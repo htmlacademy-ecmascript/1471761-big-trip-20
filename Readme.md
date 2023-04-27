@@ -1,7 +1,7 @@
 # Проект «Большое путешествие»
 
 * Студент: [Luiza Leahu](https://up.htmlacademy.ru/ecmascript/20/user/1471761).
-* Наставник: `Неизвестно`.
+* Наставник: [Алексей Толстоног](https://htmlacademy.ru/profile/id620625).
 
 ---
 
