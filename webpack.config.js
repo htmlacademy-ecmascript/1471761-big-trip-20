@@ -1,52 +1,50 @@
-//задайте main.js точкой входа;
-//в качестве директории для сборки укажите папку build.
-//Помните, что путь должен быть абсолютный. Используйте path.resolve;
-//файл сборки (бандл) назовите bundle.js;
-//активируйте опцию очистки директории для сборки перед новой сборкой;
-//активируйте генерацию source-maps
+import path from 'path';
+import { fileURLToPath } from 'url';
+import CopyPlugin from 'copy-webpack-plugin';
+import HtmlPlugin from 'html-webpack-plugin';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const path = require('path');
-const CopyPlugin = require('copy-webpack-plugin');
-const HtmlPlugin = require('html-webpack-plugin');
-
-module.exports = {
-entry: './src/main.js',
-output: {
-  filename: 'bundle.[contenthash].js',
-  path: path.resolve(__dirname, 'build'),
-  clean: true,
-},
-devtool: 'source-map',
-plugins: [
-  new HtmlPlugin({
-    template: 'public/index.html' ,
-  }),
-  new CopyPlugin({
-    patterns: [
-      {
-        from: 'public',
-        globOptions: {
-          ignore: ['**/index.html'],
-        },
-      },
-    ]
-  })
-],
-module: {
-  rules: [
-    {
-      test: /\.js$/,
-      exclude: /(node_modules)/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presents: ['@babel/preset-env']
-        },
-      },
+export default {
+    entry: './src/main.js',
+    output: {
+        filename: 'bundle.[contenthash].js',
+        path: path.resolve(__dirname, 'build'),
+        clean: true,
     },
-  ]
+    devtool: 'source-map',
+    plugins: [
+        new HtmlPlugin({
+            template: 'public/index.html',
+        }),
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: 'public',
+                    globOptions: {
+                        ignore: ['**/index.html'],
+                    },
+                },
+            ],
+        }),
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /(node_modules)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    },
+                },
+            },
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader']
+            },
+        ],
+    }
 }
-};
-
-
