@@ -1,13 +1,13 @@
 import { getRandomInteger } from '../utils.js';
 import { Price } from './const.js';
-import {getDate} from './utils.js';
+import { getDate } from './utils.js';
 
 function generatePoint(type, destinationId, offerIds) {
   return {
     id: crypto.randomUUID(),
     basePrice: getRandomInteger(Price.MIN, Price.MAX),
-    dateFrom: getDate({next: false}),
-    dateTo: getDate({next: true}),
+    dateFrom: getDate({ next: false }),
+    dateTo: getDate({ next: true }),
     destination: destinationId,
     isFavorite: !!getRandomInteger(0, 1),
     offers: offerIds,
@@ -15,4 +15,4 @@ function generatePoint(type, destinationId, offerIds) {
   };
 }
 
-export {generatePoint};
+export { generatePoint };

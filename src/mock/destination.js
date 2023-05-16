@@ -17,4 +17,4 @@ function generateDestination() {
   };
 }
 
-export {generateDestination};
+export { generateDestination };
