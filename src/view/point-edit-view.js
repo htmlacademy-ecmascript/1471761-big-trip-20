@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 
 function createPointEditViewTemplate() {
   return (`<li class="trip-events__item">
@@ -139,19 +139,8 @@ function createPointEditViewTemplate() {
 `);
 }
 
-export default class PointEditView {
-  getTemplate() {
+export default class PointEditView extends AbstractView {
+  get template() {
     return createPointEditViewTemplate();
-  }
-
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
   }
 }
