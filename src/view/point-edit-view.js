@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 
 function createPointEditViewTemplate() {
   return (`<li class="trip-events__item">
@@ -139,19 +139,31 @@ function createPointEditViewTemplate() {
 `);
 }
 
-export default class PointEditView {
-  getTemplate() {
-    return createPointEditViewTemplate();
+export default class PointEditView extends AbstractView {
+  #point = null;
+  #handleFormSubmit = null;
+
+  constructor({ point, onFormSubmit }) {
+    super();
+    this.#point = point;
+    this.#handleFormSubmit = onFormSubmit;
+
+    this.element.querySelector('form')
+      .addEventListener('submit', this.#formSubmitHandler);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-    return this.element;
+  get template() {
+    return createPointEditViewTemplate(this.#point);
   }
 
-  removeElement() {
-    this.element = null;
-  }
+
+  #formSubmitHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleFormSubmit();
+  };
 }
+
+//closeClickHandler = (evt) => {
+//evt.preventDefault();
+// this.#onCloseClick();
+
