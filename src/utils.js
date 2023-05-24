@@ -67,6 +67,8 @@ function getRandomArrayElement(items) {
   return items[Math.floor(Math.random() * items.length)];
 }
 
+const isEscapeKey = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
+
 export {
   getRandomInteger,
   getRandomValue,
@@ -76,5 +78,6 @@ export {
   getPointDuration,
   capitalize,
   getScheduleDate,
-  getRandomArrayElement
+  getRandomArrayElement,
+  isEscapeKey
 };

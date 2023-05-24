@@ -140,7 +140,30 @@ function createPointEditViewTemplate() {
 }
 
 export default class PointEditView extends AbstractView {
-  get template() {
-    return createPointEditViewTemplate();
+  #point = null;
+  #handleFormSubmit = null;
+
+  constructor({ point, onFormSubmit }) {
+    super();
+    this.#point = point;
+    this.#handleFormSubmit = onFormSubmit;
+
+    this.element.querySelector('form')
+      .addEventListener('submit', this.#formSubmitHandler);
   }
+
+  get template() {
+    return createPointEditViewTemplate(this.#point);
+  }
+
+
+  #formSubmitHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleFormSubmit();
+  };
 }
+
+//closeClickHandler = (evt) => {
+//evt.preventDefault();
+// this.#onCloseClick();
+

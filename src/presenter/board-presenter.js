@@ -3,7 +3,7 @@ import EventListView from '../view/event-list-view.js';
 import WaypointView from '../view/waypoint-view.js';
 import SortView from '../view/sort-view.js';
 import PointEditView from '../view/point-edit-view.js';
-
+import { isEscapeKey } from '../utils.js';
 //import { POINT_COUNT } from '../const.js';
 
 
@@ -14,6 +14,7 @@ export default class BoardPresenter {
   #offersModel = null;
   #pointsModel = null;
   #points = [];
+  #editMoreOptionsComponent = null;
 
   #eventListComponent = new EventListView();
   #sortComponent = new SortView();
@@ -28,6 +29,7 @@ export default class BoardPresenter {
   }
 
   init() {
+
     render(this.#sortComponent, this.#boardContainer);
     render(this.#eventListComponent, this.#boardContainer);
 
@@ -36,53 +38,40 @@ export default class BoardPresenter {
     });
   }
 
-  #renderPoint = (point) => {
+  #renderPoint(point) {
+    const escKeyDownHandler = (evt) => {
+      if (isEscapeKey) {
+        evt.preventDefault();
+        replaceFormToPoint();
+        document.removeEventListner('keydown', escKeyDownHandler);
+      }
+    };
+
     const pointComponent = new WaypointView({
       point,
-      pointDestinations: this.#destinationsModel.getByID(point.destination),
-      pointOffers: this.#offersModel.getByType(point.type),
-      onEditClick: pointEditClickHandler,
+      onEditClick: () => {
+        replacePointToForm();
+        document.addEventListener('keydown', escKeyDownHandler);
+      }
     });
 
     const pointEditComponent = new PointEditView({
       point,
-      pointDestinations: this.#destinationsModel.get(),
-      pointOffers: this.#offersModel.get(),
-      onResetClick: resetButtonClickHandler,
-      //onSubmitClick: pointSubmitHandler,
+      onFormSubmit: () => {
+        replaceFormToPoint();
+        document.removeEventListener('keydown', escKeyDownHandler);
+      }
     });
 
-    const replacePointToForm = () => {
+    function replacePointToForm() {
       replace(pointEditComponent, pointComponent);
-    };
+    }
 
-    const replaceFormToPoint = () => {
+    function replaceFormToPoint() {
       replace(pointComponent, pointEditComponent);
-    };
-
-    const escKeyDownHandler = (evt) => {
-      if (evt.key === 'Escape' || evt.key === 'Esc') {
-        evt.preventDefault();
-        replaceFormToPoint();
-        document.moveEventListner('keydown', escKeyDownHandler);
-      }
-    };
-
-    function pointEditClickHandler() {
-      replacePointToForm();
-      document.addEventListener('keydown', escKeyDownHandler);
     }
-
-    function resetButtonClickHandler() {
-      replaceFormToPoint();
-      document.removeEventListener('keydown', escKeyDownHandler);
-    }
-
-    //function resetButtonClickHandler() {
-    //  replaceFormToPoint();
-    // document.removeEventListener('keydown', escKeyDownHandler);
-    //}
 
     render(pointComponent, this.#eventListComponent.element);
-  };
+  }
 }
+
