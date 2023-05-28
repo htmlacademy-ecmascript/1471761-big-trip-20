@@ -3,7 +3,7 @@ import EventListView from '../view/event-list-view.js';
 import WaypointView from '../view/waypoint-view.js';
 import SortView from '../view/sort-view.js';
 import PointEditView from '../view/point-edit-view.js';
-import { isEscapeKey } from '../utils.js';
+import { isEscapeKey } from '../utils/common.js';
 //import { POINT_COUNT } from '../const.js';
 
 
