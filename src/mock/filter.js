@@ -1,4 +1,4 @@
-import { filter } from '../src/utils/filter.js';
+import { filter } from '../utils/filter.js';
 
 function generateFilters(points) {
   return Object.entries(filter)

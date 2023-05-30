@@ -1,9 +1,9 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import { capitalize } from '../utils.point.js';
 
-function createFilterItem(filter) {
+function createFilterItemTemplate(filter) {
+
   return `
-  <div class="trip-filters__filter">
         <input
          id="filter-${filter.type}"
          class="trip-filters__filter-input  visually-hidden"
@@ -22,25 +22,37 @@ function createFilterItem(filter) {
       `;
 }
 
-function createFilterViewTemplate(filters) {
-  return `
-  <form class="trip-filters" action="#" method="get">
-  ${filters.map(createFilterItem).join('')}
-      <button class="visually-hidden" type="submit">Accept filter</button>
-    </form>
-  `;
-}
+function createFilterTemplate(filterItems) {
 
-export { createFilterViewTemplate };
+  const filterItemsTemplate = filterItems
+    .map((filter) => createFilterItemTemplate(filter)
+      .join(''));
+
+  return (
+    `<div class="trip-filters__filter">
+      ${filterItemsTemplate}
+    </div>`
+  );
+}
+/*
+     <form class="trip-filters" action="#" method="get">
+  ${filters.map(createFilterItemTemplate).join('')}
+      <button class="visually-hidden" type="submit">Accept filter</button>
+    </form>)
+
+*/
+
+//export { createFilterViewTemplate };
 
 export default class FilterView extends AbstractView {
-  #filters = [];
-  constructor(filters) {
+  #filters = null;
+
+  constructor({filters}) {
     super();
     this.#filters = filters;
   }
 
   get template() {
-    return createFilterViewTemplate();
+    return createFilterTemplate(this.#filters);
   }
 }
