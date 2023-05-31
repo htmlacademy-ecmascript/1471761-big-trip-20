@@ -17,6 +17,7 @@ export default class BoardPresenter {
   #editMoreOptionsComponent = null;
 
   #eventListComponent = new EventListView();
+
   #sortComponent = new SortView();
 
   constructor({ boardContainer, pointsModel, destinationsModel, offersModel }) {
