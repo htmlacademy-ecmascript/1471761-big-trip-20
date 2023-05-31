@@ -51,7 +51,7 @@ function getPointDuration(dateFrom, dateTo) {
   return pointDuration;
 }
 
-function getScheduleDate(date) {
+function getDate(date) {
   return dayjs(date).format('DD/MM/YY HH;mm');
 }
 
@@ -73,7 +73,7 @@ export {
   formatStringToTime,
   getPointDuration,
   capitalize,
-  getScheduleDate,
+  getDate,
   isPointFuture,
   isPointPresent,
   isPointPast

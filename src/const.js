@@ -15,17 +15,6 @@ const TYPES = [
 
 const DEFAULT_TYPE = 'flight';
 
-/*const EMTY_POINT = {
-  basePrice: 0,
-  dateFrom: null,
-  dateTo: null,
-  destination: null,
-  isFavorite: false,
-  offers: [],
-  type: DEFAULT_TYPE
-};
-
-*/
 const FilterType = {
   EVERYTHING: 'everything',
   FUTURE: 'future',
@@ -35,7 +24,6 @@ const FilterType = {
 
 export {
   POINT_COUNT,
-  //EMTY_POINT,
   DESTINATION_COUNT,
   OFFER_COUNT,
   TYPES,

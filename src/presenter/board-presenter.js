@@ -4,7 +4,6 @@ import WaypointView from '../view/waypoint-view.js';
 import SortView from '../view/sort-view.js';
 import PointEditView from '../view/point-edit-view.js';
 import { isEscapeKey } from '../utils/common.js';
-//import { POINT_COUNT } from '../const.js';
 
 
 export default class BoardPresenter {
@@ -20,11 +19,11 @@ export default class BoardPresenter {
 
   #sortComponent = new SortView();
 
-  constructor({ boardContainer, pointsModel, destinationsModel, offersModel }) {
+  constructor({ boardContainer, destinationsModel, offersModel, pointsModel }) {
     this.#boardContainer = boardContainer;
-    this.#pointsModel = pointsModel;
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
+    this.#pointsModel = pointsModel;
 
     this.#points = [...this.#pointsModel.get()];
   }

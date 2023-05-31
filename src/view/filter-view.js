@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import { capitalize } from '../utils.point.js';
+import { capitalize } from '../utils/point.js';
 
 function createFilterItemTemplate(filter) {
 
@@ -25,8 +25,8 @@ function createFilterItemTemplate(filter) {
 function createFilterTemplate(filterItems) {
 
   const filterItemsTemplate = filterItems
-    .map((filter) => createFilterItemTemplate(filter)
-      .join(''));
+    .map((filter) => createFilterItemTemplate(filter))
+    .join('');
 
   return (
     `<div class="trip-filters__filter">
@@ -34,20 +34,10 @@ function createFilterTemplate(filterItems) {
     </div>`
   );
 }
-/*
-     <form class="trip-filters" action="#" method="get">
-  ${filters.map(createFilterItemTemplate).join('')}
-      <button class="visually-hidden" type="submit">Accept filter</button>
-    </form>)
-
-*/
-
-//export { createFilterViewTemplate };
-
 export default class FilterView extends AbstractView {
   #filters = null;
 
-  constructor({filters}) {
+  constructor({ filters }) {
     super();
     this.#filters = filters;
   }
