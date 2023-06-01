@@ -15,10 +15,18 @@ const TYPES = [
 
 const DEFAULT_TYPE = 'flight';
 
+const FilterType = {
+  EVERYTHING: 'everything',
+  FUTURE: 'future',
+  PRESENT: 'present',
+  PAST: 'past'
+};
+
 export {
   POINT_COUNT,
   DESTINATION_COUNT,
   OFFER_COUNT,
   TYPES,
-  DEFAULT_TYPE
+  DEFAULT_TYPE,
+  FilterType,
 };
