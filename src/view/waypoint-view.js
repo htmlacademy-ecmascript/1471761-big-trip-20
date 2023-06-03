@@ -451,8 +451,8 @@ export default class WaypointView extends AbstractView {
   #point = null;
   #pointDestination = null;
   #pointOffers = null;
-  #handleEditClick = null;
-  #handleFavoriteClick = null;
+  #onEditClick = null;
+  #onFavoriteClick = null;
 
 
   constructor({ point, pointDestination, pointOffers, onEditClick, onFavoriteClick}) {
@@ -460,15 +460,16 @@ export default class WaypointView extends AbstractView {
     this.#point = point;
     this.#pointDestination = pointDestination;
     this.#pointOffers = pointOffers;
-    this.#handleEditClick = onEditClick;
-    this.#handleFavoriteClick = onFavoriteClick;
+    this.#onEditClick = onEditClick;
+    this.#onFavoriteClick = onFavoriteClick;
 
     this.element
       .querySelector('.event__rollup-btn')
-      .addEventListener('click', this.#editClickHandler);
+      .addEventListener('click', this.#onEditClick);
 
     this.element.querySelector('.event__favorite-btn')
-      .addEventListener('click', this.favoriteClickHandler);
+      .addEventListener('click', this.#onFavoriteClick);
+
   }
 
   get template() {
@@ -479,14 +480,14 @@ export default class WaypointView extends AbstractView {
     });
   }
 
-  #editClickHandler = (evt) => {
+  #onEditClick = (evt) => {
     evt.preventDefault();
-    this.#handleEditClick();
+    this.#onEditClick();
   };
 }
 
-#favoriteClickHandler = (evt) => {
+#onFavoriteClick = (evt) => {
   evt.preventDefault();
-  this.handleFavoriteClick();
+  this.#onFavoriteClick();
 };
 

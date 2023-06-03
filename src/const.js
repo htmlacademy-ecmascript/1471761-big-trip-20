@@ -22,7 +22,14 @@ const FilterType = {
   PAST: 'past'
 };
 
+const Mode = {
+  DEFAULT: 'DEFAULT',
+  EDITING: 'EDITING',
+};
+
+
 export {
+  Mode,
   POINT_COUNT,
   DESTINATION_COUNT,
   OFFER_COUNT,
