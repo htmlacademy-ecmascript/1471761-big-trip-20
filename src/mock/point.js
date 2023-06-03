@@ -1,6 +1,7 @@
-import { getRandomInteger } from '../utils/common.js';
+import { getRandomArrayElement, getRandomInteger } from '../utils/common.js';
 import { Price } from './const.js';
 import { getDate } from '../utils/point.js';
+import { nanoid } from 'nanoid';
 
 function generatePoint(type, destinationId, offerIds) {
   return {
@@ -15,4 +16,11 @@ function generatePoint(type, destinationId, offerIds) {
   };
 }
 
-export { generatePoint };
+function getRandomPoint() {
+  return {
+    id: nanoid(),
+    ...getRandomArrayElement(mockPoints)
+  };
+}
+
+export { generatePoint, getRandomPoint };

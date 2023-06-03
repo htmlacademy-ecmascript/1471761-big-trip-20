@@ -1,10 +1,11 @@
-import { render, replace } from '../framework/render.js';
+import { render, RenderPosition} from '../framework/render.js';
 import EventListView from '../view/event-list-view.js';
-import WaypointView from '../view/waypoint-view.js';
 import SortView from '../view/sort-view.js';
-import PointEditView from '../view/point-edit-view.js';
-import { isEscapeKey } from '../utils/common.js';
-
+//import { isEscapeKey } from '../utils/common.js';
+import PointPresenter from './point-presenter.js';
+import { EmtyListView } from '../view/emty-list-view.js';
+import { updateItem } from '../utils/common.js';
+import {BoardView} from '../view/board-view.js';
 
 export default class BoardPresenter {
 
@@ -15,63 +16,79 @@ export default class BoardPresenter {
   #points = [];
   #editMoreOptionsComponent = null;
 
+  #boardComponent = new BoardView();
   #eventListComponent = new EventListView();
 
+  #pointListComponent = new EventListView();
+
   #sortComponent = new SortView();
+  #noPointComponent = new EmtyListView();
+  #boardPoints = [];
+  #pointPresenters = new Map();
 
   constructor({ boardContainer, destinationsModel, offersModel, pointsModel }) {
     this.#boardContainer = boardContainer;
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
     this.#pointsModel = pointsModel;
-
-    this.#points = [...this.#pointsModel.get()];
   }
 
   init() {
 
-    render(this.#sortComponent, this.#boardContainer);
-    render(this.#eventListComponent, this.#boardContainer);
+    this.#boardPoints = [...this.#pointsModel.points];
 
-    this.#points.forEach((point) => {
-      this.#renderPoint(point);
-    });
+    this.#renderBoard();
+  }
+
+  #handleModeChange = () => {
+    this.#pointPresenters.forEach((presenter) => presenter.resetView());
+  };
+
+  #handlePointChange = (updatedPoint) => {
+    this.#boardPoints = updateItem(this.#boardPoints, updatedPoint);
+    this.#pointPresenters.get(updatedPoint.id).init(updatedPoint);
+  };
+
+  #renderSort() {
+    render(this.#sortComponent, this.#boardComponent.element, RenderPosition.AFTERBEGIN);
   }
 
   #renderPoint(point) {
-    const escKeyDownHandler = (evt) => {
-      if (isEscapeKey) {
-        evt.preventDefault();
-        replaceFormToPoint();
-        document.removeEventListner('keydown', escKeyDownHandler);
-      }
-    };
 
-    const pointComponent = new WaypointView({
-      point,
-      onEditClick: () => {
-        replacePointToForm();
-        document.addEventListener('keydown', escKeyDownHandler);
-      }
+    const pointPresenter = new PointPresenter({
+      pointListContainer: this.#pointListComponent.element,
+      onDataChange: this.#handlePointChange,
+      onModeChange: this.#handleModeChange
     });
 
-    const pointEditComponent = new PointEditView({
-      point,
-      onFormSubmit: () => {
-        replaceFormToPoint();
-        document.removeEventListener('keydown', escKeyDownHandler);
-      }
-    });
+    pointPresenter.init(point);
+    this.#pointPresenters.set(point.id, pointPresenter);
+  }
 
-    function replacePointToForm() {
-      replace(pointEditComponent, pointComponent);
-    }
+  #renderPoints(from, to) {
+    this.#boardPoints
+      .slice(from, to)
+      .forEach((point) => this.#renderPoint(point));
+  }
 
-    function replaceFormToPoint() {
-      replace(pointComponent, pointEditComponent);
-    }
+  #renderNoPoints() {
+    render(this.#noPointComponent, this.#boardComponent.element, RenderPosition.AFTERBEGIN);
+  }
 
-    render(pointComponent, this.#eventListComponent.element);
+  #clearPointList() {
+    this.#pointPresenters.forEach((presenter) => presenter.destroy());
+    this.#pointPresenters.clear();
+  }
+
+  #renderEventList() {
+    render(this.#pointListComponent, this.#boardComponent.element);
+  }
+
+  #renderBoard() {
+    render(this.#boardComponent, this.#boardContainer);
+
+    this.#renderSort();
+    this.#renderEventList();
+
   }
 }
-
