@@ -27,8 +27,16 @@ const Mode = {
   EDITING: 'EDITING',
 };
 
+const SortType = {
+  DAY: 'day',
+  EVENT: 'event',
+  TIME: 'time',
+  PRICE: 'price',
+  OFFERS: 'offers',
+};
 
 export {
+  SortType,
   Mode,
   POINT_COUNT,
   DESTINATION_COUNT,

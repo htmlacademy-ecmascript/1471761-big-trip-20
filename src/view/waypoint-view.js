@@ -480,14 +480,15 @@ export default class WaypointView extends AbstractView {
     });
   }
 
-  #onEditClick = (evt) => {
+  #handlerEditClick = (evt) => {
     evt.preventDefault();
     this.#onEditClick();
   };
+
+  #handlerFavoriteClick = (evt) => {
+    evt.preventDefault();
+    this.#onFavoriteClick();
+  };
 }
 
-#onFavoriteClick = (evt) => {
-  evt.preventDefault();
-  this.#onFavoriteClick();
-};
 

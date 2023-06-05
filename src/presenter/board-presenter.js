@@ -20,7 +20,6 @@ export default class BoardPresenter {
   #pointsModel = null;
 
   #points = [];
-  //#editMoreOptionsComponent = null;
 
   #boardComponent = new BoardView();
   #eventListComponent = new EventListView();
@@ -31,6 +30,8 @@ export default class BoardPresenter {
   #noPointComponent = new EmtyListView();
 
   #boardPoints = [];
+  #handleDataChange = null;
+  //#handleModeChange = null;
 
   #pointPresenters = new Map();
 
@@ -64,15 +65,16 @@ export default class BoardPresenter {
   };
 
 
-  //#sortPoints = (SortType) => {
-    //this.#currentSortType = sortType;
-    //this.#points = sort[this.#currentSortType](this.#points);
+  #sortPoints = (SortType) => {
+    this.#currentSortType = sortType;
+    this.#points = sort[this.#currentSortType](this.#points);
+  }
 
-    #renderPoints = () => {
-      this.#points.forEach((point) => {
-        this.#renderPoint(point);
-      });
-    };
+  #renderPoints = () => {
+    this.#points.forEach((point) => {
+      this.#renderPoint(point);
+    });
+  };
 
   #handleModeChange = () => {
     this.#pointPresenters.forEach((presenter) => presenter.resetView());
@@ -83,9 +85,15 @@ export default class BoardPresenter {
     this.#pointPresenters.get(updatedPoint.id).init(updatedPoint);
   };
 
+  #clearPointList = () => {
+    this.#pointPresenters.forEach((presenter) => presenter.destroy());
+    this.#pointPresenters.clear();
+  };
+
+
   #sortTypeChangeHandler = (sortType) => {
     this.#sortPoints(sortType);
-    this.#clearPoints();
+    this.#clearPoint();
     this.#renderSort(this.#boardContainer);
     this.#renderPoints();
   }
@@ -101,14 +109,11 @@ export default class BoardPresenter {
     if (prevSortComponent) {
       replace(this.#sortComponent, prevSortComponent);
       remove(prevSortComponent);
-    }  else  {
+    } else {
       render(this.#sortComponent, boardContainer);
     }
+  }
 
-  #clearPointList() {
-    this.#pointPresenters.forEach((presenter) => presenter.destroy());
-    this.#pointPresenters.clear();
-  };
 
 
   #renderPointContainer = () => {
@@ -117,7 +122,7 @@ export default class BoardPresenter {
   };
 
   #renderBoard = () => {
-    if(this.#points.length === 0) {
+    if (this.#points.length === 0) {
       render(new EmtyListView(), this.#boardContainer);
       return;
     }
@@ -127,4 +132,4 @@ export default class BoardPresenter {
     this.#renderPoints();
   };
 
-}}
+};
