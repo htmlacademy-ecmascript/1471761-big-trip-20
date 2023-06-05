@@ -35,7 +35,17 @@ const SortType = {
   OFFERS: 'offers',
 };
 
+const EnabledSortType = {
+  [SortType.DAY]: true,
+  [SortType.EVENT]: false,
+  [SortType.TIME]: true,
+  [SortType.PRICE]: true,
+  [SortType.OFFERS]: false
+};
+
+
 export {
+  EnabledSortType,
   SortType,
   Mode,
   POINT_COUNT,

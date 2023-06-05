@@ -1,7 +1,7 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import { SortType } from '../const.js';
 
-const enabledSortType = {
+const EnabledSortType = {
   [SortType.DAY]: true,
   [SortType.EVENT]: false,
   [SortType.TIME]: true,
@@ -32,10 +32,12 @@ function getSortItem(sortItem) {
   `;
 }
 
-function createSortViewTemplate() {
-  return `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
-  ${SortType.map((sortItem) => getSortItem(sortItem)).join('')}
-</form>`;
+function createSortViewTemplate({sortMap}) {
+  return `
+  <form class="trip-events__trip-sort  trip-sort" action="#" method="get">
+  ${sortMap.map((sortItem) => getSortItem(sortItem)).join('')}
+</form>
+`;
 }
 
 export default class SortView extends AbstractView {
@@ -49,7 +51,7 @@ export default class SortView extends AbstractView {
       .map((type) => ({
         type,
         isChecked: (type === sortType),
-        isDisabled: !enabledSortType[type]
+        isDisabled: !EnabledSortType[type]
       }));
 
     this.#onSortTypeChange = onSortTypeChange;
