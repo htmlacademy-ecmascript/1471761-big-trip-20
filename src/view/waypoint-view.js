@@ -465,10 +465,11 @@ export default class WaypointView extends AbstractView {
 
     this.element
       .querySelector('.event__rollup-btn')
-      .addEventListener('click', this.#onEditClick);
+      .addEventListener('click', this.#editClickHandler);
 
-    this.element.querySelector('.event__favorite-btn')
-      .addEventListener('click', this.#onFavoriteClick);
+    this.element
+    .querySelector('.event__favorite-icon')
+      .addEventListener('click', this.#favoriteClick);
 
   }
 
@@ -480,12 +481,12 @@ export default class WaypointView extends AbstractView {
     });
   }
 
-  #handlerEditClick = (evt) => {
+  #editClickHandler = (evt) => {
     evt.preventDefault();
     this.#onEditClick();
   };
 
-  #handlerFavoriteClick = (evt) => {
+  #favoriteClick = (evt) => {
     evt.preventDefault();
     this.#onFavoriteClick();
   };
