@@ -22,7 +22,32 @@ const FilterType = {
   PAST: 'past'
 };
 
+const Mode = {
+  DEFAULT: 'DEFAULT',
+  EDITING: 'EDITING',
+};
+
+const SortType = {
+  DAY: 'day',
+  EVENT: 'event',
+  TIME: 'time',
+  PRICE: 'price',
+  OFFERS: 'offers',
+};
+
+const EnabledSortType = {
+  [SortType.DAY]: true,
+  [SortType.EVENT]: false,
+  [SortType.TIME]: true,
+  [SortType.PRICE]: true,
+  [SortType.OFFERS]: false
+};
+
+
 export {
+  EnabledSortType,
+  SortType,
+  Mode,
   POINT_COUNT,
   DESTINATION_COUNT,
   OFFER_COUNT,

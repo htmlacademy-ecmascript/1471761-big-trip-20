@@ -5,7 +5,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
-//dayjs.duration(100);
 
 const MSEC_IN_SEC = 1000;
 const SEC_IN_MIN = 60;
@@ -67,7 +66,25 @@ function isPointPast(point) {
   return dayjs().isAfter(point.dateTo);
 }
 
+function getPointsDateDifference(pointA, pointB) {
+  return new Date(pointA.dateFrom) - new Date(pointB.dateFrom);
+}
+
+function getPointsDurationsDifference(pointA, pointB) {
+  const durationA = new Date(pointA.dateTo) - new Date(pointA.dateFrom);
+  const durationB = new Date(pointB.dateTo) - new Date(pointB.dateFrom);
+
+  return durationB - durationA;
+}
+
+function getPointsPriceDifference(pointA, pointB) {
+  return pointB.basePrice - pointA.basePrice;
+}
+
 export {
+  getPointsDateDifference,
+  getPointsDurationsDifference,
+  getPointsPriceDifference,
   formatStringToDateTime,
   formatStringToShortDate,
   formatStringToTime,
