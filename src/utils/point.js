@@ -5,7 +5,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
-//dayjs.duration(100);
 
 const MSEC_IN_SEC = 1000;
 const SEC_IN_MIN = 60;

@@ -5,7 +5,6 @@ import PointPresenter from './point-presenter.js';
 import { render, remove, replace, RenderPosition } from '../framework/render.js';
 import EmptyListView from '../view/board-view.js';
 import { updateItem } from '../utils/common.js';
-import BoardView from '../view/board-view.js';
 import { SortType } from '../const.js';
 import { sort } from '../utils/sort.js';
 
@@ -45,11 +44,10 @@ export default class BoardPresenter {
 
     this.#points = sort[SortType.DAY]([...this.#pointsModel.get()]);
   }
-}
 
-init() {
-    this.#renderBoard()
-  };
+  init() {
+    this.#renderBoard();
+  }
 
   #renderPoint = (point) => {
 
@@ -96,6 +94,7 @@ init() {
       replace(this.#sortComponent, prevSortComponent);
       remove(prevSortComponent);
     } else {
+
       render(this.#sortComponent, container, RenderPosition.AFTERBEGIN);
     }
   };
@@ -109,7 +108,6 @@ init() {
 
     if (this.#points.length === 0) {
       render(new EmptyListView(), this.#container);
-console.log(4,this.#container);
       return;
     }
 
@@ -132,4 +130,7 @@ console.log(4,this.#container);
 
   #modeChangeHandler = () => {
     this.#pointPresenters.forEach((presenter) => presenter.resetView());
-  }
+  };
+
+}
+

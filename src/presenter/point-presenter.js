@@ -26,6 +26,8 @@ export default class PointPresenter {
     this.#offersModel = offersModel;
     this.#onChangeData = onChangeData;
     this.#onChangeMode = onChangeMode;
+
+
   }
 
   init(point) {
@@ -47,11 +49,11 @@ export default class PointPresenter {
       pointDestinations: this.#destinationsModel.destinations,
       pointOffers: this.#offersModel.offers,
       onResetClick: this.#resetButtonClickHandler,
-      onSubmitClick: this.#formSubmitHandler,
+      //onSubmitClick: this.#handleFormSubmit,
     });
 
     if (prevPointComponent === null || prevPointEditComponent === null) {
-      render(this.#pointComponent, this.#pointListContainer);
+      render(this.#pointComponent, this.#container);
       return;
     }
 
@@ -70,13 +72,13 @@ export default class PointPresenter {
   destroy = () => {
     remove(this.#pointComponent);
     remove(this.#pointEditComponent);
-  }
+  };
 
   resetView = () => {
     if (this.#mode !== Mode.DEFAULT) {
       this.#replaceFormToPoint();
     }
-  }
+  };
 
   #replacePointToForm = () => {
     replace(this.#pointEditComponent, this.#pointComponent);
@@ -89,7 +91,7 @@ export default class PointPresenter {
     replace(this.#pointComponent, this.#pointEditComponent);
     document.removeEventListener('keydown', this.#escKeyHandler);
     this.#mode = Mode.DEFAULT;
-  }
+  };
 
   #escKeyHandler = (evt) => {
     if (isEscapeKey) {
@@ -105,8 +107,8 @@ export default class PointPresenter {
   #handleFavoriteClick = () => {
     this.#onChangeData({
       ...this.#point,
-       isFavorite: !this.#point.isFavorite
-      });
+      isFavorite: !this.#point.isFavorite
+    });
   };
 
   #resetButtonClickHandler = () => {
