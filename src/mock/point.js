@@ -16,6 +16,7 @@ function generatePoint(type, destinationId, offerIds) {
   };
 }
 
+
 const mockPoints = [
   {
     id: '1',

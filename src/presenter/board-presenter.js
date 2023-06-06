@@ -30,7 +30,7 @@ export default class BoardPresenter {
   //#pointListComponent = new EventListView();
 
 
-  //#noPointComponent = new EmptyListView();
+  #noPointComponent = new EmptyListView();
 
   //#boardPoints = [];
   //#handleDataChange = null;
@@ -47,9 +47,9 @@ export default class BoardPresenter {
   }
 }
 
-  init() {
-    this.#renderBoard();
-  }
+init() {
+    this.#renderBoard()
+  };
 
   #renderPoint = (point) => {
 
@@ -107,19 +107,11 @@ export default class BoardPresenter {
 
   #renderBoard = () => {
 
-    render(this.#listComponent, this.#container);
-
-    /*if (this.#points.length === 0) {
+    if (this.#points.length === 0) {
       render(new EmptyListView(), this.#container);
 console.log(4,this.#container);
       return;
-    } */
-
-    if (this.#points.every((point) => point === null)) {
-      this.#renderNoPoints();
-      return;
     }
-
 
     this.#renderSort(this.#container);
     this.#renderPointContainer();

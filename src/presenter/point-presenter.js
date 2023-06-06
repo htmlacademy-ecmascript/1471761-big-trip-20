@@ -6,7 +6,7 @@ import { isEscapeKey } from '../utils/common.js';
 import { Mode } from '../const.js';
 
 export default class PointPresenter {
-  #pointListcontainer = null;
+  #container = null;
 
   #onChangeData = null;
   #onChangeMode = null;
@@ -20,8 +20,8 @@ export default class PointPresenter {
   #point = null;
   #mode = Mode.DEFAULT;
 
-  constructor({ pointListContainer, destinationsModel, offersModel, onChangeData, onChangeMode }) {
-    this.#pointListContainer = pointListContainer;
+  constructor({container, destinationsModel, offersModel, onChangeData, onChangeMode }) {
+    this.#container = container;
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
     this.#onChangeData = onChangeData;
@@ -44,14 +44,14 @@ export default class PointPresenter {
 
     this.#pointEditComponent = new PointEditView({
       point: this.#point,
-      pointDestinations: this.#destinationsModel.get(),
-      pointOffers: this.#offersModel.get(),
+      pointDestinations: this.#destinationsModel.destinations,
+      pointOffers: this.#offersModel.offers,
       onResetClick: this.#resetButtonClickHandler,
-      onFormSubmit: this.#handleFormSubmit,
+      onSubmitClick: this.#formSubmitHandler,
     });
 
     if (prevPointComponent === null || prevPointEditComponent === null) {
-      render(this.#pointComponent, this.#container);
+      render(this.#pointComponent, this.#pointListContainer);
       return;
     }
 
