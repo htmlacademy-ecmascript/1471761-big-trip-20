@@ -1,8 +1,10 @@
 import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration.js';
+import duration from 'dayjs/plugin/duration';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 dayjs.extend(duration);
-dayjs.duration(100);
+dayjs.extend(relativeTime);
+
 
 const MSEC_IN_SEC = 1000;
 const SEC_IN_MIN = 60;
@@ -11,17 +13,6 @@ const HOUR_IN_DAY = 24;
 
 const MSEC_IN_HOUR = MIN_IN_HOUR * SEC_IN_MIN * MSEC_IN_SEC;
 const MSEC_IN_DAY = HOUR_IN_DAY * MSEC_IN_HOUR;
-
-function getRandomInteger(a = 0, b = 1) {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-
-  return Math.floor(lower + Math.random() * (upper - lower + 1));
-}
-
-function getRandomValue(items) {
-  return items[getRandomInteger(0, items.length - 1)];
-}
 
 function formatStringToDateTime(date) {
   return dayjs(date).format('YYYY-MM-DDTHH:mm');
@@ -59,25 +50,48 @@ function getPointDuration(dateFrom, dateTo) {
   return pointDuration;
 }
 
-function getScheduleDate(date) {
+function getDate(date) {
   return dayjs(date).format('DD/MM/YY HH;mm');
 }
 
-function getRandomArrayElement(items) {
-  return items[Math.floor(Math.random() * items.length)];
+function isPointFuture(point) {
+  return dayjs().isBefore(point.dateFrom);
 }
 
-const isEscapeKey = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
+function isPointPresent(point) {
+  return (dayjs().isAfter(point.dateFrom) && dayjs().isBefore(point.dateTo));
+}
+
+function isPointPast(point) {
+  return dayjs().isAfter(point.dateTo);
+}
+
+function getPointsDateDifference(pointA, pointB) {
+  return new Date(pointA.dateFrom) - new Date(pointB.dateFrom);
+}
+
+function getPointsDurationsDifference(pointA, pointB) {
+  const durationA = new Date(pointA.dateTo) - new Date(pointA.dateFrom);
+  const durationB = new Date(pointB.dateTo) - new Date(pointB.dateFrom);
+
+  return durationB - durationA;
+}
+
+function getPointsPriceDifference(pointA, pointB) {
+  return pointB.basePrice - pointA.basePrice;
+}
 
 export {
-  getRandomInteger,
-  getRandomValue,
+  getPointsDateDifference,
+  getPointsDurationsDifference,
+  getPointsPriceDifference,
   formatStringToDateTime,
   formatStringToShortDate,
   formatStringToTime,
   getPointDuration,
   capitalize,
-  getScheduleDate,
-  getRandomArrayElement,
-  isEscapeKey
+  getDate,
+  isPointFuture,
+  isPointPresent,
+  isPointPast
 };

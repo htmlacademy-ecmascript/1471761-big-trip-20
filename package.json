@@ -2,7 +2,6 @@
   "name": "big-trip",
   "version": "20.0.0",
   "private": true,
-  "type": "module",
   "description": "Проект «Большое путешествие» от HTML Academy",
   "browserslist": [
     "last 2 versions",
@@ -34,6 +33,7 @@
     "node": "18"
   },
   "dependencies": {
-    "dayjs": "1.11.7"
+    "dayjs": "1.11.7",
+    "nanoid": "4.0.2"
   }
 }
