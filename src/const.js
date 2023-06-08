@@ -15,6 +15,8 @@ const TYPES = [
   'restaurant'
 ];
 
+const EVENT_TYPES_LIST = Object.values(TYPES);
+
 const OFFERS = [
   'Order Uber',
   'Add luggage',
@@ -68,6 +70,7 @@ const EMPTY_POINT = {
 
 export {
   EMPTY_POINT,
+  EVENT_TYPES_LIST,
   OFFERS,
   EnabledSortType,
   SortType,
