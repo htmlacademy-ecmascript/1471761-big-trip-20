@@ -1,4 +1,4 @@
-import { nanoid } from 'nanoid';
+//import { nanoid } from 'nanoid';
 
 const POINT_COUNT = 10;
 const DESTINATION_COUNT = 10;
@@ -15,7 +15,7 @@ const TYPES = [
   'restaurant'
 ];
 
-const OFFERS_OPTIONS = [
+const OFFERS = [
   'Order Uber',
   'Add luggage',
   'Switch to comfort',
@@ -55,23 +55,20 @@ const EnabledSortType = {
   [SortType.OFFERS]: false
 };
 
-const BLANK_DESTINATION = {
-  id: 0,
-  name: '',
-  description: '',
-  pictures: [],
-};
-
-const BLANK_OFFER = {
-  type: '',
+const EMPTY_POINT = {
+  id: '',
+  basePrice: 0,
+  dateFrom: null,
+  dateTo: null,
+  destination: null,
+  isFavorite: false,
   offers: [],
+  type: 'taxi',
 };
-
 
 export {
-  BLANK_DESTINATION,
-  BLANK_OFFER,
-  OFFERS_OPTIONS,
+  EMPTY_POINT,
+  OFFERS,
   EnabledSortType,
   SortType,
   Mode,
