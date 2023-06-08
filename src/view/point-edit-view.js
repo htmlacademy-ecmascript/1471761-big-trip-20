@@ -214,7 +214,7 @@ export default class PointEditView extends AbstractStatefulView {
       offerBlock.addEventListener('change', this.#offerClickHandler);
     }
 
-    this.element.querySelector('event__input--price').addEventListener('change', this.#priceInputChange);
+    this.element.querySelector('.event__input--price').addEventListener('change', this.#priceInputChange);
   };
 
   #resetButtonClickHandler = (evt) => {
@@ -260,7 +260,7 @@ export default class PointEditView extends AbstractStatefulView {
   #offerClickHandler = (evt) => {
     evt.preventDefault();
 
-    const checkedBoxes = Array.from(this.element.querySelectorAll('.e.........'));
+    const checkedBoxes = Array.from(this.element.querySelectorAll('.event__offer-checkbox'));
 
     this._setState({
       point: {

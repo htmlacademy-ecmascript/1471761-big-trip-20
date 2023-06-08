@@ -122,6 +122,5 @@ export default class BoardPresenter {
   #modeChangeHandler = () => {
     this.#pointPresenters.forEach((presenter) => presenter.resetView());
   };
-
 }
 
