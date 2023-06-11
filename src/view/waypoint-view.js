@@ -468,7 +468,7 @@ export default class WaypointView extends AbstractView {
       .addEventListener('click', this.#editClickHandler);
 
     this.element
-    .querySelector('.event__favorite-icon')
+      .querySelector('.event__favorite-btn')
       .addEventListener('click', this.#favoriteClick);
 
   }
