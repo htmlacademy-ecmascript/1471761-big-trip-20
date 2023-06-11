@@ -11,6 +11,7 @@ import { sort } from '../utils/sort.js';
 
 export default class BoardPresenter {
 
+  #datepicker = null;
   #container = null;
 
   #sortComponent = null;
@@ -133,4 +134,3 @@ export default class BoardPresenter {
   };
 
 }
-

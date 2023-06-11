@@ -35,6 +35,7 @@ const SortType = {
   OFFERS: 'offers',
 };
 
+
 const EnabledSortType = {
   [SortType.DAY]: true,
   [SortType.EVENT]: false,
