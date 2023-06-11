@@ -6,6 +6,7 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
 const DATETIME_FORMAT = 'DD/MM/YY HH:mm';
+
 const NEW_EVENT_POINT = {
   basePrice: '',
   dateFrom: new Date(),
@@ -17,6 +18,7 @@ const NEW_EVENT_POINT = {
   type: DEFAULT_TYPE,
 };
 
+
 function createEventTypesListTemplate(currentType) {
   const typesList = Object.values(TYPES).map((eventType) =>
     `<div class="event__type-item">
@@ -27,7 +29,7 @@ function createEventTypesListTemplate(currentType) {
   return `<div class="event__type-list">
             <fieldset class="event__type-group">
               <legend class="visually-hidden">Event type</legend>
-              ${typesList};
+              ${typesList}
             </fieldset>
           </div>`;
 }
@@ -155,7 +157,7 @@ export default class PointEditView extends AbstractStatefulView {
 
   get template() {
     return createEditorTemplate({
-      state: this._state,
+      state: this._state.point,
       pointDestinations: this.#pointDestinations,
       pointOffers: this.#pointOffers
     });
@@ -216,7 +218,7 @@ export default class PointEditView extends AbstractStatefulView {
 
   #formSubmitHandler = (evt) => {
     evt.preventDefault();
-    this.#onSubmitClick(PointEditView.parseStateToPoint(this._state));
+    this.#onSubmitClick(PointEditView.parseStateToPoint(this._state.point));
   };
 
   #typeInputClick = (evt) => {
