@@ -5,6 +5,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
+const formatDateTime = (date, format) => dayjs(date).format(format).toUpperCase();
 
 const MSEC_IN_SEC = 1000;
 const SEC_IN_MIN = 60;
@@ -82,6 +83,7 @@ function getPointsPriceDifference(pointA, pointB) {
 }
 
 export {
+  formatDateTime,
   getPointsDateDifference,
   getPointsDurationsDifference,
   getPointsPriceDifference,
