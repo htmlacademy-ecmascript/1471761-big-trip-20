@@ -69,8 +69,8 @@ function createEventDetailsTemplate(offers, destination) {
           </section>`;
 }
 function createEditorTemplate(data) {
-  const isNewEventPoint = !data.id;
-  const eventPoint = isNewEventPoint ? EMPTY_POINT : data;
+  const isEmptyPoint = !data.id;
+  const eventPoint = isEmptyPoint ? EMPTY_POINT : data;
   const { basePrice, dateFrom, dateTo, destination, offers, type } = eventPoint;
   const name = destination ? destination.name : '';
   const eventStartDate = formatDateTime(dateFrom, DATETIME_FORMAT);
@@ -113,7 +113,7 @@ function createEditorTemplate(data) {
             <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${basePrice}">
           </div>
           <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
-          <button class="event__reset-btn" type="reset">${isNewEventPoint ? 'Cancel' : 'Delete'}</button>
+          <button class="event__reset-btn" type="reset">${isEmptyPoint ? 'Cancel' : 'Delete'}</button>
           <button class="event__rollup-btn" type="button">
             <span class="visually-hidden">Open event</span>
           </button>
