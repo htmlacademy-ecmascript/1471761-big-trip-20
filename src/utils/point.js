@@ -5,7 +5,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
-const formatDateTime = (date, format) => dayjs(date).format(format).toUpperCase();
 
 const MSEC_IN_SEC = 1000;
 const SEC_IN_MIN = 60;
@@ -14,6 +13,12 @@ const HOUR_IN_DAY = 24;
 
 const MSEC_IN_HOUR = MIN_IN_HOUR * SEC_IN_MIN * MSEC_IN_SEC;
 const MSEC_IN_DAY = HOUR_IN_DAY * MSEC_IN_HOUR;
+
+const formatDateTime = (date, format) => dayjs(date).format(format).toUpperCase();
+
+function humaniseDate(eventDate, dateFormat) {
+  return eventDate ? dayjs(eventDate).format(dateFormat) : '';
+}
 
 function formatStringToDateTime(date) {
   return dayjs(date).format('YYYY-MM-DDTHH:mm');
@@ -83,6 +88,7 @@ function getPointsPriceDifference(pointA, pointB) {
 }
 
 export {
+  humaniseDate,
   formatDateTime,
   getPointsDateDifference,
   getPointsDurationsDifference,
