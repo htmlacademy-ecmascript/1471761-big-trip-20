@@ -8,9 +8,9 @@ import 'flatpickr/dist/flatpickr.min.css';
 const DATETIME_FORMAT = 'DD/MM/YY HH:mm';
 
 const NEW_EVENT_POINT = {
-  basePrice: '',
-  dateFrom: new Date(),
-  dateTo: new Date(),
+  basePrice: 0,
+  dateFrom: null,
+  dateTo: null,
   destination: null,
   id: null,
   isFavorite: false,
@@ -142,8 +142,8 @@ export default class PointEditView extends AbstractStatefulView {
   #onResetClick = null;
   #onSubmitClick = null;
 
-  #datePickerFrom = null;
-  #datePickerTo = null;
+  #datepickerFrom = null;
+  #datepickerTo = null;
 
   constructor({ point = NEW_EVENT_POINT, pointDestinations, pointOffers, onSubmitClick, onResetClick }) {
     super();
@@ -166,14 +166,14 @@ export default class PointEditView extends AbstractStatefulView {
   removeElement = () => {
     super.removeElement();
 
-    if (this.#datePickerFrom) {
-      this.#datePickerFrom.destroy();
-      this.#datePickerFrom = null;
+    if (this.#datepickerFrom) {
+      this.#datepickerFrom.destroy();
+      this.#datepickerFrom = null;
     }
 
-    if (this.#datePickerTo) {
-      this.#datePickerTo.destroy();
-      this.#datePickerTo = null;
+    if (this.#datepickerTo) {
+      this.#datepickerTo.destroy();
+      this.#datepickerTo = null;
     }
   };
 
@@ -280,7 +280,7 @@ export default class PointEditView extends AbstractStatefulView {
         dateFrom: userDate
       }
     });
-    this.#datePickerTo.set('minDate', this._state.point.dateFrom);
+    this.#datepickerTo.set('minDate', this._state.point.dateFrom);
   };
 
   #dateToChangeHandler = ([userDate]) => {
@@ -290,17 +290,17 @@ export default class PointEditView extends AbstractStatefulView {
         dateTo: userDate
       }
     });
-    this.#datePickerFrom.set('maxDate', this._state.point.dateTo);
+    this.#datepickerFrom.set('maxDate', this._state.point.dateTo);
   };
 
   #setDatepickers = () => {
 
     const [dateFromElement, dateToElement] = this.element.querySelectorAll('.event__input--time');
 
-    this.#datePickerFrom = flatpickr(
+    this.#datepickerFrom = flatpickr(
       dateFromElement,
       {
-        dateFormat: 'd/m/y H:i',
+        dateFormat: 'dd/mm/yy H:i',
         defaultDate: this._state.point.dateFrom,
         onClose: this.#dateFromChangeHandler,
         enableTime: true,
@@ -312,10 +312,10 @@ export default class PointEditView extends AbstractStatefulView {
       },
     );
 
-    this.#datePickerTo = flatpickr(
+    this.#datepickerTo = flatpickr(
       dateToElement,
       {
-        dateFormat: 'd/m/y H:i',
+        dateFormat: 'dd/mm/yy H:i',
         defaultDate: this._state.point.dateTo,
         onClose: this.#dateToChangeHandler,
         enableTime: true,
