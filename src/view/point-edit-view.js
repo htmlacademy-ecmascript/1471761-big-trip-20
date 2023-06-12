@@ -1,22 +1,11 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
-import { TYPES, DEFAULT_TYPE } from '../const.js';
+import { TYPES, EMPTY_POINT } from '../const.js';
 import { formatDateTime } from '../utils/point.js';
 
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
 const DATETIME_FORMAT = 'DD/MM/YY HH:mm';
-
-const NEW_EVENT_POINT = {
-  basePrice: 0,
-  dateFrom: null,
-  dateTo: null,
-  destination: null,
-  id: null,
-  isFavorite: false,
-  offers: [],
-  type: DEFAULT_TYPE,
-};
 
 
 function createEventTypesListTemplate(currentType) {
@@ -81,7 +70,7 @@ function createEventDetailsTemplate(offers, destination) {
 }
 function createEditorTemplate(data) {
   const isNewEventPoint = !data.id;
-  const eventPoint = isNewEventPoint ? NEW_EVENT_POINT : data;
+  const eventPoint = isNewEventPoint ? EMPTY_POINT : data;
   const { basePrice, dateFrom, dateTo, destination, offers, type } = eventPoint;
   const name = destination ? destination.name : '';
   const eventStartDate = formatDateTime(dateFrom, DATETIME_FORMAT);
@@ -145,7 +134,7 @@ export default class PointEditView extends AbstractStatefulView {
   #datepickerFrom = null;
   #datepickerTo = null;
 
-  constructor({ point = NEW_EVENT_POINT, pointDestinations, pointOffers, onSubmitClick, onResetClick }) {
+  constructor({ point = EMPTY_POINT, pointDestinations, pointOffers, onSubmitClick, onResetClick }) {
     super();
     this.#pointDestinations = pointDestinations;
     this.#pointOffers = pointOffers;

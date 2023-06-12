@@ -44,8 +44,19 @@ const EnabledSortType = {
   [SortType.OFFERS]: false
 };
 
+const EMPTY_POINT = {
+  id: '',
+  basePrice: 0,
+  dateFrom: null,
+  dateTo: null,
+  destination: null,
+  isFavorite: false,
+  offers: [],
+  type: DEFAULT_TYPE,
+};
 
 export {
+  EMPTY_POINT,
   EnabledSortType,
   SortType,
   Mode,
