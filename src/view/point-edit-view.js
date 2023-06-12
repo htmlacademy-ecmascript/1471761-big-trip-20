@@ -1,19 +1,8 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
-import { TYPES, DEFAULT_TYPE } from '../const.js';
+import { TYPES, EMPTY_POINT } from '../const.js';
 import { formatDateTime } from '../utils/point.js';
 
 const DATETIME_FORMAT = 'DD/MM/YY HH:mm';
-
-const NEW_EVENT_POINT = {
-  basePrice: '',
-  dateFrom: new Date(),
-  dateTo: new Date(),
-  destination: null,
-  id: null,
-  isFavorite: false,
-  offers: [],
-  type: DEFAULT_TYPE,
-};
 
 function createEventTypesListTemplate(currentType) {
   const typesList = Object.values(TYPES).map((eventType) =>
@@ -92,7 +81,7 @@ function createEventDetailsTemplate(offers, destination) {
 function createEditorTemplate(data) {
 
   const isNewEventPoint = !data.id;
-  const eventPoint = isNewEventPoint ? NEW_EVENT_POINT : data;
+  const eventPoint = isNewEventPoint ? EMPTY_POINT : data;
 
   const { basePrice, dateFrom, dateTo, destination, offers, type } = eventPoint;
 
@@ -163,7 +152,7 @@ export default class PointEditView extends AbstractStatefulView {
   #onResetClick = null;
   #onSubmitClick = null;
 
-  constructor({ point = NEW_EVENT_POINT, pointDestinations, pointOffers, onSubmitClick, onResetClick }) {
+  constructor({ point = EMPTY_POINT, pointDestinations, pointOffers, onSubmitClick, onResetClick }) {
     super();
 
     this.#pointDestinations = pointDestinations;

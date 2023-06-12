@@ -1,5 +1,3 @@
-//import { nanoid } from 'nanoid';
-
 const POINT_COUNT = 10;
 const DESTINATION_COUNT = 10;
 const OFFER_COUNT = 10;
@@ -65,7 +63,7 @@ const EMPTY_POINT = {
   destination: null,
   isFavorite: false,
   offers: [],
-  type: 'taxi',
+  type: DEFAULT_TYPE,
 };
 
 export {
