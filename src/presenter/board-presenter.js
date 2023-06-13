@@ -36,6 +36,7 @@ export default class BoardPresenter {
     this.#pointsModel = pointsModel;
 
     this.#points = sort[SortType.DAY]([...this.#pointsModel.get()]);
+
   }
 
   init() {

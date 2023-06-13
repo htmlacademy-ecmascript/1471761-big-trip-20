@@ -291,7 +291,7 @@ export default class PointEditView extends AbstractStatefulView {
   #setDatepickers = () => {
 
     const [dateFromElement, dateToElement] = this.element.querySelectorAll('.event__input--time');
-    //console.log(dateFromElement.value);
+
     this.#datepickerFrom = flatpickr(
       dateFromElement,
       {

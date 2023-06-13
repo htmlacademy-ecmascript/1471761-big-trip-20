@@ -30,6 +30,7 @@ export default class PointPresenter {
   }
 
   init(point) {
+
     this.#point = point;
 
     const prevPointComponent = this.#pointComponent;
@@ -48,7 +49,7 @@ export default class PointPresenter {
       pointDestinations: this.#destinationsModel.destinations,
       pointOffers: this.#offersModel.offers,
       onResetClick: this.#resetButtonClickHandler,
-      //onSubmitClick: this.#handleFormSubmit,
+
     });
 
     if (prevPointComponent === null || prevPointEditComponent === null) {
