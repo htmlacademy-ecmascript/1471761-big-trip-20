@@ -1,4 +1,4 @@
-/*import dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -103,9 +103,9 @@ export {
   isPointPresent,
   isPointPast
 };
-*/
 
-import dayjs from 'dayjs';
+
+/*import dayjs from 'dayjs';
 
 export function humanizeCalendarDateFromDate(date) {
   return date ? dayjs(date).format('MMM DD').toUpperCase() : '';
@@ -142,3 +142,4 @@ export function getRandomArrayElement(items) {
 export function durationPoint(point) {
   return dayjs(point.dateTo).diff(dayjs(point.dateFrom));
 }
+*/
