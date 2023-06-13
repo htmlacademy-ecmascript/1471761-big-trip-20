@@ -5,7 +5,7 @@ import { formatDateTime } from '../utils/point.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
-const DATETIME_FORMAT = 'DD/MM/YY HH:mm';
+const DATETIME_FORMAT = 'd/m/Y HH:mm';
 
 
 function createEventTypesListTemplate(currentType) {
@@ -22,6 +22,12 @@ function createEventTypesListTemplate(currentType) {
             </fieldset>
           </div>`;
 }
+
+/*function createCityListTemplate(cities) {
+  return cities.map((city) => `<option value="${city}"></option>`).join('');
+} */
+
+
 function createTypeOffersListTemplate(typeOffers) {
   if (typeOffers.length === 0) {
     return '';
@@ -93,7 +99,7 @@ function createEditorTemplate(data) {
             </label>
             <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${name}" list="destination-list-1">
             <datalist id="destination-list-1">
-              <option value="Amsterdam"></option>
+               <option value="Amsterdam"></option>
               <option value="Geneva"></option>
               <option value="Chamonix"></option>
             </datalist>
@@ -285,11 +291,11 @@ export default class PointEditView extends AbstractStatefulView {
   #setDatepickers = () => {
 
     const [dateFromElement, dateToElement] = this.element.querySelectorAll('.event__input--time');
-
+    //console.log(dateFromElement.value);
     this.#datepickerFrom = flatpickr(
       dateFromElement,
       {
-        dateFormat: 'dd/mm/yy H:i',
+        dateFormat: 'd/m/Y H:i',
         defaultDate: this._state.point.dateFrom,
         onClose: this.#dateFromChangeHandler,
         enableTime: true,
@@ -304,7 +310,7 @@ export default class PointEditView extends AbstractStatefulView {
     this.#datepickerTo = flatpickr(
       dateToElement,
       {
-        dateFormat: 'dd/mm/yy H:i',
+        dateFormat: 'd/m/Y H:i',
         defaultDate: this._state.point.dateTo,
         onClose: this.#dateToChangeHandler,
         enableTime: true,
@@ -314,6 +320,7 @@ export default class PointEditView extends AbstractStatefulView {
         },
         'time_24hr': true
       },
+
     );
   };
 
