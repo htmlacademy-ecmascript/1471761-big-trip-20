@@ -39,6 +39,10 @@ export default class BoardPresenter {
 
   }
 
+  get points() {
+    return this.#pointsModel.points;
+  }
+
   init() {
     this.#renderBoard();
   }
@@ -125,3 +129,45 @@ export default class BoardPresenter {
     this.#pointPresenters.forEach((presenter) => presenter.resetView());
   };
 }
+
+
+/*#renderMessage() {
+  this.#messageComponent = new MessageView({filterType: this.#filterModel.get()});
+  render(this.#messageComponent, this.#container);
+}
+
+#renderPointsList() {
+  render(this.#pointsListComponent, this.#container);
+}
+
+#renderBoard = () => {
+
+    if (this.#points.length === 0 && !this.#isCreating) {
+      this.#renderMessage();
+      return;
+    }
+
+    this.#renderSort();
+    this.#renderPointsList();
+    this.#renderPoints();
+  };
+
+
+  #clearBoard = ({resetSortType = false} = {}) => {
+    this.#clearPoints();
+    remove(this.#messageComponent);
+
+  if (resetSortType) {
+    this.#currentSortType = SortType.DAY;
+  }
+  };
+
+
+#viewActionHandler =(actionType, updateType, update) => {
+  switch (actionType) {
+    case
+  }
+}
+
+
+*/
