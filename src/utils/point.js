@@ -21,7 +21,7 @@ function humaniseDate(eventDate, dateFormat) {
 }
 
 function formatStringToDateTime(date) {
-  return dayjs(date).format('YYYY-MM-DDTHH:mm');
+  return dayjs(date).format('YYYY-MM-DD HH:mm');
 }
 
 function formatStringToShortDate(date) {
@@ -56,8 +56,10 @@ function getPointDuration(dateFrom, dateTo) {
   return pointDuration;
 }
 
+const getDatesDiff = (dateFrom, dateTo, timeUnit) => timeUnit ? dayjs(dateTo).diff(dayjs(dateFrom), timeUnit) : dayjs(dateTo).diff(dayjs(dateFrom));
+
 function getDate(date) {
-  return dayjs(date).format('DD/MM/YY HH;mm');
+  return dayjs(date).format('DD/MM/YY HH:mm');
 }
 
 function isPointFuture(point) {
@@ -87,9 +89,27 @@ function getPointsPriceDifference(pointA, pointB) {
   return pointB.basePrice - pointA.basePrice;
 }
 
+const sortByDay = (routePointA, routePointB) => {
+  const dateA = dayjs(routePointA.dateFrom);
+  const dateB = dayjs(routePointB.dateFrom);
+  if (dateA.isSame(dateB, 'D')) {
+    return 0;
+  }
+  return dateA.isAfter(dateB, 'D') ? 1 : -1;
+};
+
+const sortByDurationTime = (routePointA, routePointB) => getDatesDiff(routePointB.dateFrom, routePointB.dateTo) - getDatesDiff(routePointA.dateFrom, routePointA.dateTo);
+
+const sortByPrice = (routePointA, routePointB) => routePointB.basePrice - routePointA.basePrice;
+
+
 export {
-  formatDateTime,
+  getDatesDiff,
+  sortByDurationTime,
+  sortByPrice,
+  sortByDay,
   humaniseDate,
+  formatDateTime,
   getPointsDateDifference,
   getPointsDurationsDifference,
   getPointsPriceDifference,
@@ -103,3 +123,43 @@ export {
   isPointPresent,
   isPointPast
 };
+
+
+/*import dayjs from 'dayjs';
+
+export function humanizeCalendarDateFromDate(date) {
+  return date ? dayjs(date).format('MMM DD').toUpperCase() : '';
+}
+
+export function humaniseDateFromDate(date) {
+  return date ? dayjs(date).format('YYYY-MM-DD').toUpperCase() : '';
+}
+
+export function humanizeTimeFromDate(date) {
+  return date ? dayjs(date).format('HH:mm') : '';
+}
+
+export function humanizeDurationFromDates(from, to) {
+  if (!from || !to) {
+    return '';
+  }
+
+  const minutes = dayjs(to).diff(dayjs(from), 'minute');
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  return ` ${days > 0 ? `${days}D` : ''} ${hours > 0 ? `${hours}H` : ''} ${minutes - (hours * 60)}M`;
+}
+
+export function getRandomNumber() {
+  return Math.floor(Math.random() * 20);
+}
+
+export function getRandomArrayElement(items) {
+  return items[Math.floor(Math.random() * items.length)];
+}
+
+export function durationPoint(point) {
+  return dayjs(point.dateTo).diff(dayjs(point.dateFrom));
+}
+*/

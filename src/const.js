@@ -49,6 +49,7 @@ const SortType = {
   OFFERS: 'offers',
 };
 
+
 const EnabledSortType = {
   [SortType.DAY]: true,
   [SortType.EVENT]: false,
@@ -65,13 +66,13 @@ const EMPTY_POINT = {
   destination: null,
   isFavorite: false,
   offers: [],
-  type: 'taxi',
+  type: DEFAULT_TYPE,
 };
 
 export {
   EMPTY_POINT,
-  EVENT_TYPES_LIST,
   OFFERS,
+  EVENT_TYPES_LIST,
   EnabledSortType,
   SortType,
   Mode,

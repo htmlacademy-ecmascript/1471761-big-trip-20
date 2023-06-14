@@ -20,7 +20,7 @@ export default class PointPresenter {
   #point = null;
   #mode = Mode.DEFAULT;
 
-  constructor({container, destinationsModel, offersModel, onChangeData, onChangeMode }) {
+  constructor({ container, destinationsModel, offersModel, onChangeData, onChangeMode }) {
     this.#container = container;
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
@@ -30,6 +30,7 @@ export default class PointPresenter {
   }
 
   init(point) {
+
     this.#point = point;
 
     const prevPointComponent = this.#pointComponent;
@@ -48,7 +49,7 @@ export default class PointPresenter {
       pointDestinations: this.#destinationsModel.destinations,
       pointOffers: this.#offersModel.offers,
       onResetClick: this.#resetButtonClickHandler,
-      //onSubmitClick: this.#handleFormSubmit,
+
     });
 
     if (prevPointComponent === null || prevPointEditComponent === null) {
