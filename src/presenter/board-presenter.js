@@ -11,6 +11,7 @@ import { sort } from '../utils/sort.js';
 
 export default class BoardPresenter {
 
+  #datepicker = null;
   #container = null;
 
   #sortComponent = null;
@@ -35,6 +36,7 @@ export default class BoardPresenter {
     this.#pointsModel = pointsModel;
 
     this.#points = sort[SortType.DAY]([...this.#pointsModel.get()]);
+
   }
 
   init() {
@@ -123,4 +125,3 @@ export default class BoardPresenter {
     this.#pointPresenters.forEach((presenter) => presenter.resetView());
   };
 }
-

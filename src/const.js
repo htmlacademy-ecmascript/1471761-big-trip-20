@@ -47,6 +47,7 @@ const SortType = {
   OFFERS: 'offers',
 };
 
+
 const EnabledSortType = {
   [SortType.DAY]: true,
   [SortType.EVENT]: false,
@@ -68,8 +69,8 @@ const EMPTY_POINT = {
 
 export {
   EMPTY_POINT,
-  EVENT_TYPES_LIST,
   OFFERS,
+  EVENT_TYPES_LIST,
   EnabledSortType,
   SortType,
   Mode,
