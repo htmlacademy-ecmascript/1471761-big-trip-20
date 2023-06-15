@@ -5,6 +5,7 @@ import { UserAction, UpdateType } from '../const.js';
 import { remove, render, replace } from '../framework/render.js';
 import { isEscapeKey } from '../utils/common.js';
 import { Mode } from '../const.js';
+import { isDatesEqual } from '../utils/point.js';
 
 export default class PointPresenter {
   #container = null;
@@ -51,6 +52,8 @@ export default class PointPresenter {
       pointOffers: this.#offersModel.offers,
       onResetClick: this.#resetButtonClickHandler,
 
+      onFormSubmit: this.#handleFormSubmit,
+      onDeleteClick: this.#handleDeleteClick
     });
 
     if (prevPointComponent === null || prevPointEditComponent === null) {
@@ -119,14 +122,27 @@ export default class PointPresenter {
     this.#replaceFormToPoint();
   };
 
-  #handlerFormSubmit = (point) => {
+  #handleFormSubmit = (update) => {
+
+    const isMinorUpdate =
+      !isDatesEqual(this.#point.dueDate, update.dueDate);
+
     this.#onChangeData(
       UserAction.UPDATE_POINT,
+
+      isMinorUpdate ? UpdateType.MINOR : UpdateType.PATCH,
+      update,
+    );
+    this.#replaceFormToPoint();
+  };
+
+  #handleDeleteClick = (point) => {
+    this.#onChangeData(
+      UserAction.DELETE_POINT,
       UpdateType.MINOR,
       point,
     );
 
-    this.#replaceFormToPoint();
   };
 
 }

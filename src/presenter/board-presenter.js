@@ -8,8 +8,11 @@ import EmptyListView from '../view/board-view.js';
 import { SortType, DEFAULT_SORT_TYPE, UpdateType, UserAction } from '../const.js';
 //import { sort } from '../utils/sort.js';
 import { sortByDay, sortByPrice, sortByDurationTime } from '../utils/point.js';
+import BoardView from '../view/board-view.js';
 
 export default class BoardPresenter {
+  #boardContainer = null;
+  #boardComponent = new BoardView();
 
   #datepicker = null;
   #container = null;
@@ -73,25 +76,22 @@ export default class BoardPresenter {
   };
 
 
-  #renderPoints = () => {
-    this.#pointsModel.forEach((point) => {
-      this.#renderPoint(point);
-    });
+  #renderPoints = (points) => {
+    points.forEach((point) => this.#renderPoint(point));
   };
 
-  #clearPoints = () => {
-    this.#pointPresenters.forEach((presenter) => presenter.destroy());
-    this.#pointPresenters.clear();
-  };
+  #renderNoPoints() {
+    render(this.#noPointComponent, this.#boardComponent.element, RenderPosition.AFTERBEGIN);
+  }
 
-  #renderSort = (container) => {
+  #renderSort = () => {
 
     this.#sortComponent = new SortView({
       currentSortType: this.#currentSortType,
       onSortTypeChange: this.#sortTypeChangeHandler
     });
 
-    render(this.#sortComponent, container, RenderPosition.AFTERBEGIN);
+    render(this.#sortComponent, this.#boardComponent.element, RenderPosition.AFTERBEGIN);
   };
 
   #renderPointContainer = () => {
@@ -147,11 +147,13 @@ export default class BoardPresenter {
 
   #clearBoard({ resetSortType = false } = {}) {
 
+    //const pointCount = this.points.length;
+
     this.#pointPresenters.forEach((presenter) => presenter.destroy());
     this.#pointPresenters.clear();
 
     remove(this.#sortComponent);
-    //remove(this.#noTaskComponent);
+    remove(this.#noPointComponent);
 
 
     if (resetSortType) {
