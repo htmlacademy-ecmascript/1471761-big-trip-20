@@ -2,7 +2,7 @@
 import SortView from '../view/sort-view.js';
 import PointPresenter from './point-presenter.js';
 
-import { render, remove, replace, RenderPosition } from '../framework/render.js';
+import { render, remove, RenderPosition } from '../framework/render.js';
 import EmptyListView from '../view/board-view.js';
 
 import { SortType, DEFAULT_SORT_TYPE, UpdateType, UserAction } from '../const.js';
@@ -85,20 +85,13 @@ export default class BoardPresenter {
   };
 
   #renderSort = (container) => {
-    const prevSortComponent = this.#sortComponent;
 
     this.#sortComponent = new SortView({
-      sortType: this.#currentSortType,
+      currentSortType: this.#currentSortType,
       onSortTypeChange: this.#sortTypeChangeHandler
     });
 
-    if (prevSortComponent) {
-      replace(this.#sortComponent, prevSortComponent);
-      remove(prevSortComponent);
-    } else {
-
-      render(this.#sortComponent, container, RenderPosition.AFTERBEGIN);
-    }
+    render(this.#sortComponent, container, RenderPosition.AFTERBEGIN);
   };
 
   #renderPointContainer = () => {
@@ -106,17 +99,6 @@ export default class BoardPresenter {
     render(this.#eventListComponent, this.#container);
   };
 
-  #renderBoard = () => {
-
-    if (this.#pointsModel.length === 0) {
-      render(this.#eventListComponent, this.#container);
-      return;
-    }
-
-    this.#renderSort(this.#container);
-    this.#renderPointContainer();
-    this.#renderPoints();
-  };
 
   #handleViewAction = (actionType, updateType, update) => {
     switch (actionType) {
@@ -133,72 +115,55 @@ export default class BoardPresenter {
   };
 
   #handleModelEvent = (updateType, data) => {
-    console.log(updateType, data);
-    // В зависимости от типа изменений решаем, что делать:
     switch (updateType) {
       case UpdateType.PATCH:
-        // - обновить часть списка (например, когда поменялось описание)
         this.#pointPresenters.get(data.id).init(data);
         break;
       case UpdateType.MINOR:
-        // - обновить список (например, когда задача ушла в архив)
+        this.#clearBoard();
+        this.#renderBoard();
         break;
       case UpdateType.MAJOR:
-        // - обновить всю доску (например, при переключении фильтра)
+        this.#clearBoard({ resetSortType: true });
+        this.#renderBoard();
         break;
     }
   };
 
   #sortTypeChangeHandler = (sortType) => {
+    if (this.#currentSortType === sortType) {
+      return;
+    }
+
     this.#currentSortType = sortType;
-    this.#clearPoints();
-    this.#renderSort(this.#container);
-    this.#renderPoints();
+    this.#clearBoard();
+    this.#renderBoard();
   };
 
   #modeChangeHandler = () => {
     this.#pointPresenters.forEach((presenter) => presenter.resetView());
   };
-}
 
 
-/*#renderMessage() {
-  this.#messageComponent = new MessageView({filterType: this.#filterModel.get()});
-  render(this.#messageComponent, this.#container);
-}
+  #clearBoard({ resetSortType = false } = {}) {
 
-#renderPointsList() {
-  render(this.#pointsListComponent, this.#container);
-}
+    this.#pointPresenters.forEach((presenter) => presenter.destroy());
+    this.#pointPresenters.clear();
 
-#renderBoard = () => {
+    remove(this.#sortComponent);
+    //remove(this.#noTaskComponent);
 
-    if (this.#points.length === 0 && !this.#isCreating) {
-      this.#renderMessage();
-      return;
+
+    if (resetSortType) {
+      this.#currentSortType = DEFAULT_SORT_TYPE;
     }
 
+  }
+
+
+  #renderBoard = () => {
     this.#renderSort();
-    this.#renderPointsList();
-    this.#renderPoints();
+    render(this.#eventListComponent, this.#container.element);
+    this.points.forEach((point) => this.#renderPoint(point));
   };
-
-
-  #clearBoard = ({resetSortType = false} = {}) => {
-    this.#clearPoints();
-    remove(this.#messageComponent);
-
-  if (resetSortType) {
-    this.#currentSortType = SortType.DAY;
-  }
-  };
-
-
-#viewActionHandler =(actionType, updateType, update) => {
-  switch (actionType) {
-    case
-  }
 }
-
-
-*/
