@@ -1,13 +1,13 @@
-import EventListView from '../view/event-list-view.js';
+//import EventListView from '../view/event-list-view.js';
 import SortView from '../view/sort-view.js';
 import PointPresenter from './point-presenter.js';
 
 import { render, remove, replace, RenderPosition } from '../framework/render.js';
 import EmptyListView from '../view/board-view.js';
-import { updateItem } from '../utils/common.js';
-import { SortType } from '../const.js';
-import { sort } from '../utils/sort.js';
 
+import { SortType, DEFAULT_SORT_TYPE } from '../const.js';
+import { sort } from '../utils/sort.js';
+import { sortByDay, sortByPrice, sortByDurationTime } from '../utils/point.js';
 
 export default class BoardPresenter {
 
@@ -21,8 +21,8 @@ export default class BoardPresenter {
   #offersModel = null;
   #pointsModel = null;
 
-  #points = [];
-  #currentSortType = SortType.DAY;
+
+  #currentSortType = SortType[DEFAULT_SORT_TYPE];
 
 
   #noPointComponent = new EmptyListView();
@@ -35,11 +35,21 @@ export default class BoardPresenter {
     this.#offersModel = offersModel;
     this.#pointsModel = pointsModel;
 
-    this.#points = sort[SortType.DAY]([...this.#pointsModel.get()]);
+    this.#pointsModel = sort[SortType.DAY]([...this.#pointsModel.get()]);
 
   }
 
   get points() {
+
+    switch (this.#currentSortType) {
+      case SortType.TIME:
+        return [...this.#pointsModel.points].sort(sortByDurationTime);
+      case SortType.PRICE:
+        return [...this.#pointsModel.points].sort(sortByPrice);
+      case SortType.DAY:
+        return [...this.#pointsModel.points].sort(sortByDay);
+    }
+
     return this.#pointsModel.points;
   }
 
@@ -63,13 +73,8 @@ export default class BoardPresenter {
   };
 
 
-  #sortPoints = (sortType) => {
-    this.#currentSortType = sortType;
-    this.#points = sort[this.#currentSortType](this.#points);
-  };
-
   #renderPoints = () => {
-    this.#points.forEach((point) => {
+    this.#pointsModel.forEach((point) => {
       this.#renderPoint(point);
     });
   };
@@ -97,14 +102,14 @@ export default class BoardPresenter {
   };
 
   #renderPointContainer = () => {
-    this.#eventListComponent = new EventListView();
+    //this.#eventListComponent = new EventListView();
     render(this.#eventListComponent, this.#container);
   };
 
   #renderBoard = () => {
 
-    if (this.#points.length === 0) {
-      render(new EmptyListView(), this.#container);
+    if (this.#pointsModel.length === 0) {
+      render(this.#eventListComponent, this.#container);
       return;
     }
 
@@ -114,12 +119,12 @@ export default class BoardPresenter {
   };
 
   #pointChangeHandler = (updatedPoint) => {
-    this.#points = updateItem(this.#points, updatedPoint);
+
     this.#pointPresenters.get(updatedPoint.id).init(updatedPoint);
   };
 
   #sortTypeChangeHandler = (sortType) => {
-    this.#sortPoints(sortType);
+    this.#currentSortType = sortType;
     this.#clearPoints();
     this.#renderSort(this.#container);
     this.#renderPoints();

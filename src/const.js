@@ -47,6 +47,7 @@ const SortType = {
   OFFERS: 'offers',
 };
 
+const DEFAULT_SORT_TYPE = 'DAY';
 
 const EnabledSortType = {
   [SortType.DAY]: true,
@@ -80,4 +81,5 @@ export {
   TYPES,
   DEFAULT_TYPE,
   FilterType,
+  DEFAULT_SORT_TYPE
 };
