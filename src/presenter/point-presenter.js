@@ -52,7 +52,7 @@ export default class PointPresenter {
       pointOffers: this.#offersModel.offers,
       onResetClick: this.#resetButtonClickHandler,
 
-      onFormSubmit: this.#handleFormSubmit,
+      onSubmitClick: this.#onSubmitClick,
       onDeleteClick: this.#handleDeleteClick
     });
 
@@ -122,7 +122,7 @@ export default class PointPresenter {
     this.#replaceFormToPoint();
   };
 
-  #handleFormSubmit = (update) => {
+  #onSubmitClick = (update) => {
 
     const isMinorUpdate =
       !isDatesEqual(this.#point.dueDate, update.dueDate);
