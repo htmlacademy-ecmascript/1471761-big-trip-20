@@ -6,7 +6,7 @@ import { render, remove, replace, RenderPosition } from '../framework/render.js'
 import EmptyListView from '../view/board-view.js';
 
 import { SortType, DEFAULT_SORT_TYPE } from '../const.js';
-import { sort } from '../utils/sort.js';
+//import { sort } from '../utils/sort.js';
 import { sortByDay, sortByPrice, sortByDurationTime } from '../utils/point.js';
 
 export default class BoardPresenter {
@@ -35,8 +35,8 @@ export default class BoardPresenter {
     this.#offersModel = offersModel;
     this.#pointsModel = pointsModel;
 
-    this.#pointsModel = sort[SortType.DAY]([...this.#pointsModel.get()]);
-
+    //this.#pointsModel = sort[SortType.DAY]([...this.#pointsModel.get()]);
+    this.#pointsModel.addObserver(this.#handleModelEvent);
   }
 
   get points() {
@@ -63,7 +63,7 @@ export default class BoardPresenter {
       container: this.#eventListComponent.element,
       destinationsModel: this.#destinationsModel,
       offersModel: this.#offersModel,
-      onChangeData: this.#pointChangeHandler,
+      onDataChange: this.#handleViewAction,
       onChangeMode: this.#modeChangeHandler
     });
 
@@ -118,9 +118,20 @@ export default class BoardPresenter {
     this.#renderPoints();
   };
 
-  #pointChangeHandler = (updatedPoint) => {
+  #handleViewAction = (actionType, updateType, update) => {
+    console.log(actionType, updateType, update);
+    // Здесь будем вызывать обновление модели.
+    // actionType - действие пользователя, нужно чтобы понять, какой метод модели вызвать
+    // updateType - тип изменений, нужно чтобы понять, что после нужно обновить
+    // update - обновленные данные
+  };
 
-    this.#pointPresenters.get(updatedPoint.id).init(updatedPoint);
+  #handleModelEvent = (updateType, data) => {
+    console.log(updateType, data);
+    // В зависимости от типа изменений решаем, что делать:
+    // - обновить часть списка (например, когда поменялось описание)
+    // - обновить список (например, когда задача ушла в архив)
+    // - обновить всю доску (например, при переключении фильтра)
   };
 
   #sortTypeChangeHandler = (sortType) => {

@@ -1,6 +1,7 @@
 import WaypointView from '../view/waypoint-view.js';
 import PointEditView from '../view/point-edit-view.js';
 
+import { UserAction, UpdateType } from '../const.js';
 import { remove, render, replace } from '../framework/render.js';
 import { isEscapeKey } from '../utils/common.js';
 import { Mode } from '../const.js';
@@ -107,10 +108,11 @@ export default class PointPresenter {
   };
 
   #handleFavoriteClick = () => {
-    this.#onChangeData({
-      ...this.#point,
-      isFavorite: !this.#point.isFavorite
-    });
+    this.#onChangeData(
+      UserAction.UPDATE_POINT,
+      UpdateType.MINOR,
+      { ...this.#point, isFavorite: !this.#point.isFavorite },
+    );
   };
 
   #resetButtonClickHandler = () => {
@@ -118,7 +120,12 @@ export default class PointPresenter {
   };
 
   #handlerFormSubmit = (point) => {
-    this.#onChangeData(point);
+    this.#onChangeData(
+      UserAction.UPDATE_POINT,
+      UpdateType.MINOR,
+      point,
+    );
+
     this.#replaceFormToPoint();
   };
 
