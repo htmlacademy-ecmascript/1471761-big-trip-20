@@ -54,6 +54,7 @@ export default class PointPresenter {
 
       onSubmitClick: this.#onSubmitClick,
       onDeleteClick: this.#handleDeleteClick
+
     });
 
     if (prevPointComponent === null || prevPointEditComponent === null) {

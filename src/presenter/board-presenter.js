@@ -6,15 +6,16 @@ import { render, remove, RenderPosition } from '../framework/render.js';
 import EmptyListView from '../view/board-view.js';
 
 import { SortType, DEFAULT_SORT_TYPE, UpdateType, UserAction, FilterType } from '../const.js';
-//import { sort } from '../utils/sort.js';
 import { sortByDay, sortByPrice, sortByDurationTime } from '../utils/sort.js';
 import BoardView from '../view/board-view.js';
 import { filter } from '../utils/filter.js';
 
 export default class BoardPresenter {
+
   #boardContainer = null;
   #boardComponent = new BoardView();
   #pointListComponent = new EventListView();
+
   #datepicker = null;
   #container = null;
 
@@ -56,7 +57,9 @@ export default class BoardPresenter {
         return filteredPoints.sort(sortByDay);
     }
 
+
     return filteredPoints;
+
   }
 
   init() {
@@ -151,6 +154,7 @@ export default class BoardPresenter {
   };
 
 
+
   #clearBoard({ resetSortType = false } = {}) {
 
     this.#pointPresenters.forEach((presenter) => presenter.destroy());
@@ -172,4 +176,5 @@ export default class BoardPresenter {
     render(this.#eventListComponent, this.#container.element);
     this.points.forEach((point) => this.#renderPoint(point));
   };
+
 }
