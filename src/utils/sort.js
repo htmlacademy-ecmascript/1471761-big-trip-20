@@ -1,5 +1,6 @@
 import { SortType } from '../const.js';
 import { getPointsDateDifference, getPointsDurationsDifference, getPointsPriceDifference } from './point.js';
+import { getDatesDiff } from './point.js';
 import dayjs from 'dayjs';
 
 if (!Array.prototype.toSorted) {
@@ -18,6 +19,8 @@ const sort = {
     throw new Error('Sort by $(SortType.OFFER) is not implemented');
   }
 };
+
+const sortByDurationTime = (routePointA, routePointB) => getDatesDiff(routePointB.dateFrom, routePointB.dateTo) - getDatesDiff(routePointA.dateFrom, routePointA.dateTo);
 
 function getWeightForNullDate(dateA, dateB) {
   if (dateA === null && dateB === null) {
@@ -52,5 +55,6 @@ export {
   sort,
   sortByTime,
   sortByPrice,
-  sortByDay
+  sortByDay,
+  sortByDurationTime,
 };

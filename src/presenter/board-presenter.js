@@ -1,24 +1,25 @@
-//import EventListView from '../view/event-list-view.js';
+import EventListView from '../view/event-list-view.js';
 import SortView from '../view/sort-view.js';
 import PointPresenter from './point-presenter.js';
 
 import { render, remove, RenderPosition } from '../framework/render.js';
 import EmptyListView from '../view/board-view.js';
 
-import { SortType, DEFAULT_SORT_TYPE, UpdateType, UserAction } from '../const.js';
+import { SortType, DEFAULT_SORT_TYPE, UpdateType, UserAction, FilterType } from '../const.js';
 //import { sort } from '../utils/sort.js';
-import { sortByDay, sortByPrice, sortByDurationTime } from '../utils/point.js';
+import { sortByDay, sortByPrice, sortByDurationTime } from '../utils/sort.js';
 import BoardView from '../view/board-view.js';
 import { filter } from '../utils/filter.js';
 
 export default class BoardPresenter {
   #boardContainer = null;
   #boardComponent = new BoardView();
-
+  #pointListComponent = new EventListView();
   #datepicker = null;
   #container = null;
 
   #sortComponent = null;
+  #noPointComponent = null;
   #eventListComponent = null;
 
   #destinationsModel = null;
@@ -26,13 +27,12 @@ export default class BoardPresenter {
   #pointsModel = null;
   #filterModel = null;
 
-
-  #currentSortType = SortType[DEFAULT_SORT_TYPE];
-
-
-  #noPointComponent = new EmptyListView();
-
   #pointPresenters = new Map();
+  #currentSortType = SortType[DEFAULT_SORT_TYPE];
+  #filterType = FilterType.EVERYTHING;
+
+  //#noPointComponent = new EmptyListView();
+
 
   constructor({ container, destinationsModel, offersModel, pointsModel, filterModel }) {
     this.#container = container;
@@ -47,9 +47,9 @@ export default class BoardPresenter {
   }
 
   get points() {
-    const filterType = this.#filterModel.filter;
+    this.#filterType = this.#filterModel.filter;
     const points = this.#pointsModel.tasks;
-    const filteredPoints = filter[filterType](points);
+    const filteredPoints = filter[this.#filterType](points);
 
     switch (this.#currentSortType) {
       case SortType.TIME:
@@ -92,6 +92,10 @@ export default class BoardPresenter {
   };
 
   #renderNoPoints() {
+    this.#noPointComponent = new EmptyListView({
+      filterType: this.#filterType
+    });
+
     render(this.#noPointComponent, this.#boardComponent.element, RenderPosition.AFTERBEGIN);
   }
 
@@ -164,8 +168,11 @@ export default class BoardPresenter {
     this.#pointPresenters.clear();
 
     remove(this.#sortComponent);
-    remove(this.#noPointComponent);
+    //remove(this.#noPointComponent);
 
+    if (this.#noPointComponent) {
+      remove(this.#noPointComponent);
+    }
 
     if (resetSortType) {
       this.#currentSortType = DEFAULT_SORT_TYPE;
