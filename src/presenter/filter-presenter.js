@@ -1,10 +1,7 @@
 import FilterView from '../view/filter-view.js';
-import { render, replace,remove } from '../framework/render.js';
+import { render, replace, remove } from '../framework/render.js';
 import { filter } from '../utils/filter.js';
 import { FilterType, UpdateType } from '../const.js';
-
-//import { generateFilters } from '../mock/filter.js';
-
 
 export default class FilterPresenter {
   #filterContainer = null;
@@ -14,23 +11,15 @@ export default class FilterPresenter {
 
   #filterComponent = null;
 
-  //#filters = [];
-
   constructor({ filterContainer, filterModel, pointsModel }) {
     this.#filterContainer = filterContainer;
     this.#filterModel = filterModel;
     this.#pointsModel = pointsModel;
 
-    //this.#filters = generateFilters(this.#pointsModel.get());
-
     this.#pointsModel.addObserver(this.#handleModelEvent);
     this.#filterModel.addObserver(this.#handleModelEvent);
   }
 
-  /*init() {
-    render(new FilterView(this.#filters), this.#container);
-  }
-} */
 
   get filters() {
     const points = this.#pointsModel.pointss;

@@ -14,7 +14,6 @@ import FilterModel from './model/filter-model.js';
 const mainElement = document.querySelector('.page-main');
 const headerElement = document.querySelector('.page-header');
 const tripInfoElement = headerElement.querySelector('.trip-main');
-//const siteHeaderElement = document.querySelector('.trip-controls');
 
 const destinationsModel = new DestinationModel();
 const offersModel = new OffersModel();
@@ -48,7 +47,6 @@ function handleNewPointButtonClick() {
   boardPresenter.createPoint();
   newPointButtonComponent.element.disabled = true;
 }
-
 
 render(new TripInfoView(), tripInfoElement, RenderPosition.AFTERBEGIN);
 render(newPointButtonComponent, headerElement);

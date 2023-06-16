@@ -63,14 +63,12 @@ function createWaypointTemplate(routePoint, destination, offers) {
 </li>`;
 }
 
-
 export default class WaypointView extends AbstractView {
   #point = null;
   #pointDestination = null;
   #pointOffers = null;
   #onEditClick = null;
   #onFavoriteClick = null;
-
 
   constructor({ point, pointDestination, pointOffers, onEditClick, onFavoriteClick}) {
 

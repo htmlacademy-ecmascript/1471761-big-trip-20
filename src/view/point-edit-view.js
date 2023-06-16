@@ -23,10 +23,6 @@ function createEventTypesListTemplate(currentType) {
           </div>`;
 }
 
-/*function createCityListTemplate(cities) {
-  return cities.map((city) => `<option value="${city}"></option>`).join('');
-} */
-
 
 function createTypeOffersListTemplate(typeOffers) {
   if (typeOffers.length === 0) {

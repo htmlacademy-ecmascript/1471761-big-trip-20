@@ -6,8 +6,7 @@ export default class PointsModel extends Observable {
   #destinationsModel = null;
   #service = null;
 
-
-  constructor({service, offersModel, destinationsModel}) {
+  constructor({ service, offersModel, destinationsModel }) {
     super();
     this.#service = service;
     this.#offersModel = offersModel;

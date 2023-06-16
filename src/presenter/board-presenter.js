@@ -31,9 +31,6 @@ export default class BoardPresenter {
   #currentSortType = SortType[DEFAULT_SORT_TYPE];
   #filterType = FilterType.EVERYTHING;
 
-  //#noPointComponent = new EmptyListView();
-
-
   constructor({ container, destinationsModel, offersModel, pointsModel, filterModel }) {
     this.#container = container;
     this.#destinationsModel = destinationsModel;
@@ -41,7 +38,6 @@ export default class BoardPresenter {
     this.#pointsModel = pointsModel;
     this.#filterModel = filterModel;
 
-    //this.#pointsModel = sort[SortType.DAY]([...this.#pointsModel.get()]);
     this.#pointsModel.addObserver(this.#handleModelEvent);
     this.#filterModel.addObserver(this.#handleModelEvent);
   }
@@ -53,17 +49,13 @@ export default class BoardPresenter {
 
     switch (this.#currentSortType) {
       case SortType.TIME:
-        //return [...this.#pointsModel.points].sort(sortByDurationTime);
         return filteredPoints.sort(sortByDurationTime);
       case SortType.PRICE:
-        //return [...this.#pointsModel.points].sort(sortByPrice);
         return filteredPoints.sort(sortByPrice);
       case SortType.DAY:
-        //return [...this.#pointsModel.points].sort(sortByDay);
         return filteredPoints.sort(sortByDay);
     }
 
-    //return this.#pointsModel.points;
     return filteredPoints;
   }
 
@@ -110,7 +102,6 @@ export default class BoardPresenter {
   };
 
   #renderPointContainer = () => {
-    //this.#eventListComponent = new EventListView();
     render(this.#eventListComponent, this.#container);
   };
 
@@ -162,13 +153,10 @@ export default class BoardPresenter {
 
   #clearBoard({ resetSortType = false } = {}) {
 
-    //const pointCount = this.points.length;
-
     this.#pointPresenters.forEach((presenter) => presenter.destroy());
     this.#pointPresenters.clear();
 
     remove(this.#sortComponent);
-    //remove(this.#noPointComponent);
 
     if (this.#noPointComponent) {
       remove(this.#noPointComponent);
@@ -177,9 +165,7 @@ export default class BoardPresenter {
     if (resetSortType) {
       this.#currentSortType = DEFAULT_SORT_TYPE;
     }
-
   }
-
 
   #renderBoard = () => {
     this.#renderSort();
