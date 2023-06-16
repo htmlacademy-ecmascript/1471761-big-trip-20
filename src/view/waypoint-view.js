@@ -1,8 +1,10 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import { humaniseDate, getPointDuration } from '../utils/point.js';
+import he from 'he';
 const DATE_FORMAT = 'YYYY-MM-DD';
 const EVENT_DATE = 'MMM DD';
 const TIME_FORMAT = 'HH:mm';
+
 
 function createWaypointTemplate(routePoint, destination, offers) {
 
@@ -42,7 +44,7 @@ function createWaypointTemplate(routePoint, destination, offers) {
       <p class="event__duration">${durationTime}</p>
     </div>
     <p class="event__price">
-      €&nbsp; <span class="event__price-value"> ${basePrice}</span>
+      €&nbsp; <span class="event__price-value"> ${he.encode(`${basePrice}`)}</span>
     </p>
     <h4 class="visually-hidden">Offers:</h4>
     <ul class="event__selected-offers">

@@ -4,6 +4,7 @@ import { formatDateTime } from '../utils/point.js';
 
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import he from 'he';
 
 const DATETIME_FORMAT = 'd/m/Y HH:mm';
 
@@ -115,7 +116,7 @@ function createEditorTemplate(data) {
               <span class="visually-hidden">Price</span>
               &euro;
             </label>
-            <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${basePrice}">
+            <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${he.endcode(`${basePrice}`)}">
           </div>
           <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
           <button class="event__reset-btn" type="reset">${isEmptyPoint ? 'Cancel' : 'Delete'}</button>
