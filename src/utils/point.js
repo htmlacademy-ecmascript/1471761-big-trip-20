@@ -94,29 +94,6 @@ function isDatesEqual(dateA, dateB) {
   return (dateA === null && dateB === null) || dayjs(dateA).isSame(dateB, 'D');
 }
 
-/*function sortTaskUp(taskA, taskB) {
-  const weight = getWeightForNullDate(taskA.dueDate, taskB.dueDate);
-  return weight ?? dayjs(taskA.dueDate).diff(dayjs(taskB.dueDate));
-}
-function sortTaskDown(taskA, taskB) {
-  const weight = getWeightForNullDate(taskA.dueDate, taskB.dueDate);
-  return weight ?? dayjs(taskB.dueDate).diff(dayjs(taskA.dueDate));
-}
-
-const sortByDay = (routePointA, routePointB) => {
-  const dateA = dayjs(routePointA.dateFrom);
-  const dateB = dayjs(routePointB.dateFrom);
-  if (dateA.isSame(dateB, 'D')) {
-    return 0;
-  }
-  return dateA.isAfter(dateB, 'D') ? 1 : -1;
-};
-
-const sortByDurationTime = (routePointA, routePointB) => getDatesDiff(routePointB.dateFrom, routePointB.dateTo) - getDatesDiff(routePointA.dateFrom, routePointA.dateTo);
-
-const sortByPrice = (routePointA, routePointB) => routePointB.basePrice - routePointA.basePrice;
-
-*/
 
 export {
   isDatesEqual,
