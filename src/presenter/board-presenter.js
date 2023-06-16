@@ -9,6 +9,7 @@ import { SortType, DEFAULT_SORT_TYPE, UpdateType, UserAction } from '../const.js
 //import { sort } from '../utils/sort.js';
 import { sortByDay, sortByPrice, sortByDurationTime } from '../utils/point.js';
 import BoardView from '../view/board-view.js';
+import { filter } from '../utils/filter.js';
 
 export default class BoardPresenter {
   #boardContainer = null;
@@ -23,6 +24,7 @@ export default class BoardPresenter {
   #destinationsModel = null;
   #offersModel = null;
   #pointsModel = null;
+  #filterModel = null;
 
 
   #currentSortType = SortType[DEFAULT_SORT_TYPE];
@@ -32,28 +34,37 @@ export default class BoardPresenter {
 
   #pointPresenters = new Map();
 
-  constructor({ container, destinationsModel, offersModel, pointsModel }) {
+  constructor({ container, destinationsModel, offersModel, pointsModel, filterModel }) {
     this.#container = container;
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
     this.#pointsModel = pointsModel;
+    this.#filterModel = filterModel;
 
     //this.#pointsModel = sort[SortType.DAY]([...this.#pointsModel.get()]);
     this.#pointsModel.addObserver(this.#handleModelEvent);
+    this.#filterModel.addObserver(this.#handleModelEvent);
   }
 
   get points() {
+    const filterType = this.#filterModel.filter;
+    const points = this.#pointsModel.tasks;
+    const filteredPoints = filter[filterType](points);
 
     switch (this.#currentSortType) {
       case SortType.TIME:
-        return [...this.#pointsModel.points].sort(sortByDurationTime);
+        //return [...this.#pointsModel.points].sort(sortByDurationTime);
+        return filteredPoints.sort(sortByDurationTime);
       case SortType.PRICE:
-        return [...this.#pointsModel.points].sort(sortByPrice);
+        //return [...this.#pointsModel.points].sort(sortByPrice);
+        return filteredPoints.sort(sortByPrice);
       case SortType.DAY:
-        return [...this.#pointsModel.points].sort(sortByDay);
+        //return [...this.#pointsModel.points].sort(sortByDay);
+        return filteredPoints.sort(sortByDay);
     }
 
-    return this.#pointsModel.points;
+    //return this.#pointsModel.points;
+    return filteredPoints;
   }
 
   init() {
