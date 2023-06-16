@@ -47,7 +47,9 @@ const SortType = {
   OFFERS: 'offers',
 };
 
+
 const DEFAULT_SORT_TYPE = 'DAY';
+
 
 const EnabledSortType = {
   [SortType.DAY]: true,
@@ -66,6 +68,7 @@ const EMPTY_POINT = {
   isFavorite: false,
   offers: [],
   type: DEFAULT_TYPE,
+
 };
 
 const UserAction = {
@@ -78,6 +81,7 @@ const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
+
 };
 
 export {

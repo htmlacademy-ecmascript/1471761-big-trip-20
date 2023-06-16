@@ -8,6 +8,7 @@ import he from 'he';
 
 const DATETIME_FORMAT = 'd/m/Y HH:mm';
 
+
 function createEventTypesListTemplate(currentType) {
   const typesList = Object.values(TYPES).map((eventType) =>
     `<div class="event__type-item">
@@ -22,7 +23,6 @@ function createEventTypesListTemplate(currentType) {
             </fieldset>
           </div>`;
 }
-
 
 function createTypeOffersListTemplate(typeOffers) {
   if (typeOffers.length === 0) {
@@ -136,6 +136,7 @@ export default class PointEditView extends AbstractStatefulView {
 
   #datepickerFrom = null;
   #datepickerTo = null;
+
 
   constructor({ point = EMPTY_POINT, pointDestinations, pointOffers, onSubmitClick, onResetClick, onDeleteClick }) {
     super();
@@ -329,6 +330,7 @@ export default class PointEditView extends AbstractStatefulView {
   #pointDeleteClickHandler = (evt) => {
     evt.preventDefault();
     this.#handleDeleteClick(PointEditView.parseStateToTask(this._state));
+
   };
 
   static parsePointToState = ({ point }) => ({ point });
