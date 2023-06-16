@@ -11,7 +11,6 @@ export default class HeaderPresenter {
   #price = null;
 
   constructor(headerContainer, title, dates, price, events) {
-
     this.#headerContainer = headerContainer;
     this.#title = title;
     this.#dates = dates;

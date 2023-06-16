@@ -44,8 +44,9 @@ export default class BoardPresenter {
   }
 
   get points() {
+
     this.#filterType = this.#filterModel.filter;
-    const points = this.#pointsModel.tasks;
+    const points = this.#pointsModel.points;
     const filteredPoints = filter[this.#filterType](points);
 
     switch (this.#currentSortType) {
@@ -154,7 +155,6 @@ export default class BoardPresenter {
   };
 
 
-
   #clearBoard({ resetSortType = false } = {}) {
 
     this.#pointPresenters.forEach((presenter) => presenter.destroy());
@@ -173,7 +173,8 @@ export default class BoardPresenter {
 
   #renderBoard = () => {
     this.#renderSort();
-    render(this.#eventListComponent, this.#container.element);
+
+    render(this.#boardComponent, this.#container);
     this.points.forEach((point) => this.#renderPoint(point));
   };
 
