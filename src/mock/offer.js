@@ -1,4 +1,4 @@
-import { getRandomArrayElement } from '../utils/common.js';
+/*import { getRandomArrayElement } from '../utils/common.js';
 import { OFFERS } from '../const.js';
 
 const mockOffers = [
@@ -53,10 +53,10 @@ const mockOffers = [
     ]
   }
 ];
-export { mockOffers };
+export { mockOffers };  */
 
 
-/*import { getRandomInteger } from '../utils/common.js';
+import { getRandomInteger } from '../utils/common.js';
 import { Price } from './const.js';
 
 function generateOffer(type) {
@@ -68,4 +68,4 @@ function generateOffer(type) {
 }
 
 export { generateOffer };
-*/
+

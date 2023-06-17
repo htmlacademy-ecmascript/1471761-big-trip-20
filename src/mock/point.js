@@ -1,4 +1,4 @@
-import { mockDestinations } from './destination.js';
+/*import { mockDestinations } from './destination.js';
 
 const mockRoutePoints = [
   {
@@ -35,9 +35,9 @@ const mockRoutePoints = [
 ];
 
 export { mockRoutePoints };
+*/
 
-
-/*import { getRandomArrayElement, getRandomInteger } from '../utils/common.js';
+import { getRandomArrayElement, getRandomInteger } from '../utils/common.js';
 import { Price } from './const.js';
 import { getDate } from '../mock/utils.js';
 import { nanoid } from 'nanoid';
@@ -156,4 +156,4 @@ function getRandomPoint() {
 }
 
 export { generatePoint, getRandomPoint };
-*/
+
