@@ -1,17 +1,21 @@
 import { remove, render, RenderPosition } from '../framework/render.js';
 import PointEditView from '../view/point-edit-view.js';
-import { nanoid } from 'nanoid';
-import { UserAction, UpdateType } from '../const.js';
+//import { nanoid } from 'nanoid';
+import { UserAction, UpdateType, EditingType } from '../const.js';
 
 export default class NewPointPresenter {
-  #pointListContainer = null;
+  #eventListContainer = null;
   #handleDataChange = null;
   #handleDestroy = null;
 
   #pointEditComponent = null;
 
-  constructor({ pointListContainer, onDataChange, onDestroy }) {
-    this.#pointListContainer = pointListContainer;
+  #destinationsModel = null;
+  #offersModel = null;
+  #pointsModel = null;
+
+  constructor({ eventListContainer, onDataChange, onDestroy }) {
+    this.#eventListContainer = eventListContainer;
     this.#handleDataChange = onDataChange;
     this.#handleDestroy = onDestroy;
   }
@@ -22,40 +26,43 @@ export default class NewPointPresenter {
     }
 
     this.#pointEditComponent = new PointEditView({
+      pointDestinations: this.#destinationsModel.get(),
+      pointOffers: this.#offersModel.get(),
+      type: EditingType.CREATING,
+
       onFormSubmit: this.#handleFormSubmit,
-      onDeleteClick: this.#handleDeleteClick
+      onResetClick: this.#resetClickHandler
     });
 
-    render(this.#pointEditComponent, this.#pointListContainer, RenderPosition.AFTERBEGIN);
-
+    render(this.#pointEditComponent, this.#eventListContainer, RenderPosition.AFTERBEGIN);
     document.addEventListener('keydown', this.#escKeyDownHandler);
   }
 
-  destroy() {
+  destroy = (isCanceled = true) => {
     if (this.#pointEditComponent === null) {
       return;
     }
 
-    this.#handleDestroy();
+    this.#handleDestroy(isCanceled);
 
     remove(this.#pointEditComponent);
     this.#pointEditComponent = null;
-
     document.removeEventListener('keydown', this.#escKeyDownHandler);
-  }
+  };
 
   #handleFormSubmit = (point) => {
     this.#handleDataChange(
       UserAction.ADD_POINT,
       UpdateType.MINOR,
+      point,
       // Пока у нас нет сервера, который бы после сохранения
       // выдывал честный id задачи, нам нужно позаботиться об этом самим
-      { id: nanoid(), ...point },
+      //{ id: nanoid(), ...point },
     );
-    this.destroy();
+    this.destroy(false);
   };
 
-  #handleDeleteClick = () => {
+  #resetClickHandler = () => {
     this.destroy();
   };
 

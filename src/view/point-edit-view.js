@@ -1,6 +1,7 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
-import { TYPES, EMPTY_POINT } from '../const.js';
+import { TYPES, EMPTY_POINT, EditingType } from '../const.js';
 import { formatDateTime } from '../utils/point.js';
+
 
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
@@ -8,6 +9,10 @@ import he from 'he';
 
 const DATETIME_FORMAT = 'd/m/Y HH:mm';
 
+/*const ButtonLabel = {
+  [EditType.EDITING]: 'Delete',
+  [EditingType.CREATING]: 'Cancel'
+};  */
 
 function createEventTypesListTemplate(currentType) {
   const typesList = Object.values(TYPES).map((eventType) =>
@@ -136,27 +141,33 @@ export default class PointEditView extends AbstractStatefulView {
 
   #datepickerFrom = null;
   #datepickerTo = null;
+  #type;
 
-
-  constructor({ point = EMPTY_POINT, pointDestinations, pointOffers, onSubmitClick, onResetClick, onDeleteClick }) {
+  constructor({ point = EMPTY_POINT, pointDestinations, pointOffers, onSubmitClick, onResetClick, onDeleteClick, type = EditingType.EDITING }) {
     super();
+
     this._setState(PointEditView.parsePointToState({ point, pointDestinations }));
+
     this.#pointDestinations = pointDestinations;
     this.#pointOffers = pointOffers;
+
     this.#onResetClick = onResetClick;
     this.#handleFormSubmit = onSubmitClick;
     this.#handleDeleteClick = onDeleteClick;
+    this.#type = type;
 
     this._restoreHandlers();
   }
 
   get template() {
     return createEditorTemplate({
-      state: this._state.point,
+      state: this._state,
       pointDestinations: this.#pointDestinations,
-      pointOffers: this.#pointOffers
+      pointOffers: this.#pointOffers,
+      type: this.#type
     });
   }
+
 
   removeElement = () => {
     super.removeElement();
@@ -176,9 +187,21 @@ export default class PointEditView extends AbstractStatefulView {
 
   _restoreHandlers = () => {
 
-    this.element
-      .querySelector('.event__rollup-btn')
-      .addEventListener('click', this.#resetButtonClickHandler);
+    if (this.#type === EditingType.EDITING) {
+      this.element
+        .querySelector('.event__rollup-btn')
+        .addEventListener('click', this.#resetButtonClickHandler);
+
+      this.element
+        .querySelector('.event__reset-btn')
+        .addEventListener('click', this.#handleDeleteClick);
+    }
+
+    if (this.#type === EditingType.CREATING) {
+      this.element
+        .querySelector('.event__reset-btn')
+        .addEventListener('click', this.#resetButtonClickHandler);
+    }
 
     this.element
       .querySelector('form')

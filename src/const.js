@@ -84,7 +84,13 @@ const UpdateType = {
 
 };
 
+const EditingType = {
+  EDITING: 'EDITING',
+  CREATING: 'CREATING'
+};
+
 export {
+  EditingType,
   UserAction,
   UpdateType,
   EMPTY_POINT,

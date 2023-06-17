@@ -1,4 +1,4 @@
-import TripInfoView from '../view/trip-info-view';
+/*import TripInfoView from '../view/trip-info-view';
 import NewEventButtonView from '../view/new-event-button-view.js';
 import { render } from '../framework/render';
 
@@ -37,3 +37,4 @@ export default class HeaderPresenter {
     render(newEventButtonComponent, this.#headerContainer);
   }
 }
+*/
