@@ -1,7 +1,7 @@
 
 import { remove, render, RenderPosition } from '../framework/render.js';
 import PointEditView from '../view/point-edit-view.js';
-//import { nanoid } from 'nanoid';
+import { nanoid } from 'nanoid';
 import { UserAction, UpdateType, EditingType } from '../const.js';
 
 export default class NewPointPresenter {
@@ -61,7 +61,7 @@ export default class NewPointPresenter {
       point,
       // Пока у нас нет сервера, который бы после сохранения
       // выдывал честный id задачи, нам нужно позаботиться об этом самим
-      //{ id: nanoid(), ...point },
+      { id: nanoid(), ...point },
     );
     this.destroy(false);
   };

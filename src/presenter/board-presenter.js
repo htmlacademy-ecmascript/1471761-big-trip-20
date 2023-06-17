@@ -83,6 +83,7 @@ export default class BoardPresenter {
 
 
   #renderPoints = () => {
+    debugger;
     this.points.forEach((point) => this.#renderPoint(point));
   };
 
