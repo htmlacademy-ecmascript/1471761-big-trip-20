@@ -1,7 +1,7 @@
 import FilterView from '../view/filter-view.js';
 import { render, replace, remove } from '../framework/render.js';
 import { filter } from '../utils/filter.js';
-import { UpdateType } from '../const.js';
+import { UpdateType, FilterType } from '../const.js';
 
 
 export default class FilterPresenter {
@@ -24,24 +24,18 @@ export default class FilterPresenter {
 
 
   get filters() {
-    const points = this.#pointsModel.get();
+    const points = this.#pointsModel.points;
 
-    return Object.entries(filter)
-      .map(([filterType, filterPoints]) => ({
-        type: filterType,
-        //hasPoints: filterPoints(points).length > 0
-        count: filter[type](points).length
-      }));
+    return Object.values(FilterType).map((type) => ({ type, count: filter[type](points).length}));
   }
 
   init() {
-    this.#currentFilter = this.#filterModel.get();
-    //const filters = this.filters;
+    const filters = this.filters;
     const prevFilterComponent = this.#filterComponent;
 
     this.#filterComponent = new FilterView({
-      filters: this.filters,
-      currentFilter: this.#currentFilter,
+      filters,
+      currentFilter: this.#filterModel.filter,
       onFilterTypeChange: this.#handleFilterTypeChange
     });
 
@@ -59,6 +53,10 @@ export default class FilterPresenter {
   };
 
   #handleFilterTypeChange = (filterType) => {
+    if (this.#filterModel.filter === filterType) {
+      return;
+    }
+
     this.#filterModel.set(UpdateType.MAJOR, filterType);
   };
 }

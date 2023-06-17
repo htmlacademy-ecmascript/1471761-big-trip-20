@@ -3,7 +3,7 @@ import SortView from '../view/sort-view.js';
 import PointPresenter from './point-presenter.js';
 import NewPointPresenter from './new-point-presenter.js';
 import { render, remove, replace } from '../framework/render.js';
-import ErrorMessageView from '../view/error-mesage-view.js';
+import ErrorMessageView from '../view/error-message-view.js';
 import { sort } from '../utils/sort.js';
 import { SortType, UpdateType, UserAction, FilterType } from '../const.js';
 import { filter } from '../utils/filter.js';

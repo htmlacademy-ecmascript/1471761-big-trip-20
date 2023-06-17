@@ -1,3 +1,4 @@
+
 import { remove, render, RenderPosition } from '../framework/render.js';
 import PointEditView from '../view/point-edit-view.js';
 //import { nanoid } from 'nanoid';
@@ -14,10 +15,13 @@ export default class NewPointPresenter {
   #offersModel = null;
   #pointsModel = null;
 
-  constructor({ eventListContainer, onDataChange, onDestroy }) {
+  constructor({ eventListContainer, onDataChange, onDestroy, destinationsModel, offersModel, pointsModel }) {
     this.#eventListContainer = eventListContainer;
     this.#handleDataChange = onDataChange;
     this.#handleDestroy = onDestroy;
+    this.#destinationsModel = destinationsModel;
+    this.#offersModel = offersModel;
+    this.#pointsModel = pointsModel;
   }
 
   init() {
