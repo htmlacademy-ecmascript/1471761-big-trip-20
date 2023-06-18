@@ -1,6 +1,7 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import { capitalize } from '../utils/point.js';
 
+
 function createFilterItemTemplate(filter, currentFilterType) {
   const { type, count } = filter;
 

@@ -195,7 +195,7 @@ export default class BoardPresenter {
     this.#isCreating = false;
     this.#newPointButton.setDisable(false);
 
-    if (isCanceled && this.point.length === 0) {
+    if (isCanceled && this.points.length === 0) {
       this.#renderMessage();
     }
     remove(this.#sortComponent);

@@ -17,6 +17,7 @@ const headerElement = document.querySelector('.page-header');
 const tripInfoElement = headerElement.querySelector('.trip-main');
 const filterElement = tripInfoElement.querySelector('.trip-controls__filters');
 //const eventListElement = mainElement.querySelector('trip-events');
+//const mainFilterElement = tripInfoElement.querySelector('.trip-controls');
 
 const mockService = new MockService();
 const destinationsModel = new DestinationModel(mockService);
