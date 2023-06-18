@@ -9,11 +9,6 @@ import he from 'he';
 
 const DATETIME_FORMAT = 'd/m/Y HH:mm';
 
-/*const ButtonLabel = {
-  [EditType.EDITING]: 'Delete',
-  [EditingType.CREATING]: 'Cancel'
-};  */
-
 function createEventTypesListTemplate(currentType) {
   const typesList = Object.values(TYPES).map((eventType) =>
     `<div class="event__type-item">

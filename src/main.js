@@ -11,13 +11,10 @@ import OffersModel from './model/offers-model.js';
 import PointsModel from './model/points-model.js';
 import FilterModel from './model/filter-model.js';
 
-//const bodyElement = document.querySelector('body');
 const mainElement = document.querySelector('.page-main');
 const headerElement = document.querySelector('.page-header');
 const tripInfoElement = headerElement.querySelector('.trip-main');
 const filterElement = tripInfoElement.querySelector('.trip-controls__filters');
-//const eventListElement = mainElement.querySelector('trip-events');
-//const mainFilterElement = tripInfoElement.querySelector('.trip-controls');
 
 const mockService = new MockService();
 const destinationsModel = new DestinationModel(mockService);

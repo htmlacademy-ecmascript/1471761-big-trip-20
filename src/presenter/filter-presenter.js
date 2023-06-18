@@ -13,7 +13,7 @@ export default class FilterPresenter {
   #filterComponent = null;
   #currentFilter = null;
 
-  constructor({ filterContainer, pointsModel, filterModel}) {
+  constructor({ filterContainer, pointsModel, filterModel }) {
     this.#filterContainer = filterContainer;
     this.#pointsModel = pointsModel;
     this.#filterModel = filterModel;
@@ -26,7 +26,7 @@ export default class FilterPresenter {
   get filters() {
     const points = this.#pointsModel.get();
 
-    return Object.values(FilterType).map((type) => ({ type, count: filter[type](points).length}));
+    return Object.values(FilterType).map((type) => ({ type, count: filter[type](points).length }));
   }
 
   init() {
@@ -53,10 +53,11 @@ export default class FilterPresenter {
   };
 
   #handleFilterTypeChange = (filterType) => {
+
     if (this.#filterModel.filter === filterType) {
       return;
     }
 
-    this.#filterModel.set(UpdateType.MAJOR, filterType);
+    this.#filterModel.setFilter(UpdateType.MAJOR, filterType);
   };
 }

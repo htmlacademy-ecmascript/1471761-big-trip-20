@@ -56,8 +56,10 @@ export default class BoardPresenter {
     const filterType = this.#filterModel.filter;
 
     const filteredPoints = filter[filterType](this.#pointsModel.get());
-
-    return sort[this.#currentSortType](filteredPoints);
+    if (!sort[this.#currentSortType]) {
+      //  debugger;
+    }
+    return sort[this.#currentSortType ?? 'day'](filteredPoints);
 
   }
 
@@ -107,7 +109,7 @@ export default class BoardPresenter {
 
     if (prevSortComponent) {
       replace(this.#sortComponent, prevSortComponent);
-      remove(prevSortComponent);
+
     } else {
       render(this.#sortComponent, this.#container);
     }
@@ -117,7 +119,6 @@ export default class BoardPresenter {
     this.#messageComponent = new ErrorMessageView({ filterType: this.#filterModel.get() });
     render(this.#messageComponent, this.#container);
   }
-
 
   #handleViewAction = (actionType, updateType, update) => {
     switch (actionType) {

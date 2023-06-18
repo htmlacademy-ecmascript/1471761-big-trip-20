@@ -6,6 +6,7 @@ function createFilterItemTemplate(filter, currentFilterType) {
   const { type, count } = filter;
 
   return `
+  <div class="trip-filters__filter">
         <input
          id="filter-${type}"
          class="trip-filters__filter-input  visually-hidden"
@@ -31,8 +32,9 @@ function createFilterTemplate(filterItems, currentFilterType) {
     .map((filter) => createFilterItemTemplate(filter, currentFilterType))
     .join('');
 
+
   return (
-    `<div class="trip-filters__filter">
+    ` <form class="trip-filters" action="#" method="get">
       ${filterItemsTemplate}
     </div>`
   );

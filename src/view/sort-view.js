@@ -3,10 +3,10 @@ import { SortType } from '../const.js';
 
 
 function createSortViewTemplate(currentSortType) {
-  return(
+  return (
     `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
  <div class="trip-sort__item  trip-sort__item--day">
-   <input id="sort-day" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-day" checked>
+   <input id="sort-day" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-day" ${currentSortType === SortType.DAY ? 'checked' : ''}>
    <label class="trip-sort__btn" for="sort-day" data-sort-type="${SortType.DAY}">Day</label>
  </div>
 
@@ -32,13 +32,12 @@ function createSortViewTemplate(currentSortType) {
 </form>`);
 }
 
-
 export default class SortView extends AbstractView {
   #currentSortType = null;
   #onSortTypeChange = null;
 
   constructor({ sortType, onSortTypeChange }) {
-    //debugger;
+
     super();
     this.#currentSortType = sortType;
     this.#onSortTypeChange = onSortTypeChange;
@@ -51,7 +50,8 @@ export default class SortView extends AbstractView {
 
   #sortTypeChangeHandler = (evt) => {
     evt.preventDefault();
-    this.#onSortTypeChange(evt.target.dataset.sortType);
+
+    this.#onSortTypeChange(evt.target.nextElementSibling.dataset.sortType);
   };
 }
 
