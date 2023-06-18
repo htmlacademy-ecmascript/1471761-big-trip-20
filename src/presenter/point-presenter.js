@@ -22,10 +22,10 @@ export default class PointPresenter {
   #point = null;
   #mode = Mode.DEFAULT;
 
-  constructor({ container, onChangeData, onChangeMode }) {
+  constructor({ container, onChangeData, onChangeMode, destinationsModel, offersModel }) {
     this.#container = container;
-    //this.#destinationsModel = destinationsModel;
-    //this.#offersModel = offersModel;
+    this.#destinationsModel = destinationsModel;
+    this.#offersModel = offersModel;
     this.#onChangeData = onChangeData;
     this.#onChangeMode = onChangeMode;
 
@@ -40,16 +40,16 @@ export default class PointPresenter {
 
     this.#pointComponent = new WaypointView({
       point: this.#point,
-      //pointDestination: this.#destinationsModel.getById(point.destination),
-      //pointOffers: this.#offersModel.getByType(point.type),
+      pointDestination: this.#destinationsModel.getById(point.destination),
+      pointOffers: this.#offersModel.getByType(point.type),
       onEditClick: this.#handleEditClick,
       onFavoriteClick: this.#handleFavoriteClick
     });
 
     this.#pointEditComponent = new PointEditView({
       point: this.#point,
-      //pointDestinations: this.#destinationsModel.destinations,
-      //pointOffers: this.#offersModel.offers,
+      pointDestinations: this.#destinationsModel.destinations,
+      pointOffers: this.#offersModel.offers,
       onResetClick: this.#resetButtonClickHandler,
       onSubmitClick: this.#onSubmitClick,
       onDeleteClick: this.#handleDeleteClick

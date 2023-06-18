@@ -32,9 +32,8 @@ export default class BoardPresenter {
   #newPointPresenter = null;
   #currentSortType = SortType.DAY;
 
-  constructor({ container, newPointButtonContainer, destinationsModel, offersModel, pointsModel, filterModel }) {
+  constructor({ container, destinationsModel, offersModel, pointsModel, filterModel }) {
     this.#container = container;
-    this.#newPointButtonContainer = newPointButtonContainer;
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
     this.#pointsModel = pointsModel;
@@ -54,7 +53,8 @@ export default class BoardPresenter {
 
   get points() {
 
-    const filterType = this.#filterModel.get();
+    const filterType = this.#filterModel.filter;
+
     const filteredPoints = filter[filterType](this.#pointsModel.get());
 
     return sort[this.#currentSortType](filteredPoints);
@@ -63,7 +63,6 @@ export default class BoardPresenter {
 
   init() {
     this.#newPointButton = new NewEventButtonView({ onClick: this.#newPointButtonClickHandler });
-    render(this.#newPointButton, this.#newPointButtonContainer);
     this.#renderBoard();
   }
 
@@ -110,7 +109,7 @@ export default class BoardPresenter {
       replace(this.#sortComponent, prevSortComponent);
       remove(prevSortComponent);
     } else {
-      render(this.sortComponent, this.#container);
+      render(this.#sortComponent, this.#container);
     }
   };
 

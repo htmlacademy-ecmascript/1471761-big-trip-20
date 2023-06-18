@@ -2,7 +2,7 @@ import AbstractView from '../framework/view/abstract-view.js';
 import { SortType } from '../const.js';
 
 
-function createSortViewTemplate({currentSortType}) {
+function createSortViewTemplate(currentSortType) {
   return(
     `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
  <div class="trip-sort__item  trip-sort__item--day">
@@ -37,9 +37,10 @@ export default class SortView extends AbstractView {
   #currentSortType = null;
   #onSortTypeChange = null;
 
-  constructor({ currentSortType, onSortTypeChange }) {
+  constructor({ sortType, onSortTypeChange }) {
+    //debugger;
     super();
-    this.#currentSortType = currentSortType;
+    this.#currentSortType = sortType;
     this.#onSortTypeChange = onSortTypeChange;
     this.element.addEventListener('change', this.#sortTypeChangeHandler);
   }

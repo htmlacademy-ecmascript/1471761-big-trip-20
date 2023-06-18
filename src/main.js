@@ -53,7 +53,7 @@ function handleNewPointButtonClick() {
 }
 
 render(new TripInfoView(), tripInfoElement, RenderPosition.AFTERBEGIN);
-render(newPointButtonComponent, headerElement);
+render(newPointButtonComponent, tripInfoElement);
 
 filterPresenter.init();
 boardPresenter.init();

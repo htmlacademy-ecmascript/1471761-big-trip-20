@@ -1,67 +1,11 @@
-/*import { getRandomArrayElement } from '../utils/common.js';
-import { OFFERS } from '../const.js';
-
-const mockOffers = [
-  {
-    type: 'taxi',
-    offers: [
-      {
-        id: '1',
-        title: getRandomArrayElement(OFFERS),
-        price: 350
-      },
-      {
-        id: '2',
-        title: getRandomArrayElement(OFFERS),
-        price: 45
-      }
-    ]
-  },
-  {
-    type: 'flight',
-    offers: [
-      {
-        id: '1',
-        title: getRandomArrayElement(OFFERS),
-        price: 400
-      },
-      {
-        id: '2',
-        title: getRandomArrayElement(OFFERS),
-        price: 450
-      },
-      {
-        id: '3',
-        title: getRandomArrayElement(OFFERS),
-        price: 30
-      }
-    ]
-  },
-  {
-    type: 'check-in',
-    offers: [
-      {
-        id: '1',
-        title: getRandomArrayElement(OFFERS),
-        price: 100
-      },
-      {
-        id: '2',
-        title: getRandomArrayElement(OFFERS),
-        price: 45
-      }
-    ]
-  }
-];
-export { mockOffers };  */
-
 
 import { getRandomInteger } from '../utils/common.js';
 import { Price } from './const.js';
+import { nanoid } from 'nanoid';
 
 function generateOffer(type) {
   return {
-    id: crypto.randomUUID(),
+    id: nanoid(),
     title: ` Offer ${type}`,
     price: getRandomInteger(Price.MIN, (Price.MAX / 10))
   };
