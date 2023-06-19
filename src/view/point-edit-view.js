@@ -1,12 +1,13 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
-import { TYPES, EMPTY_POINT } from '../const.js';
+import { TYPES, EMPTY_POINT, EditingType } from '../const.js';
 import { formatDateTime } from '../utils/point.js';
+
 
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import he from 'he';
 
 const DATETIME_FORMAT = 'd/m/Y HH:mm';
-
 
 function createEventTypesListTemplate(currentType) {
   const typesList = Object.values(TYPES).map((eventType) =>
@@ -22,11 +23,6 @@ function createEventTypesListTemplate(currentType) {
             </fieldset>
           </div>`;
 }
-
-/*function createCityListTemplate(cities) {
-  return cities.map((city) => `<option value="${city}"></option>`).join('');
-} */
-
 
 function createTypeOffersListTemplate(typeOffers) {
   if (typeOffers.length === 0) {
@@ -116,7 +112,7 @@ function createEditorTemplate(data) {
               <span class="visually-hidden">Price</span>
               &euro;
             </label>
-            <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${basePrice}">
+            <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${he.encode(`${basePrice}`)}">
           </div>
           <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
           <button class="event__reset-btn" type="reset">${isEmptyPoint ? 'Cancel' : 'Delete'}</button>
@@ -135,28 +131,38 @@ export default class PointEditView extends AbstractStatefulView {
   #pointDestinations = null;
   #pointOffers = null;
   #onResetClick = null;
-  #onSubmitClick = null;
+  #handleFormSubmit = null;
+  #handleDeleteClick = null;
 
   #datepickerFrom = null;
   #datepickerTo = null;
+  #type;
 
-  constructor({ point = EMPTY_POINT, pointDestinations, pointOffers, onSubmitClick, onResetClick }) {
+  constructor({ point = EMPTY_POINT, pointDestinations, pointOffers, onSubmitClick, onResetClick, onDeleteClick, type = EditingType.EDITING }) {
     super();
+
+    this._setState(PointEditView.parsePointToState({ point, pointDestinations }));
+
     this.#pointDestinations = pointDestinations;
     this.#pointOffers = pointOffers;
+
     this.#onResetClick = onResetClick;
-    this.#onSubmitClick = onSubmitClick;
-    this._setState(PointEditView.parsePointToState({ point, pointDestinations }));
+    this.#handleFormSubmit = onSubmitClick;
+    this.#handleDeleteClick = onDeleteClick;
+    this.#type = type;
+
     this._restoreHandlers();
   }
 
   get template() {
     return createEditorTemplate({
-      state: this._state.point,
+      state: this._state,
       pointDestinations: this.#pointDestinations,
-      pointOffers: this.#pointOffers
+      pointOffers: this.#pointOffers,
+      type: this.#type
     });
   }
+
 
   removeElement = () => {
     super.removeElement();
@@ -176,13 +182,25 @@ export default class PointEditView extends AbstractStatefulView {
 
   _restoreHandlers = () => {
 
-    this.element
-      .querySelector('.event__rollup-btn')
-      .addEventListener('click', this.#resetButtonClickHandler);
+    if (this.#type === EditingType.EDITING) {
+      this.element
+        .querySelector('.event__rollup-btn')
+        .addEventListener('click', this.#resetButtonClickHandler);
+
+      this.element
+        .querySelector('.event__reset-btn')
+        .addEventListener('click', this.#handleDeleteClick);
+    }
+
+    if (this.#type === EditingType.CREATING) {
+      this.element
+        .querySelector('.event__reset-btn')
+        .addEventListener('click', this.#resetButtonClickHandler);
+    }
 
     this.element
       .querySelector('form')
-      .addEventListener('submit', this.#formSubmitHandler);
+      .addEventListener('submit', this.#onSubmitClick);
 
     this.element
       .querySelectorAll('.event__type-input')
@@ -190,6 +208,9 @@ export default class PointEditView extends AbstractStatefulView {
         element.addEventListener('change', this.#typeInputClick);
       });
 
+    this.element
+      .querySelector('.event__reset-btn')
+      .addEventListener('click', this.#pointDeleteClickHandler);
     this.element
       .querySelector('.event__input--destination')
       .addEventListener('change', this.#destinationInputChange);
@@ -211,7 +232,7 @@ export default class PointEditView extends AbstractStatefulView {
     this.#onResetClick();
   };
 
-  #formSubmitHandler = (evt) => {
+  #onSubmitClick = (evt) => {
     evt.preventDefault();
     this.#onSubmitClick(PointEditView.parseStateToPoint(this._state.point));
   };
@@ -322,6 +343,12 @@ export default class PointEditView extends AbstractStatefulView {
       },
 
     );
+  };
+
+  #pointDeleteClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleDeleteClick(PointEditView.parseStateToTask(this._state));
+
   };
 
   static parsePointToState = ({ point }) => ({ point });

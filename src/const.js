@@ -1,5 +1,3 @@
-//import { nanoid } from 'nanoid';
-
 const POINT_COUNT = 10;
 const DESTINATION_COUNT = 10;
 const OFFER_COUNT = 10;
@@ -50,6 +48,9 @@ const SortType = {
 };
 
 
+const DEFAULT_SORT_TYPE = 'DAY';
+
+
 const EnabledSortType = {
   [SortType.DAY]: true,
   [SortType.EVENT]: false,
@@ -67,9 +68,31 @@ const EMPTY_POINT = {
   isFavorite: false,
   offers: [],
   type: DEFAULT_TYPE,
+
+};
+
+const UserAction = {
+  UPDATE_POINT: 'UPDATE_POINT',
+  ADD_POINT: 'ADD_POINT',
+  DELETE_POINT: 'DELETE_POINT',
+};
+
+const UpdateType = {
+  PATCH: 'PATCH',
+  MINOR: 'MINOR',
+  MAJOR: 'MAJOR',
+
+};
+
+const EditingType = {
+  EDITING: 'EDITING',
+  CREATING: 'CREATING'
 };
 
 export {
+  EditingType,
+  UserAction,
+  UpdateType,
   EMPTY_POINT,
   OFFERS,
   EVENT_TYPES_LIST,
@@ -82,4 +105,5 @@ export {
   TYPES,
   DEFAULT_TYPE,
   FilterType,
+  DEFAULT_SORT_TYPE
 };

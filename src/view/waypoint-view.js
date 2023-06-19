@@ -1,5 +1,7 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import { humaniseDate, getPointDuration } from '../utils/point.js';
+import he from 'he';
+
 const DATE_FORMAT = 'YYYY-MM-DD';
 const EVENT_DATE = 'MMM DD';
 const TIME_FORMAT = 'HH:mm';
@@ -15,6 +17,7 @@ function createWaypointTemplate(routePoint, destination, offers) {
   const endTime = humaniseDate(dateTo, TIME_FORMAT);
   const durationTime = getPointDuration(dateFrom, dateTo);
 
+
   function createOfferTemplate(offersList) {
     return offersList.map((offer) =>
       `<li class="event__offer">
@@ -23,6 +26,7 @@ function createWaypointTemplate(routePoint, destination, offers) {
          <span class="event__offer-price">${offer.price}</span>
        </li>`).join('');
   }
+
 
   const getFavoriteButton = () => isFavorite ? 'active' : '';
 
@@ -42,7 +46,7 @@ function createWaypointTemplate(routePoint, destination, offers) {
       <p class="event__duration">${durationTime}</p>
     </div>
     <p class="event__price">
-      €&nbsp; <span class="event__price-value"> ${basePrice}</span>
+      €&nbsp; <span class="event__price-value"> ${he.encode(`${basePrice}`)}</span>
     </p>
     <h4 class="visually-hidden">Offers:</h4>
     <ul class="event__selected-offers">
@@ -61,14 +65,12 @@ function createWaypointTemplate(routePoint, destination, offers) {
 </li>`;
 }
 
-
 export default class WaypointView extends AbstractView {
   #point = null;
   #pointDestination = null;
   #pointOffers = null;
-  #onEditClick = null;ÏÏ;
+  #onEditClick = null;
   #onFavoriteClick = null;
-
 
   constructor({ point, pointDestination, pointOffers, onEditClick, onFavoriteClick}) {
 
@@ -86,7 +88,6 @@ export default class WaypointView extends AbstractView {
     this.element
       .querySelector('.event__favorite-btn')
       .addEventListener('click', this.#favoriteClick);
-
   }
 
   get template() {
@@ -107,5 +108,4 @@ export default class WaypointView extends AbstractView {
     this.#onFavoriteClick();
   };
 }
-
 
