@@ -3,17 +3,27 @@ import Observable from '../framework/observable.js';
 //import { getRandomPoint } from '../mock/point.js';
 
 export default class PointsModel extends Observable {
-  //#points = Array.from({ length: POINT_COUNT }, getRandomPoint);
+  #pointsApiService = null;
   #points = [];
-  //#offersModel = null;
-  //#destinationsModel = null;
-  #service = null;
+  // #service = null;
 
-  constructor(service) {
+  constructor({pointsApiService}) {
+    //super();
+    //this.#service = service;
+    //this.#points = this.#service.getPoints();
+
     super();
-    this.#service = service;
-    this.#points = this.#service.getPoints();
+    this.#pointsApiService = pointsApiService;
+
+    this.#pointsApiService.points.then((points) => {
+      console.log(points);
+      // Есть проблема: cтруктура объекта похожа, но некоторые ключи называются иначе,
+      // а ещё на сервере используется snake_case, а у нас camelCase.
+      // Можно, конечно, переписать часть нашего клиентского приложения, но зачем?
+      // Есть вариант получше - паттерн "Адаптер"
+    });
   }
+
 
   get() {
     return this.#points;
@@ -25,17 +35,17 @@ export default class PointsModel extends Observable {
   }
 
   update(updateType, update) {
-    this.#points = this.#service.updatePoints(update);
+    this.#points = this.#pointsApiService.updatePoints(update);
     this._notify(updateType, update);
   }
 
   add(updateType, point) {
-    this.#points = this.#service.addPoints(point);
+    this.#points = this.#pointsApiService.addPoints(point);
     this._notify(updateType, point);
   }
 
   deletePoint(updateType, point) {
-    this.#points = this.#service.deletePoints(point);
+    this.#points = this.#pointsApiService.deletePoints(point);
     this._notify(updateType, point);
   }
 }
