@@ -16,9 +16,11 @@ const AUTHORIZATION = 'Basic hS7cfS74wdt1se2d';
 const END_POINT = 'https://20.ecmascript.pages.academy/big-trip';
 
 const mainElement = document.querySelector('.page-main');
+const mainBodyElement = document.querySelector('.page-body');
 const headerElement = document.querySelector('.page-header');
 const tripInfoElement = headerElement.querySelector('.trip-main');
 const filterElement = tripInfoElement.querySelector('.trip-controls__filters');
+const siteBodyElement = mainBodyElement.querySelector('.trip-events');
 
 //const mockService = new MockService();
 //const destinationsModel = new DestinationModel(mockService);
@@ -59,7 +61,7 @@ function handleNewPointFormClose() {
 }
 
 function handleNewPointButtonClick() {
-  //newPointButtonComponent.showNewEventForm();
+  boardPresenter.createPoint();
   newPointButtonComponent.element.disabled = true;
 }
 
@@ -68,6 +70,7 @@ render(new TripInfoView(), tripInfoElement, RenderPosition.AFTERBEGIN);
 
 filterPresenter.init();
 boardPresenter.init();
+
 pointsModel.init()
   .finally(() => {
     render(newPointButtonComponent, tripInfoElement);

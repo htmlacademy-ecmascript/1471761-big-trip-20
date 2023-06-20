@@ -42,24 +42,26 @@ export default class BoardPresenter {
     upperLimit: TimeLimit.UPPER_LIMIT
   });
 
+  #onNewPointClose = null;
   #pointPresenters = new Map();
   #newPointPresenter = null;
   #currentSortType = SortType.DAY;
   #filterType = FilterType.EVERYTHING;
 
-  constructor({ container, destinationsModel, offersModel, pointsModel, filterModel }) {
+  constructor({ container, destinationsModel, offersModel, pointsModel, filterModel, onNewPointClose }) {
     this.#container = container;
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
     this.#pointsModel = pointsModel;
     this.#filterModel = filterModel;
+    this.#onNewPointClose = onNewPointClose;
 
     this.#newPointPresenter = new NewPointPresenter({
       container: this.#eventListComponent.element,
       destinationsModel: this.#destinationsModel,
       offersModel: this.#offersModel,
       onDataChange: this.#handleViewAction,
-      onDestroy: this.#newPointDestroyHandler
+      onClose: this.#closeNewPoint,
     });
 
     this.#pointsModel.addObserver(this.#handleModelEvent);
@@ -82,6 +84,26 @@ export default class BoardPresenter {
     this.#newPointButton = new NewEventButtonView({ onClick: this.#newPointButtonClickHandler });
     this.#renderBoard();
   }
+
+  createPoint() {
+    this.#isCreating = true;
+    this.#currentSortType = SortType.DAY;
+    this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
+
+    this.#modeChangeHandler();
+    this.#newPointPresenter.init();
+  }
+
+  #closeNewPoint = () => {
+    this.#isCreating = false;
+    this.#onNewPointClose();
+    if (!this.points.length) {
+      this.#renderNoTripPoints();
+      remove(this.#sortComponent);
+      this.#sortComponent = null;
+    }
+  };
+
 
   #renderPoint = (point) => {
     const pointPresenter = new PointPresenter({

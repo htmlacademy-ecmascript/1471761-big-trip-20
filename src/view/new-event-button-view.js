@@ -18,7 +18,7 @@ export default class NewEventButtonView extends AbstractView {
   }
 
   showNewEventForm = (evt) => {
-    // evt.preventDefault();
+    evt.preventDefault();
     this.#onNewPointButtonClick();
   };
 

@@ -19,6 +19,7 @@ export default class HeaderPresenter {
   }
 
   init() {
+    //debugger;
     this.#renderTripInfo();
     this.#renderNewEventButton();
   }
@@ -37,4 +38,5 @@ export default class HeaderPresenter {
     render(newEventButtonComponent, this.#headerContainer);
   }
 }
+
 */

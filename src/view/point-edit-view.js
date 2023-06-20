@@ -2,6 +2,7 @@ import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import { TYPES, EMPTY_POINT, EditingType } from '../const.js';
 import { formatDateTime } from '../utils/point.js';
 
+
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import he from 'he';
@@ -117,12 +118,12 @@ function createEditorTemplate(data) {
             <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${he.encode(`${basePrice}`)}">
           </div>
           <button class="event__save-btn  btn  btn--blue" type="submit" ${isDisabled ? 'disabled' : ''} >
-      ${isSaving ? 'Saving...' : 'Save'}
-          </button >
-          <button class="event__reset-btn" type="reset"> ${isDisabled ? 'disabled' : ''}>${isEmptyPoint ? 'Cancel' : 'Delete'}</button>
-          ${!isEmptyPoint ? '' : `<button class="event__rollup-btn" type="button"  ${isDisabled ? 'disabled' : ''}>
-                    <span class="visually-hidden">Open event</span>
-                  </button>`}
+          ${isSaving ? 'Saving...' : 'Save'}
+        </button>
+        <button class="event__reset-btn" type="reset"> ${isDisabled ? 'disabled' : ''}>${isEmptyPoint ? 'Cancel' : 'Delete'}</button>
+        ${!isEmptyPoint ? '' : `<button class="event__rollup-btn" type="button"  ${isDisabled ? 'disabled' : ''}>
+                  <span class="visually-hidden">Open event</span>
+                </button>`}S
         </header >
     ${ createEventDetailsTemplate(offers, destination) }
       </form >
