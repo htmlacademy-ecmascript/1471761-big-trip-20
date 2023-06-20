@@ -1,4 +1,4 @@
-
+/*
 import { getRandomArrayElement, getRandomInteger } from '../utils/common.js';
 import { Price } from './const.js';
 import { getDate } from '../mock/utils.js';
@@ -118,4 +118,4 @@ function getRandomPoint() {
 }
 
 export { generatePoint, getRandomPoint };
-
+*/

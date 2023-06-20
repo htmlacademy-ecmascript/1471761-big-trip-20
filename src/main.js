@@ -59,7 +59,7 @@ function handleNewPointFormClose() {
 }
 
 function handleNewPointButtonClick() {
-  boardPresenter.createPoint();
+  //newPointButtonComponent.showNewEventForm();
   newPointButtonComponent.element.disabled = true;
 }
 

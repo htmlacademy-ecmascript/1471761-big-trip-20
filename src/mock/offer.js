@@ -1,4 +1,4 @@
-
+/*
 import { getRandomInteger } from '../utils/common.js';
 import { Price } from './const.js';
 import { nanoid } from 'nanoid';
@@ -13,3 +13,4 @@ function generateOffer(type) {
 
 export { generateOffer };
 
+*/

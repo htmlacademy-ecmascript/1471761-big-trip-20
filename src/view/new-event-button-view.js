@@ -7,9 +7,9 @@ function createNewEventButtonTemplate() {
 export default class NewEventButtonView extends AbstractView {
   #onNewPointButtonClick = null;
 
-  constructor({ onNewPointButtonClick }) {
+  constructor({onClick}) {
     super();
-    this.#onNewPointButtonClick = onNewPointButtonClick;
+    this.#onNewPointButtonClick = onClick;
     this.element.addEventListener('click', this.#onNewPointButtonClick);
   }
 
@@ -17,8 +17,8 @@ export default class NewEventButtonView extends AbstractView {
     return createNewEventButtonTemplate();
   }
 
-  #onNewEventClick = (evt) => {
-    evt.preventDefault();
+  showNewEventForm = (evt) => {
+    // evt.preventDefault();
     this.#onNewPointButtonClick();
   };
 

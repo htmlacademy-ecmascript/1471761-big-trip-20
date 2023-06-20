@@ -1,4 +1,4 @@
-import { generateDestination } from '../mock/destination.js';
+/*import { generateDestination } from '../mock/destination.js';
 import { generateOffer } from '../mock/offer.js';
 import { generatePoint } from '../mock/point.js';
 
@@ -63,3 +63,4 @@ export default class MockService {
   }
 
 }
+*/

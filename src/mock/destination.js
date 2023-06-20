@@ -1,4 +1,4 @@
-import { getRandomValue } from '../utils/common.js';
+/*import { getRandomValue } from '../utils/common.js';
 import { CITIES, DESCRIPTION } from './const.js';
 import { nanoid } from 'nanoid';
 
@@ -20,3 +20,4 @@ function generateDestination() {
 
 export { generateDestination };
 
+*/
