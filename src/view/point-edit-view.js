@@ -2,7 +2,6 @@ import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import { TYPES, EMPTY_POINT, EditingType } from '../const.js';
 import { formatDateTime } from '../utils/point.js';
 
-
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import he from 'he';
