@@ -120,10 +120,10 @@ function createEditorTemplate(data) {
           <button class="event__save-btn  btn  btn--blue" type="submit" ${isDisabled ? 'disabled' : ''} >
           ${isSaving ? 'Saving...' : 'Save'}
         </button>
-        <button class="event__reset-btn" type="reset"> ${isDisabled ? 'disabled' : ''}>${isEmptyPoint ? 'Cancel' : 'Delete'}</button>
+        <button class="event__reset-btn" type="reset"> ${isDisabled ? 'disabled' : ''}${isEmptyPoint ? 'Cancel' : 'Delete'}</button>
         ${!isEmptyPoint ? '' : `<button class="event__rollup-btn" type="button"  ${isDisabled ? 'disabled' : ''}>
                   <span class="visually-hidden">Open event</span>
-                </button>`}S
+                </button>`}
         </header >
     ${ createEventDetailsTemplate(offers, destination) }
       </form >
