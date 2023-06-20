@@ -38,7 +38,7 @@ const pointsModel = new PointsModel({
 const filterModel = new FilterModel();
 
 const boardPresenter = new BoardPresenter({
-  container: mainElement,
+  container: siteBodyElement,
   destinationsModel,
   offersModel,
   pointsModel,
@@ -65,7 +65,7 @@ function handleNewPointButtonClick() {
   newPointButtonComponent.element.disabled = true;
 }
 
-render(new TripInfoView(), tripInfoElement, RenderPosition.AFTERBEGIN);
+//render(new TripInfoView(), tripInfoElement, RenderPosition.AFTERBEGIN);
 //render(newPointButtonComponent, tripInfoElement);
 
 filterPresenter.init();
