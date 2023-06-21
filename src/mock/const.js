@@ -1,4 +1,4 @@
-const CITIES = [
+/*const CITIES = [
   'Chamonix',
   'Geneva',
   'Amsterdam',
@@ -27,3 +27,4 @@ const TripDuration = {
 };
 
 export { CITIES, DESCRIPTION, Price, TripDuration };
+*/

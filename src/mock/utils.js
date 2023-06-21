@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+/*import dayjs from 'dayjs';
 import { getRandomInteger } from '../utils/common.js';
 import { TripDuration } from './const.js';
 
@@ -20,3 +20,4 @@ function getDate({ next }) {
 }
 
 export { getDate };
+*/
