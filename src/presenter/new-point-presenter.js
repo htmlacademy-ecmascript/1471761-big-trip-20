@@ -79,15 +79,10 @@ export default class NewPointPresenter {
       UserAction.ADD_POINT,
       UpdateType.MINOR,
       point,
-      // aici trebuie de sters nanaid npm uninstall nanoid
 
-      // Пока у нас нет сервера, который бы после сохранения
-      // выдывал честный id задачи, нам нужно позаботиться об этом самим
       { id: nanoid(), ...point },
-      // pina aici de sters
 
     );
-    //this.destroy(false);
   };
 
   #resetClickHandler = () => {

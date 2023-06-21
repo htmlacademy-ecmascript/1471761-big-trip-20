@@ -46,7 +46,6 @@ export default class PointPresenter {
       onEditClick: this.#handleEditClick,
       onFavoriteClick: this.#handleFavoriteClick
     });
-    //debugger;
 
     this.#pointEditComponent = new PointEditView({
       point: this.#point,

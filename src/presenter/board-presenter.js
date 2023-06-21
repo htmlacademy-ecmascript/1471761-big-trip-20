@@ -73,9 +73,7 @@ export default class BoardPresenter {
     const filterType = this.#filterModel.filter;
 
     const filteredPoints = filter[filterType](this.#pointsModel.points);
-    if (!sort[this.#currentSortType]) {
-      //  debugger;
-    }
+
     return sort[this.#currentSortType ?? 'day'](filteredPoints);
 
   }
@@ -154,7 +152,6 @@ export default class BoardPresenter {
 
   #renderLoading() {
     render(this.#loadingComponent, this.#container, RenderPosition.AFTERBEGIN);
-    //this.#boardComponent.element
   }
 
   #renderNoTripPoints() {
@@ -228,7 +225,6 @@ export default class BoardPresenter {
   #clearBoard = ({ resetSortType = false } = {}) => {
 
     this.#clearPoints();
-    //remove(this.#messageComponent);
 
     if (resetSortType) {
       this.#currentSortType = SortType.DAY;
