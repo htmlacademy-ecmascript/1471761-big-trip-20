@@ -15,18 +15,16 @@ import FilterModel from './model/filter-model.js';
 const AUTHORIZATION = 'Basic hS7cfS74wdt1se2d';
 const END_POINT = 'https://20.ecmascript.pages.academy/big-trip';
 
-//const mainElement = document.querySelector('.page-main');
+
 const mainBodyElement = document.querySelector('.page-body');
 const headerElement = document.querySelector('.page-header');
 const tripInfoElement = headerElement.querySelector('.trip-main');
 const filterElement = tripInfoElement.querySelector('.trip-controls__filters');
 const siteBodyElement = mainBodyElement.querySelector('.trip-events');
 
-//const mockService = new MockService();
-//const destinationsModel = new DestinationModel(mockService);
-//const offersModel = new OffersModel(mockService);
 
 const pointApiService = new PointsApiService(END_POINT, AUTHORIZATION);
+pointApiService.init();
 const destinationsModel = new DestinationModel(pointApiService);
 const offersModel = new OffersModel(pointApiService);
 
