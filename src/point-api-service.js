@@ -8,14 +8,20 @@ const Method = {
 };
 
 export default class PointsApiService extends ApiService {
+  #destinations = [];
+  #offers = [];
+
+  async init() {
+    this.#destinations = await this._load({ url: 'destinations' }).then(ApiService.parseResponse);
+    this.#offers = await this._load({ url: 'offers' }).then(ApiService.parseResponse);
+  }
+
   get destinations() {
-    return this._load({ url: 'destinations' })
-      .then(ApiService.parseResponse);
+    return this.#destinations;
   }
 
   get offers() {
-    return this._load({ url: 'offers' })
-      .then(ApiService.parseResponse);
+    return this.#offers;
   }
 
   get points() {
@@ -75,5 +81,18 @@ export default class PointsApiService extends ApiService {
 
     return adaptedPoint;
   };
+
+  async loadData() {
+
+    this.destinations = await this._load({ url: 'destinations' })
+      .then(ApiService.parseResponse);
+
+    this.offers = await this._load({ url: 'offers' })
+      .then(ApiService.parseResponse);
+
+    this.points = await this._load({ url: 'points' })
+      .then(ApiService.parseResponse);
+
+  }
 
 }

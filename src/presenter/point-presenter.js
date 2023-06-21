@@ -22,16 +22,17 @@ export default class PointPresenter {
   #point = null;
   #mode = Mode.DEFAULT;
 
-  constructor({ container, onChangeData, onChangeMode, destinationsModel, offersModel }) {
+  constructor({ container, onDataChange, onChangeMode, destinationsModel, offersModel }) {
+
     this.#container = container;
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
-    this.#onChangeData = onChangeData;
+    this.#onChangeData = onDataChange;
     this.#onChangeMode = onChangeMode;
 
   }
 
-  init(point) {
+  async init(point) {
 
     this.#point = point;
 
@@ -45,10 +46,11 @@ export default class PointPresenter {
       onEditClick: this.#handleEditClick,
       onFavoriteClick: this.#handleFavoriteClick
     });
+    //debugger;
 
     this.#pointEditComponent = new PointEditView({
       point: this.#point,
-      pointDestinations: this.#destinationsModel.destinations,
+      pointDestinations: this.#destinationsModel.get(),
       pointOffers: this.#offersModel.offers,
       onResetClick: this.#resetButtonClickHandler,
       onSubmitClick: this.#onSubmitClick,

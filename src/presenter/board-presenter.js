@@ -57,7 +57,7 @@ export default class BoardPresenter {
     this.#onNewPointClose = onNewPointClose;
 
     this.#newPointPresenter = new NewPointPresenter({
-      container: this.#eventListComponent.element,
+      eventListContainer: this.#eventListComponent.element,
       destinationsModel: this.#destinationsModel,
       offersModel: this.#offersModel,
       onDataChange: this.#handleViewAction,
