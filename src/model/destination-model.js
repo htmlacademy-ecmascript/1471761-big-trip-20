@@ -4,7 +4,6 @@ export default class DestinationModel {
 
   constructor(service) {
     this.service = service;
-    //this.destinations = this.service.getDestinations();
   }
 
   async init() {

@@ -1,10 +1,10 @@
-import { render} from './framework/render.js';
+import { render, RenderPosition} from './framework/render.js';
 import NewEventButtonView from './view/new-event-button-view.js';
 import BoardPresenter from './presenter/board-presenter.js';
 
 //import MockService from './service/mock-service.js';
 import FilterPresenter from './presenter/filter-presenter.js';
-//import TripInfoView from './view/trip-info-view.js';
+import TripInfoView from './view/trip-info-view.js';
 import PointsApiService from './point-api-service.js';
 
 import DestinationModel from './model/destination-model.js';
@@ -65,7 +65,7 @@ function handleNewPointButtonClick() {
   newPointButtonComponent.element.disabled = true;
 }
 
-//render(new TripInfoView(), tripInfoElement, RenderPosition.AFTERBEGIN);
+render(new TripInfoView(), tripInfoElement, RenderPosition.AFTERBEGIN);
 //render(newPointButtonComponent, tripInfoElement);
 
 filterPresenter.init();
