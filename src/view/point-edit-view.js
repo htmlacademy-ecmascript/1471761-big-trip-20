@@ -77,7 +77,6 @@ function createEditorTemplate(data) {
   const name = destination ? destination.name : '';
   const eventStartDate = formatDateTime(dateFrom, DATETIME_FORMAT);
   const eventEndDate = formatDateTime(dateTo, DATETIME_FORMAT);
-  //const deleteButton = isDeleting ? 'Deleting...' : 'Delete';
 
 
   return (
