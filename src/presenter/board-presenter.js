@@ -16,10 +16,6 @@ const TimeLimit = {
   UPPER_LIMIT: 1000,
 };
 
-// test text
-// test pullrequest
-// new test
-
 
 export default class BoardPresenter {
   #container = null;
