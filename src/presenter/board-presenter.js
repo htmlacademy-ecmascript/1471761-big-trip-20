@@ -9,6 +9,9 @@ import { SortType, UpdateType, UserAction, FilterType } from '../const.js';
 import { filter } from '../utils/filter.js';
 import NewEventButtonView from '../view/new-event-button-view.js';
 
+// test text
+// test pullrequest
+
 export default class BoardPresenter {
   #container = null;
   #newPointButtonContainer = null;
