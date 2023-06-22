@@ -16,6 +16,7 @@ const TimeLimit = {
   UPPER_LIMIT: 1000,
 };
 
+
 export default class BoardPresenter {
   #container = null;
   #newPointButtonContainer = null;
