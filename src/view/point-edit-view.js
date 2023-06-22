@@ -73,10 +73,12 @@ function createEventDetailsTemplate(offers, destination) {
 function createEditorTemplate(data) {
   const isEmptyPoint = !data.id;
   const eventPoint = isEmptyPoint ? EMPTY_POINT : data;
-  const { basePrice, dateFrom, dateTo, destination, offers, type } = eventPoint;
+  const { basePrice, dateFrom, dateTo, destination, offers, type, isDisabled, isSaving } = eventPoint;
   const name = destination ? destination.name : '';
   const eventStartDate = formatDateTime(dateFrom, DATETIME_FORMAT);
   const eventEndDate = formatDateTime(dateTo, DATETIME_FORMAT);
+
+
   return (
     `<li class="trip-events__item">
       <form class="event event--edit" action="#" method="post">
@@ -114,15 +116,17 @@ function createEditorTemplate(data) {
             </label>
             <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${he.encode(`${basePrice}`)}">
           </div>
-          <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
-          <button class="event__reset-btn" type="reset">${isEmptyPoint ? 'Cancel' : 'Delete'}</button>
-          <button class="event__rollup-btn" type="button">
-            <span class="visually-hidden">Open event</span>
-          </button>
-        </header>
-        ${createEventDetailsTemplate(offers, destination)}
-      </form>
-    </li>`
+          <button class="event__save-btn  btn  btn--blue" type="submit" ${isDisabled ? 'disabled' : ''} >
+          ${isSaving ? 'Saving...' : 'Save'}
+        </button>
+        <button class="event__reset-btn" type="reset"> ${isDisabled ? 'disabled' : ''}${isEmptyPoint ? 'Cancel' : 'Delete'}</button>
+        ${!isEmptyPoint ? '' : `<button class="event__rollup-btn" type="button"  ${isDisabled ? 'disabled' : ''}>
+                  <span class="visually-hidden">Open event</span>
+                </button>`}
+        </header >
+    ${ createEventDetailsTemplate(offers, destination) }
+      </form >
+    </li > `
   );
 }
 
@@ -200,7 +204,7 @@ export default class PointEditView extends AbstractStatefulView {
 
     this.element
       .querySelector('form')
-      .addEventListener('submit', this.#onSubmitClick);
+      .addEventListener('submit', this.#submitClickHandler);
 
     this.element
       .querySelectorAll('.event__type-input')
@@ -232,9 +236,9 @@ export default class PointEditView extends AbstractStatefulView {
     this.#onResetClick();
   };
 
-  #onSubmitClick = (evt) => {
+  #submitClickHandler = (evt) => {
     evt.preventDefault();
-    this.#onSubmitClick(PointEditView.parseStateToPoint(this._state.point));
+    this.#handleFormSubmit(PointEditView.parseStateToPoint(this._state.point));
   };
 
   #typeInputClick = (evt) => {
@@ -351,6 +355,26 @@ export default class PointEditView extends AbstractStatefulView {
 
   };
 
-  static parsePointToState = ({ point }) => ({ point });
-  static parseStateToPoint = (state) => state.point;
+  static parsePointToState = (point) => {
+    const state = {
+      ...point,
+      isDisabled: false,
+      isSaving: false,
+      isDeleting: false,
+    };
+
+    return state;
+
+  };
+
+  static parseStateToPoint = (state) => {
+    const point = { ...state };
+
+    delete point.isDisabled;
+    delete point.isSaving;
+    delete point.isDeleting;
+
+    return point;
+  };
+
 }
