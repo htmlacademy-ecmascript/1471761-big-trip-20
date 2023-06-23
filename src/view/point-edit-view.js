@@ -70,6 +70,27 @@ function createEventDetailsTemplate(offers, destination) {
           ${createEventDescriptionTemplate(destination)}
           </section>`;
 }
+
+/*
+function renderDestinationOptionsTemplate (cities) {
+  if (!cities.length) {
+    return '';
+  }
+  return cities.map((city) => `<option value=${city.name}></option>`).join('');
+}
+
+function createDestinationTemplate (destinations, initialDestination, isDisabled) {
+
+  const destinationName = initialDestination !== null ? initialDestination.name : '';
+
+  return `<input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${he.encode(destinationName)}" list="destination-list-1">
+          <datalist id="destination-list-1" ${isDisabled ? 'disabled' : ''}>
+            ${renderDestinationOptionsTemplate(destinations)}
+          </datalist>`;
+}
+
+*/
+
 function createEditorTemplate(data) {
   const isEmptyPoint = !data.id;
   const eventPoint = isEmptyPoint ? EMPTY_POINT : data;
@@ -77,7 +98,11 @@ function createEditorTemplate(data) {
   const name = destination ? destination.name : '';
   const eventStartDate = formatDateTime(dateFrom, DATETIME_FORMAT);
   const eventEndDate = formatDateTime(dateTo, DATETIME_FORMAT);
+  const cities = data.pointDestinations.map((dest) => dest.name);
 
+  function renderCityOptions() {
+    return cities.map((city) => `<option value="${city}"></option>`);
+  }
 
   return (
     `<li class="trip-events__item">
@@ -97,9 +122,7 @@ function createEditorTemplate(data) {
             </label>
             <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${name}" list="destination-list-1">
             <datalist id="destination-list-1">
-               <option value="Amsterdam"></option>
-              <option value="Geneva"></option>
-              <option value="Chamonix"></option>
+               ${renderCityOptions(cities)}
             </datalist>
           </div>
           <div class="event__field-group  event__field-group--time">

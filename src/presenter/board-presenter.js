@@ -33,7 +33,7 @@ export default class BoardPresenter {
   #offersModel = null;
   #pointsModel = null;
   #filterModel = null;
-  #isLoading = true;
+  #isLoading = false;
 
   #loadingComponent = new LoadingView();
   #isCreating = false;

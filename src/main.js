@@ -21,55 +21,61 @@ const headerElement = document.querySelector('.page-header');
 const tripInfoElement = headerElement.querySelector('.trip-main');
 const filterElement = tripInfoElement.querySelector('.trip-controls__filters');
 const siteBodyElement = mainBodyElement.querySelector('.trip-events');
+//const eventListElement = mainElement.qyerySelector('.trip-events');
+//mainElement = bodyElement.querySelector('.page-main');
 
 
-const pointApiService = new PointsApiService(END_POINT, AUTHORIZATION);
-pointApiService.init();
-const destinationsModel = new DestinationModel(pointApiService);
-const offersModel = new OffersModel(pointApiService);
+async function run() {
 
-const pointsModel = new PointsModel({
-  service: pointApiService,
-  destinationsModel,
-  offersModel
-});
-const filterModel = new FilterModel();
+  const pointApiService = new PointsApiService(END_POINT, AUTHORIZATION);
+  await pointApiService.init();
+  const destinationsModel = new DestinationModel(pointApiService);
+  const offersModel = new OffersModel(pointApiService);
 
-const boardPresenter = new BoardPresenter({
-  container: siteBodyElement,
-  destinationsModel,
-  offersModel,
-  pointsModel,
-  filterModel,
-  onNewPointDestroy: handleNewPointFormClose
-});
-
-const filterPresenter = new FilterPresenter({
-  filterContainer: filterElement,
-  pointsModel,
-  filterModel
-});
-
-const newPointButtonComponent = new NewEventButtonView({
-  onClick: handleNewPointButtonClick
-});
-
-function handleNewPointFormClose() {
-  newPointButtonComponent.element.disabled = false;
-}
-
-function handleNewPointButtonClick() {
-  boardPresenter.createPoint();
-  newPointButtonComponent.element.disabled = true;
-}
-
-render(new TripInfoView(), tripInfoElement, RenderPosition.AFTERBEGIN);
-
-
-filterPresenter.init();
-boardPresenter.init();
-
-pointsModel.init()
-  .finally(() => {
-    render(newPointButtonComponent, tripInfoElement);
+  const pointsModel = new PointsModel({
+    service: pointApiService,
+    destinationsModel,
+    offersModel
   });
+  const filterModel = new FilterModel();
+
+  const boardPresenter = new BoardPresenter({
+    container: siteBodyElement,
+    destinationsModel,
+    offersModel,
+    pointsModel,
+    filterModel,
+    onNewPointDestroy: handleNewPointFormClose
+  });
+
+  const filterPresenter = new FilterPresenter({
+    filterContainer: filterElement,
+    pointsModel,
+    filterModel
+  });
+
+  destinationsModel.init();
+  offersModel.init();
+  pointsModel.init();
+  filterPresenter.init();
+  boardPresenter.init();
+
+  const newPointButtonComponent = new NewEventButtonView({
+    onClick: handleNewPointButtonClick
+  });
+
+  function handleNewPointFormClose() {
+    newPointButtonComponent.element.disabled = false;
+  }
+
+  function handleNewPointButtonClick() {
+    boardPresenter.createPoint();
+    newPointButtonComponent.element.disabled = true;
+  }
+
+  render(new TripInfoView(), tripInfoElement, RenderPosition.AFTERBEGIN);
+  render(newPointButtonComponent, tripInfoElement);
+}
+
+run();
+

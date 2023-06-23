@@ -8,6 +8,7 @@ const TIME_FORMAT = 'HH:mm';
 
 function createWaypointTemplate(routePoint, destination, offers) {
 
+
   const { dateFrom, dateTo, type, basePrice, isFavorite } = routePoint;
 
 
@@ -19,7 +20,7 @@ function createWaypointTemplate(routePoint, destination, offers) {
 
 
   function createOfferTemplate(offersList) {
-    return offersList.map((offer) =>
+    return offersList.offers.map((offer) =>
       `<li class="event__offer">
          <span class="event__offer-title">${offer.title}</span>
          &plus;&euro;&nbsp;
@@ -91,6 +92,7 @@ export default class WaypointView extends AbstractView {
   }
 
   get template() {
+
     return createWaypointTemplate(
       this.#point,
       this.#pointDestination,

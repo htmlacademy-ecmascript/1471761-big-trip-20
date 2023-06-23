@@ -9,3 +9,5 @@ export default class BoardView extends AbstractView {
     return createBoardTemplate();
   }
 }
+
+// de verificat daca se foloseste
