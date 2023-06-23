@@ -205,6 +205,7 @@ export default class PointEditView extends AbstractStatefulView {
     }
   };
 
+  //de verificat aici
   reset = (point) => this.updateElement({ point });
 
   _restoreHandlers = () => {
@@ -374,7 +375,7 @@ export default class PointEditView extends AbstractStatefulView {
 
   #pointDeleteClickHandler = (evt) => {
     evt.preventDefault();
-    this.#handleDeleteClick(PointEditView.parseStateToTask(this._state));
+    this.#handleDeleteClick(PointEditView.parseStateToPoint(this._state));
 
   };
 

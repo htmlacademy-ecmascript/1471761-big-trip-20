@@ -42,12 +42,12 @@ export default class NewPointPresenter {
     document.addEventListener('keydown', this.#escKeyDownHandler);
   }
 
-  destroy = (isCanceled = true) => {
+  destroy = () => {
     if (this.#pointEditComponent === null) {
       return;
     }
 
-    this.#handleDestroy(isCanceled);
+    this.#handleDestroy();
 
     remove(this.#pointEditComponent);
     this.#pointEditComponent = null;
