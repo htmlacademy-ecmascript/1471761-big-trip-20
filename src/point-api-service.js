@@ -10,10 +10,16 @@ const Method = {
 export default class PointsApiService extends ApiService {
   #destinations = [];
   #offers = [];
+  #points = [];
 
   async init() {
-    this.#destinations = await this._load({ url: 'destinations' }).then(ApiService.parseResponse);
-    this.#offers = await this._load({ url: 'offers' }).then(ApiService.parseResponse);
+    this.#destinations = await this._load({ url: 'destinations' })
+      .then(ApiService.parseResponse);
+    this.#offers = await this._load({ url: 'offers' })
+      .then(ApiService.parseResponse);
+    this.#points = await this._load({ url: 'points' })
+      .then(ApiService.parseResponse);
+
   }
 
   get destinations() {
@@ -25,8 +31,7 @@ export default class PointsApiService extends ApiService {
   }
 
   get points() {
-    return this._load({ url: 'points' })
-      .then(ApiService.parseResponse);
+    return this.#points;
   }
 
 

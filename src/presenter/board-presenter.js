@@ -33,7 +33,7 @@ export default class BoardPresenter {
   #offersModel = null;
   #pointsModel = null;
   #filterModel = null;
-  #isLoading = true;
+  #isLoading = false;
 
   #loadingComponent = new LoadingView();
   #isCreating = false;
@@ -49,13 +49,13 @@ export default class BoardPresenter {
   #currentSortType = SortType.DAY;
   #filterType = FilterType.EVERYTHING;
 
-  constructor({ container, destinationsModel, offersModel, pointsModel, filterModel, onNewPointClose }) {
+  constructor({ container, destinationsModel, offersModel, pointsModel, filterModel, onNewPointDestroy }) {
     this.#container = container;
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
     this.#pointsModel = pointsModel;
     this.#filterModel = filterModel;
-    this.#onNewPointClose = onNewPointClose;
+    this.#onNewPointClose = onNewPointDestroy;
 
     this.#newPointPresenter = new NewPointPresenter({
       eventListContainer: this.#eventListComponent.element,
@@ -64,6 +64,7 @@ export default class BoardPresenter {
       onDataChange: this.#handleViewAction,
       onClose: this.#closeNewPoint,
     });
+
 
     this.#pointsModel.addObserver(this.#handleModelEvent);
     this.#filterModel.addObserver(this.#handleModelEvent);
@@ -178,6 +179,7 @@ export default class BoardPresenter {
         try {
           await this.#pointsModel.addPoint(updateType, update);
         } catch (err) {
+
           this.#newPointPresenter.setAborting();
         }
         break;
@@ -224,8 +226,13 @@ export default class BoardPresenter {
   };
 
   #clearBoard = ({ resetSortType = false } = {}) => {
+    this.#newPointPresenter.destroy();
+    this.#pointPresenters.forEach((presenter) => presenter.destroy());
+    this.#pointPresenters.clear();
 
-    this.#clearPoints();
+    remove(this.#sortComponent);
+    remove(this.#loadingComponent);
+
 
     if (resetSortType) {
       this.#currentSortType = SortType.DAY;
@@ -235,9 +242,6 @@ export default class BoardPresenter {
       remove(this.#emptyListComponent);
     }
 
-    if (this.#loadingComponent) {
-      remove(this.#loadingComponent);
-    }
   };
 
   #renderBoard = () => {
@@ -245,6 +249,7 @@ export default class BoardPresenter {
       this.#renderLoading();
       return;
     }
+
 
     if (this.points.length === 0 && !this.#isCreating) {
       this.#renderNoTripPoints();

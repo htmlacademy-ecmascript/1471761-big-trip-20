@@ -50,7 +50,7 @@ export default class PointPresenter {
     this.#pointEditComponent = new PointEditView({
       point: this.#point,
       pointDestinations: this.#destinationsModel.get(),
-      pointOffers: this.#offersModel.offers,
+      pointOffers: this.#offersModel.get(),
       onResetClick: this.#resetButtonClickHandler,
       onSubmitClick: this.#onSubmitClick,
       onDeleteClick: this.#handleDeleteClick
@@ -106,6 +106,7 @@ export default class PointPresenter {
   }
 
   setAborting() {
+
     if (this.#mode === Mode.DEFAULT) {
       this.#pointComponent.shake();
       return;
@@ -161,6 +162,7 @@ export default class PointPresenter {
 
   #onSubmitClick = (update) => {
 
+
     const isMinorUpdate =
       !isDatesEqual(this.#point.dueDate, update.dueDate);
 
@@ -173,10 +175,11 @@ export default class PointPresenter {
   };
 
   #handleDeleteClick = (point) => {
+
     this.#onChangeData(
       UserAction.DELETE_POINT,
       UpdateType.MINOR,
-      point,
+      point.point,
     );
 
   };

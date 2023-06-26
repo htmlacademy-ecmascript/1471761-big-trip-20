@@ -20,17 +20,6 @@ function humaniseDate(eventDate, dateFormat) {
   return eventDate ? dayjs(eventDate).format(dateFormat) : '';
 }
 
-function formatStringToDateTime(date) {
-  return dayjs(date).format('YYYY-MM-DD HH:mm');
-}
-
-function formatStringToShortDate(date) {
-  return dayjs(date).format('MMM DD');
-}
-
-function formatStringToTime(date) {
-  return dayjs(date).format('HH:mm');
-}
 
 function capitalize(string) {
   return `${string[0].toUpperCase()}${string.slice(1)}`;
@@ -102,9 +91,6 @@ export {
   getPointsDateDifference,
   getPointsDurationsDifference,
   getPointsPriceDifference,
-  formatStringToDateTime,
-  formatStringToShortDate,
-  formatStringToTime,
   getPointDuration,
   capitalize,
   getDate,

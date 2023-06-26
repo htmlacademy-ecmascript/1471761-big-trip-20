@@ -19,6 +19,7 @@ export default class PointsModel extends Observable {
     try {
       const points = await this.#pointsApiService.points;
       this.#points = points.map(this.#adaptToClient);
+
     } catch (err) {
       this.#points = [];
     }
@@ -46,8 +47,10 @@ export default class PointsModel extends Observable {
   }
 
   async addPoint(updateType, update) {
+    // debugger;
     try {
-      const response = await this.#pointsApiService.addpoint(update);
+      delete update.id;
+      const response = await this.#pointsApiService.addPoint(update);
       const newTripPoint = this.#adaptToClient(response);
       this.#points = [newTripPoint, ...this.#points];
       this._notify(updateType, newTripPoint);

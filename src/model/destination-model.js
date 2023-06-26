@@ -6,8 +6,8 @@ export default class DestinationModel {
     this.#service = service;
   }
 
-  async init() {
-    this.#destinations = await this.#service.destinations;
+  init() {
+    this.#destinations = this.#service.destinations;
     return this.#destinations;
   }
 
