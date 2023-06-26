@@ -49,13 +49,13 @@ export default class BoardPresenter {
   #currentSortType = SortType.DAY;
   #filterType = FilterType.EVERYTHING;
 
-  constructor({ container, destinationsModel, offersModel, pointsModel, filterModel, onNewPointClose }) {
+  constructor({ container, destinationsModel, offersModel, pointsModel, filterModel, onNewPointDestroy }) {
     this.#container = container;
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
     this.#pointsModel = pointsModel;
     this.#filterModel = filterModel;
-    this.#onNewPointClose = onNewPointClose;
+    this.#onNewPointClose = onNewPointDestroy;
 
     this.#newPointPresenter = new NewPointPresenter({
       eventListContainer: this.#eventListComponent.element,
@@ -166,11 +166,11 @@ export default class BoardPresenter {
     this.#uiBlocker.block();
     switch (actionType) {
       case UserAction.UPDATE_POINT:
-        this.#pointPresenters.get(update.id).setSaving();
+        this.#pointPresenters.get(update.point.id).setSaving();
         try {
           await this.#pointsModel.updatePoint(updateType, update);
         } catch (err) {
-          this.#pointPresenters.get(update.id).setAborting();
+          this.#pointPresenters.get(update.point.id).setAborting();
         }
         break;
       case UserAction.ADD_POINT:
@@ -182,11 +182,11 @@ export default class BoardPresenter {
         }
         break;
       case UserAction.DELETE_POINT:
-        this.#pointPresenters.get(update.id).setDeleting();
+        this.#pointPresenters.get(update.point.id).setDeleting();
         try {
           await this.#pointsModel.deleteTask(updateType, update);
         } catch (err) {
-          this.#pointPresenters.get(update.id).setAborting();
+          this.#pointPresenters.get(update.point.id).setAborting();
         }
         break;
     }
@@ -224,8 +224,14 @@ export default class BoardPresenter {
   };
 
   #clearBoard = ({ resetSortType = false } = {}) => {
+    this.#newPointPresenter.destroy();
+    this.#pointPresenters.forEach((presenter) => presenter.destroy());
+    this.#pointPresenters.clear();
 
-    this.#clearPoints();
+    remove(this.#sortComponent);
+    remove(this.#loadingComponent);
+
+    //this.#clearPoints();
 
     if (resetSortType) {
       this.#currentSortType = SortType.DAY;
@@ -235,9 +241,10 @@ export default class BoardPresenter {
       remove(this.#emptyListComponent);
     }
 
-    if (this.#loadingComponent) {
+    /*if (this.#loadingComponent) {
       remove(this.#loadingComponent);
-    }
+    }*/
+
   };
 
   #renderBoard = () => {

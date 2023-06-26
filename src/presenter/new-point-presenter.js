@@ -15,10 +15,10 @@ export default class NewPointPresenter {
   #offersModel = null;
   #pointsModel = null;
 
-  constructor({ eventListContainer, onDataChange, onDestroy, destinationsModel, offersModel, pointsModel }) {
+  constructor({ eventListContainer, onDataChange, onClose, destinationsModel, offersModel, pointsModel }) {
     this.#eventListContainer = eventListContainer;
     this.#handleDataChange = onDataChange;
-    this.#handleDestroy = onDestroy;
+    this.#handleDestroy = onClose;
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
     this.#pointsModel = pointsModel;
@@ -34,8 +34,9 @@ export default class NewPointPresenter {
       pointOffers: this.#offersModel.get(),
       type: EditingType.CREATING,
 
-      onFormSubmit: this.#handleFormSubmit,
-      onResetClick: this.#resetClickHandler
+      onSubmitClick: this.#handleFormSubmit,
+      onResetClick: this.#resetClickHandler,
+      onDeleteClick: this.destroy
     });
 
     render(this.#pointEditComponent, this.#eventListContainer, RenderPosition.AFTERBEGIN);
@@ -62,6 +63,7 @@ export default class NewPointPresenter {
   }
 
   setAborting() {
+
     const resetFormState = () => {
       this.#pointEditComponent.updateElement({
         isDisabled: false,

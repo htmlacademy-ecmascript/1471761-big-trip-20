@@ -106,6 +106,7 @@ export default class PointPresenter {
   }
 
   setAborting() {
+
     if (this.#mode === Mode.DEFAULT) {
       this.#pointComponent.shake();
       return;
@@ -160,6 +161,7 @@ export default class PointPresenter {
   };
 
   #onSubmitClick = (update) => {
+
 
     const isMinorUpdate =
       !isDatesEqual(this.#point.dueDate, update.dueDate);

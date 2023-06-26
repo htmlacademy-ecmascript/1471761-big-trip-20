@@ -60,7 +60,6 @@ const EnabledSortType = {
 };
 
 const EMPTY_POINT = {
-  id: '',
   basePrice: 0,
   dateFrom: '01 /06 / 2023 12:00',
   dateTo: '21 /06 / 2023 00:00',
