@@ -28,6 +28,8 @@ function createTypeOffersListTemplate(typeOffers) {
   if (typeOffers.length === 0) {
     return '';
   }
+
+
   const offersList = typeOffers.map(({id, title, price, checked}) =>
     `<div class="event__offer-selector">
       <input class="event__offer-checkbox  visually-hidden" id="event-offer-${id}" type="checkbox" name="event-offer-${id}"${checked ? ' checked' : ''}>
@@ -67,6 +69,7 @@ function createEventDescriptionTemplate(destination) {
 }
 
 function createEventDetailsTemplate(offers, destination) {
+
   if (!destination) {
     return '';
   }
@@ -76,37 +79,20 @@ function createEventDetailsTemplate(offers, destination) {
           </section>`;
 }
 
-/*
-function renderDestinationOptionsTemplate (cities) {
-  if (!cities.length) {
-    return '';
-  }
-  return cities.map((city) => `<option value=${city.name}></option>`).join('');
-}
-
-function createDestinationTemplate (destinations, initialDestination, isDisabled) {
-
-  const destinationName = initialDestination !== null ? initialDestination.name : '';
-
-  return `<input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${he.encode(destinationName)}" list="destination-list-1">
-          <datalist id="destination-list-1" ${isDisabled ? 'disabled' : ''}>
-            ${renderDestinationOptionsTemplate(destinations)}
-          </datalist>`;
-}
-
-*/
-
 function createEditorTemplate(data) {
   const isEmptyPoint = !data.state.point.id;
   const eventPoint = isEmptyPoint ? EMPTY_POINT : data.state.point;
-  // console.log('createEditorTemplate', eventPoint, isEmptyPoint);
   const {basePrice, dateFrom, dateTo, destination, offers, type, isDisabled, isSaving} = eventPoint;
 
-  // offers = this.data.pointOffers[0].offers;
-
-  const name = destination ? destination.name : '';
+  const destinationItem = destination ? data.pointDestinations.find((dest) => dest.id === destination) : null;
+  const offerItems = data.pointOffers
+    .find((i) => i.type === type)
+    .offers
+    .filter((off) => offers.includes(off.id));
+  const name = destinationItem ? destinationItem.name : '' ;
   const eventStartDate = formatDateTime(dateFrom, DATETIME_FORMAT);
   const eventEndDate = formatDateTime(dateTo, DATETIME_FORMAT);
+
   const cities = data.pointDestinations.map((dest) => dest.name);
 
   function renderCityOptions() {
@@ -158,7 +144,7 @@ function createEditorTemplate(data) {
           <span class="visually-hidden">Open event</span>
         </button>
         </header >
-    ${createEventDetailsTemplate(offers, destination)}
+    ${createEventDetailsTemplate(offerItems, destinationItem)}
       </form >
     </li > `
   );
@@ -186,6 +172,7 @@ export default class PointEditView extends AbstractStatefulView {
     type = EditingType.EDITING,
   }) {
     super();
+
 
     this._setState(PointEditView.parsePointToState({point, pointDestinations, pointOffers}));
 
@@ -224,7 +211,6 @@ export default class PointEditView extends AbstractStatefulView {
     }
   };
 
-  //de verificat aici
   reset = (point) => this.updateElement({point});
 
   _restoreHandlers = () => {
@@ -236,7 +222,7 @@ export default class PointEditView extends AbstractStatefulView {
 
       this.element
         .querySelector('.event__reset-btn')
-        .addEventListener('click', this.#handleDeleteClick);
+        .addEventListener('click', this.#pointDeleteClickHandler);
     }
 
     if (this.#type === EditingType.CREATING) {
@@ -287,14 +273,18 @@ export default class PointEditView extends AbstractStatefulView {
 
   #typeInputClick = (evt) => {
     evt.preventDefault();
+    const offerType = evt.target.value;
 
     this._setState({
       point: {
         ...this._state.point,
-        type: evt.target.value,
-        offers: [], // ToDo заполнить офферы
+        type: offerType,
+        offers: this._state.pointOffers.find((offer) => offer.type === offerType).offers, // ToDo заполнить офферы
       },
     });
+
+    this._restoreHandlers();
+
   };
 
   #destinationInputChange = (evt) => {
@@ -395,6 +385,7 @@ export default class PointEditView extends AbstractStatefulView {
   };
 
   #pointDeleteClickHandler = (evt) => {
+    //debugger;
     evt.preventDefault();
     this.#handleDeleteClick(PointEditView.parseStateToPoint(this._state));
 

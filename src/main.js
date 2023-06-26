@@ -21,9 +21,6 @@ const headerElement = document.querySelector('.page-header');
 const tripInfoElement = headerElement.querySelector('.trip-main');
 const filterElement = tripInfoElement.querySelector('.trip-controls__filters');
 const siteBodyElement = mainBodyElement.querySelector('.trip-events');
-//const eventListElement = mainElement.qyerySelector('.trip-events');
-//mainElement = bodyElement.querySelector('.page-main');
-
 
 async function run() {
 
@@ -54,9 +51,9 @@ async function run() {
     filterModel
   });
 
-  destinationsModel.init();
-  offersModel.init();
-  pointsModel.init();
+  await destinationsModel.init();
+  await offersModel.init();
+  await pointsModel.init();
   filterPresenter.init();
   boardPresenter.init();
 

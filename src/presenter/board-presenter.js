@@ -65,6 +65,7 @@ export default class BoardPresenter {
       onClose: this.#closeNewPoint,
     });
 
+
     this.#pointsModel.addObserver(this.#handleModelEvent);
     this.#filterModel.addObserver(this.#handleModelEvent);
   }
@@ -166,11 +167,11 @@ export default class BoardPresenter {
     this.#uiBlocker.block();
     switch (actionType) {
       case UserAction.UPDATE_POINT:
-        this.#pointPresenters.get(update.point.id).setSaving();
+        this.#pointPresenters.get(update.id).setSaving();
         try {
           await this.#pointsModel.updatePoint(updateType, update);
         } catch (err) {
-          this.#pointPresenters.get(update.point.id).setAborting();
+          this.#pointPresenters.get(update.id).setAborting();
         }
         break;
       case UserAction.ADD_POINT:
@@ -178,15 +179,16 @@ export default class BoardPresenter {
         try {
           await this.#pointsModel.addPoint(updateType, update);
         } catch (err) {
+
           this.#newPointPresenter.setAborting();
         }
         break;
       case UserAction.DELETE_POINT:
-        this.#pointPresenters.get(update.point.id).setDeleting();
+        this.#pointPresenters.get(update.id).setDeleting();
         try {
           await this.#pointsModel.deleteTask(updateType, update);
         } catch (err) {
-          this.#pointPresenters.get(update.point.id).setAborting();
+          this.#pointPresenters.get(update.id).setAborting();
         }
         break;
     }
@@ -231,7 +233,6 @@ export default class BoardPresenter {
     remove(this.#sortComponent);
     remove(this.#loadingComponent);
 
-    //this.#clearPoints();
 
     if (resetSortType) {
       this.#currentSortType = SortType.DAY;
@@ -241,10 +242,6 @@ export default class BoardPresenter {
       remove(this.#emptyListComponent);
     }
 
-    /*if (this.#loadingComponent) {
-      remove(this.#loadingComponent);
-    }*/
-
   };
 
   #renderBoard = () => {
@@ -252,6 +249,7 @@ export default class BoardPresenter {
       this.#renderLoading();
       return;
     }
+
 
     if (this.points.length === 0 && !this.#isCreating) {
       this.#renderNoTripPoints();
