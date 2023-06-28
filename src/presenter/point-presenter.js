@@ -137,7 +137,7 @@ export default class PointPresenter {
   };
 
   #escKeyHandler = (evt) => {
-    if (isEscapeKey) {
+    if (isEscapeKey(evt)) {
       evt.preventDefault();
       this.#pointEditComponent.reset(this.#point);
       this.#replaceFormToPoint();

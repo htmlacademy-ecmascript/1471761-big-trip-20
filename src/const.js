@@ -1,7 +1,9 @@
-
+import dayjs from 'dayjs';
 const POINT_COUNT = 7;
 const DESTINATION_COUNT = 7;
 const OFFER_COUNT = 7;
+
+const DEFAULT_DATETIME_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
 const TYPES = [
   'taxi',
@@ -62,8 +64,8 @@ const EnabledSortType = {
 
 const EMPTY_POINT = {
   basePrice: 0,
-  dateFrom: '01 /06 / 2023 12:00',
-  dateTo: '21 /06 / 2023 00:00',
+  dateFrom: dayjs().format('YYYY-MM-DD HH:MM'),
+  dateTo: dayjs().add(1, 'week').format('YYYY-MM-DD HH:MM'),
   destination: null,
   isFavorite: true,
   offers: [],
@@ -111,5 +113,6 @@ export {
   TYPES,
   DEFAULT_TYPE,
   FilterType,
-  DEFAULT_SORT_TYPE
+  DEFAULT_SORT_TYPE,
+  DEFAULT_DATETIME_FORMAT
 };

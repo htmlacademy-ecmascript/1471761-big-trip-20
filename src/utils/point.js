@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
-
+import { DEFAULT_DATETIME_FORMAT } from '../const';
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
@@ -48,7 +48,7 @@ function getPointDuration(dateFrom, dateTo) {
 const getDatesDiff = (dateFrom, dateTo, timeUnit) => timeUnit ? dayjs(dateTo).diff(dayjs(dateFrom), timeUnit) : dayjs(dateTo).diff(dayjs(dateFrom));
 
 function getDate(date) {
-  return dayjs(date).format('DD/MM/YY HH:mm');
+  return dayjs(date).format(DEFAULT_DATETIME_FORMAT);
 }
 
 function isPointFuture(point) {

@@ -186,7 +186,7 @@ export default class BoardPresenter {
       case UserAction.DELETE_POINT:
         this.#pointPresenters.get(update.id).setDeleting();
         try {
-          await this.#pointsModel.deleteTask(updateType, update);
+          await this.#pointsModel.deletePoint(updateType, update);
         } catch (err) {
           this.#pointPresenters.get(update.id).setAborting();
         }
