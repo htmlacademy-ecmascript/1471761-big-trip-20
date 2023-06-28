@@ -1,6 +1,7 @@
-const POINT_COUNT = 10;
-const DESTINATION_COUNT = 10;
-const OFFER_COUNT = 10;
+
+const POINT_COUNT = 7;
+const DESTINATION_COUNT = 7;
+const OFFER_COUNT = 7;
 
 const TYPES = [
   'taxi',
@@ -64,10 +65,9 @@ const EMPTY_POINT = {
   dateFrom: '01 /06 / 2023 12:00',
   dateTo: '21 /06 / 2023 00:00',
   destination: null,
-  isFavorite: false,
+  isFavorite: true,
   offers: [],
   type: DEFAULT_TYPE,
-
 };
 
 const UserAction = {
