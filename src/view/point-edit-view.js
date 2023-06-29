@@ -212,7 +212,9 @@ export default class PointEditView extends AbstractStatefulView {
 
   removeElement = () => {
     super.removeElement();
+    // this.#datepickers.forEach((datepicker) => datepicker.destroy());
 
+    //verificat, don't repeat yourself
     if (this.#datepickerFrom) {
       this.#datepickerFrom.destroy();
       this.#datepickerFrom = null;
@@ -224,7 +226,11 @@ export default class PointEditView extends AbstractStatefulView {
     }
   };
 
-  reset = (point) => this.updateElement({ point });
+  //reset point sau event
+  //reset = (point) => this.updateElement({ point });
+  reset = (point) => {
+    this.updateElement(PointEditView.parsePointToState(point));
+  };
 
   _restoreHandlers = () => {
     //debugger;
