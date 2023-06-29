@@ -52,7 +52,9 @@ function getDate(date) {
 }
 
 function isPointFuture(point) {
-  return dayjs().isBefore(point.dateFrom);
+  const parsedDate = dayjs(point.dateFrom);
+  //debugger;
+  return dayjs().isBefore(parsedDate);
 }
 
 function isPointPresent(point) {
@@ -60,7 +62,8 @@ function isPointPresent(point) {
 }
 
 function isPointPast(point) {
-  return dayjs().isAfter(point.dateTo);
+  const parsedDate = dayjs(point.dateFrom);
+  return dayjs().isAfter(parsedDate);
 }
 
 function getPointsDateDifference(pointA, pointB) {

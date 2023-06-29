@@ -82,7 +82,6 @@ export default class BoardPresenter {
 
   init() {
     this.#newPointButton = new NewEventButtonView({ onClick: this.#newPointButtonClickHandler });
-    this.#renderBoard();
   }
 
   createPoint() {
@@ -226,6 +225,7 @@ export default class BoardPresenter {
   };
 
   #clearBoard = ({ resetSortType = false } = {}) => {
+    // debugger;
     this.#newPointPresenter.destroy();
     this.#pointPresenters.forEach((presenter) => presenter.destroy());
     this.#pointPresenters.clear();
