@@ -3,7 +3,6 @@ import { EditingType, EMPTY_POINT, TYPES } from '../const.js';
 import { formatDateTime } from '../utils/point.js';
 import { DEFAULT_DATETIME_FORMAT } from '../const.js';
 
-
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import he from 'he';
@@ -80,7 +79,8 @@ function createEventDetailsTemplate(offers, destination) {
 }
 
 function createEditorTemplate(data) {
-  const isEmptyPoint = !data.state.point.id;
+  // debugger;
+  const isEmptyPoint = !data.state.point;
   const eventPoint = isEmptyPoint ? EMPTY_POINT : data.state.point;
   const { basePrice, dateFrom, dateTo, destination, offers, type, isDisabled, isSaving } = eventPoint;
 
@@ -95,11 +95,10 @@ function createEditorTemplate(data) {
 
   // debugger;
 
-  const cities = data.pointDestinations.map((dest) => dest.name);
+  const cityList = data.pointDestinations.map((dest) => dest.name);
 
-  function renderCityOptions() {
-    return cities.map((city) => `<option value="${city}"></option>`);
-  }
+  const cities = () => cityList.map((city) => `<option value="${city}"></option>`)
+    .join(' ');
 
   return (
     `<li class="trip-events__item">
@@ -119,7 +118,7 @@ function createEditorTemplate(data) {
             </label>
             <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${name}" list="destination-list-1">
             <datalist id="destination-list-1">
-               ${renderCityOptions(cities)}
+               ${cities()}
             </datalist>
           </div>
           <div class="event__field-group  event__field-group--time">
@@ -307,7 +306,6 @@ export default class PointEditView extends AbstractStatefulView {
   #typeInputClick = (evt) => {
     evt.preventDefault();
     const offerType = evt.target.value;
-
     this.updateElement({
       point: {
         ...this._state.point,
@@ -315,7 +313,6 @@ export default class PointEditView extends AbstractStatefulView {
         offers: this._state.pointOffers.find((offer) => offer.type === offerType).offers, // ToDo заполнить офферы
       },
     });
-
   };
 
   #destinationInputChange = (evt) => {
@@ -384,7 +381,10 @@ export default class PointEditView extends AbstractStatefulView {
 
   #dateFromChangeHandler = ([userDate]) => {
     this.updateElement({
-      dateFrom: userDate,
+      point: {
+        ...this._state.point,
+        dateFrom: userDate, // ToDo заполнить офферы
+      },
     });
   };
 
@@ -400,21 +400,24 @@ export default class PointEditView extends AbstractStatefulView {
 
   #dateToChangeHandler = ([userDate]) => {
     this.updateElement({
-      dateTo: userDate,
+      point: {
+        ...this._state.point,
+        dateTo: userDate, // ToDo заполнить офферы
+      },
     });
   };
 
 
   #setDatepickers = () => {
+    const datePickers = this.element.querySelectorAll('.event__input--time');
 
-    const [dateFromElement, dateToElement] = this.element.querySelectorAll('.event__input--time');
-    //debugger;
+    const [dateFromElement, dateToElement] = datePickers;
+
     this.#datepickerFrom = flatpickr(
       dateFromElement,
       {
-        dateFormat: DEFAULT_DATETIME_FORMAT,
         defaultDate: this._state?.point?.dateFrom || new Date(),
-        onClose: this.#dateFromChangeHandler,
+        onChange: this.#dateFromChangeHandler,
         enableTime: true,
         locale: {
           firstDayOfWeek: 1,
@@ -426,9 +429,8 @@ export default class PointEditView extends AbstractStatefulView {
     this.#datepickerTo = flatpickr(
       dateToElement,
       {
-        dateFormat: DEFAULT_DATETIME_FORMAT,
         defaultDate: this._state?.point?.dateTo || new Date().fp_incr(7),
-        onClose: this.#dateToChangeHandler,
+        onChange: this.#dateToChangeHandler,
         enableTime: true,
         minDate: this._state?.point?.dateTo ?? new Date(),
         locale: {
