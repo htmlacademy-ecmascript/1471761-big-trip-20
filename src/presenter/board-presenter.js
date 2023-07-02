@@ -225,7 +225,6 @@ export default class BoardPresenter {
   };
 
   #clearBoard = ({ resetSortType = false } = {}) => {
-    // debugger;
     this.#newPointPresenter.destroy();
     this.#pointPresenters.forEach((presenter) => presenter.destroy());
     this.#pointPresenters.clear();

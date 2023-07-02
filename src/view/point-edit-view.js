@@ -67,6 +67,7 @@ function createEventDescriptionTemplate(destination) {
           </section>`;
 }
 
+// de verificat, e offers ? trebueie offers??
 function createEventDetailsTemplate(offers, destination) {
 
   if (!destination) {
@@ -79,7 +80,7 @@ function createEventDetailsTemplate(offers, destination) {
 }
 
 function createEditorTemplate(data) {
-  // debugger;
+
   const isEmptyPoint = !data.state.point;
   const eventPoint = isEmptyPoint ? EMPTY_POINT : data.state.point;
   const { basePrice, dateFrom, dateTo, destination, offers, type, isDisabled, isSaving } = eventPoint;
@@ -87,13 +88,13 @@ function createEditorTemplate(data) {
   const destinationItem = destination ? data.pointDestinations.find((dest) => dest.id === destination) : null;
   const offerItems = data.pointOffers
     .find((i) => i.type === type)
-    .offers
-    .filter((off) => offers.includes(off.id));
+    .offers;
+  //.filter((off) => offers.includes(off.id));
+
   const name = destinationItem ? destinationItem.name : '';
   const eventStartDate = formatDateTime(dateFrom, DEFAULT_DATETIME_FORMAT);
   const eventEndDate = formatDateTime(dateTo, DEFAULT_DATETIME_FORMAT);
 
-  // debugger;
 
   const cityList = data.pointDestinations.map((dest) => dest.name);
 
@@ -178,7 +179,6 @@ export default class PointEditView extends AbstractStatefulView {
   }) {
     super();
 
-    //debugger;
     this._setState(PointEditView.parsePointToState({ point, pointDestinations, pointOffers }));
 
     this.#pointDestinations = pointDestinations;
@@ -232,7 +232,6 @@ export default class PointEditView extends AbstractStatefulView {
   };
 
   _restoreHandlers = () => {
-    //debugger;
     this.element
       .querySelector('form')
       .addEventListener('submit', this.#submitClickHandler);
@@ -347,18 +346,7 @@ export default class PointEditView extends AbstractStatefulView {
     });
   };
 
-  /*#priceInputChange = (evt) => {
-    evt.preventDefault();
-    this._setState({
-      point: {
-        ...this._state.point,
-        basePrice: evt.target.valueAsNumber,
-      },
-    });
-  };
-*/
   #priceInputChange = (evt) => {
-    //debugger;
     evt.preventDefault();
     this._setState({
       point: {
@@ -419,9 +407,9 @@ export default class PointEditView extends AbstractStatefulView {
         defaultDate: this._state?.point?.dateFrom || new Date(),
         onChange: this.#dateFromChangeHandler,
         enableTime: true,
-        locale: {
+        /*locale: {
           firstDayOfWeek: 1,
-        },
+        },*/
         'time_24hr': true,
       },
     );
@@ -429,13 +417,13 @@ export default class PointEditView extends AbstractStatefulView {
     this.#datepickerTo = flatpickr(
       dateToElement,
       {
-        defaultDate: this._state?.point?.dateTo || new Date().fp_incr(7),
+        defaultDate: this._state?.point?.dateTo || new Date(),
         onChange: this.#dateToChangeHandler,
         enableTime: true,
         minDate: this._state?.point?.dateTo ?? new Date(),
-        locale: {
-          firstDayOfWeek: 1,
-        },
+        /* locale: {
+           firstDayOfWeek: 1,
+         }, */
         'time_24hr': true,
       },
     );

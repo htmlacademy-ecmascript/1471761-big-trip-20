@@ -67,7 +67,7 @@ const EnabledSortType = {
 const EMPTY_POINT = {
   basePrice: 0,
   dateFrom: dayjs().format('YYYY-MM-DD HH:MM'),
-  dateTo: dayjs().add(1, 'week').format('YYYY-MM-DD HH:MM'),
+  dateTo: dayjs().add(1, 'hour').format('YYYY-MM-DD HH:MM'),
   destination: null,
   isFavorite: true,
   offers: [],

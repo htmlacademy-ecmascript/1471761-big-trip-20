@@ -53,7 +53,6 @@ function getDate(date) {
 
 function isPointFuture(point) {
   const parsedDate = dayjs(point.dateFrom);
-  //debugger;
   return dayjs().isBefore(parsedDate);
 }
 
