@@ -11,10 +11,15 @@ import he from 'he';
 function createEventTypesListTemplate(currentType) {
   const typesList = Object.values(TYPES).map((eventType) =>
     `<div class="event__type-item">
-      <input id="event-type-${eventType}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${eventType}" ${eventType === currentType ? 'checked' : ''}>
+      <input id="event-type-${eventType}-1"
+       class="event__type-input  visually-hidden"
+       type="radio" name="event-type"
+       value="${eventType}"
+       ${eventType === currentType ? 'checked' : ''}>
       <label class="event__type-label  event__type-label--${eventType}" for="event-type-${eventType}-1">${eventType}</label>
     </div>`,
   ).join('');
+
   return `<div class="event__type-list">
             <fieldset class="event__type-group">
               <legend class="visually-hidden">Event type</legend>
@@ -31,7 +36,10 @@ function createTypeOffersListTemplate(typeOffers) {
 
   const offersList = typeOffers.map(({ id, title, price, checked }) =>
     `<div class="event__offer-selector">
-      <input class="event__offer-checkbox  visually-hidden" id="event-offer-${id}" type="checkbox" name="event-offer-${id}"${checked ? ' checked' : ''}>
+      <input class="event__offer-checkbox  visually-hidden"
+      id="event-offer-${id}"
+      type="checkbox" name="event-offer-${id}"
+      ${checked ? 'checked' : ''}>
       <label class="event__offer-label" for="event-offer-${id}">
       <span class="event__offer-title">${title}</span>
       &plus;&euro;&nbsp;
@@ -338,6 +346,8 @@ export default class PointEditView extends AbstractStatefulView {
     evt.preventDefault();
     const checkedBoxes = Array.from(this.element.querySelectorAll('.event__offer-checkbox'));
 
+    /*this._setState({
+      offers: checkedBoxes.map((element) => element.dataset.offerId),  */
     this._setState({
       point: {
         ...this._state.point,

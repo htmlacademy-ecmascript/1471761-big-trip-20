@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+//import dayjs from 'dayjs';
 const POINT_COUNT = 7;
 const DESTINATION_COUNT = 7;
 const OFFER_COUNT = 7;
@@ -66,8 +66,10 @@ const EnabledSortType = {
 
 const EMPTY_POINT = {
   basePrice: 0,
-  dateFrom: dayjs().format('YYYY-MM-DD HH:MM'),
-  dateTo: dayjs().add(1, 'hour').format('YYYY-MM-DD HH:MM'),
+  dateFrom: new Date,
+  //dayjs().format('YYYY-MM-DD HH:MM'),
+  dateTo: new Date,
+  //dayjs().add(1, 'hour').format('YYYY-MM-DD HH:MM'),
   destination: null,
   isFavorite: true,
   offers: [],
