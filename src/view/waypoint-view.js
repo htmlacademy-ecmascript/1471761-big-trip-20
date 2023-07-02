@@ -1,13 +1,12 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import { humaniseDate, getPointDuration } from '../utils/point.js';
 import he from 'he';
-//aici format ora
+
 const DATE_FORMAT = 'YYYY-MM-DD';
 const EVENT_DATE = 'MMM DD';
 const TIME_FORMAT = 'HH:mm';
 
 function createWaypointTemplate(routePoint, destination, offers) {
-
 
   const { dateFrom, dateTo, type, basePrice, isFavorite } = routePoint;
 

@@ -1,9 +1,7 @@
-//import dayjs from 'dayjs';
 const POINT_COUNT = 7;
 const DESTINATION_COUNT = 7;
 const OFFER_COUNT = 7;
 
-//const DEFAULT_DATETIME_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
 const DEFAULT_DATETIME_FORMAT = 'DD/MM/YY HH:mm';
 
