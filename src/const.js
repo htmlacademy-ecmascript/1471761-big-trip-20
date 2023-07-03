@@ -1,6 +1,4 @@
-const POINT_COUNT = 10;
-const DESTINATION_COUNT = 10;
-const OFFER_COUNT = 10;
+const DEFAULT_DATETIME_FORMAT = 'DD/MM/YY HH:mm';
 
 const TYPES = [
   'taxi',
@@ -12,8 +10,6 @@ const TYPES = [
   'sightseeing',
   'restaurant'
 ];
-
-const EVENT_TYPES_LIST = Object.values(TYPES);
 
 const OFFERS = [
   'Order Uber',
@@ -51,23 +47,14 @@ const SortType = {
 const DEFAULT_SORT_TYPE = 'DAY';
 
 
-const EnabledSortType = {
-  [SortType.DAY]: true,
-  [SortType.EVENT]: false,
-  [SortType.TIME]: true,
-  [SortType.PRICE]: true,
-  [SortType.OFFERS]: false
-};
-
 const EMPTY_POINT = {
   basePrice: 0,
-  dateFrom: '01 /06 / 2023 12:00',
-  dateTo: '21 /06 / 2023 00:00',
+  dateFrom: new Date,
+  dateTo: new Date,
   destination: null,
-  isFavorite: false,
+  isFavorite: true,
   offers: [],
   type: DEFAULT_TYPE,
-
 };
 
 const UserAction = {
@@ -101,15 +88,11 @@ export {
   UpdateType,
   EMPTY_POINT,
   OFFERS,
-  EVENT_TYPES_LIST,
-  EnabledSortType,
   SortType,
   Mode,
-  POINT_COUNT,
-  DESTINATION_COUNT,
-  OFFER_COUNT,
   TYPES,
   DEFAULT_TYPE,
   FilterType,
-  DEFAULT_SORT_TYPE
+  DEFAULT_SORT_TYPE,
+  DEFAULT_DATETIME_FORMAT
 };

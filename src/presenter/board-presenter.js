@@ -16,18 +16,14 @@ const TimeLimit = {
   UPPER_LIMIT: 1000,
 };
 
-
 export default class BoardPresenter {
   #container = null;
-  #newPointButtonContainer = null;
 
   #eventListComponent = new EventListView();
 
-  #datepicker = null;
   #emptyListComponent = null;
   #newPointButton = null;
   #sortComponent = null;
-
 
   #destinationsModel = null;
   #offersModel = null;
@@ -82,7 +78,6 @@ export default class BoardPresenter {
 
   init() {
     this.#newPointButton = new NewEventButtonView({ onClick: this.#newPointButtonClickHandler });
-    this.#renderBoard();
   }
 
   createPoint() {
@@ -103,7 +98,6 @@ export default class BoardPresenter {
       this.#sortComponent = null;
     }
   };
-
 
   #renderPoint = (point) => {
     const pointPresenter = new PointPresenter({
@@ -186,7 +180,7 @@ export default class BoardPresenter {
       case UserAction.DELETE_POINT:
         this.#pointPresenters.get(update.id).setDeleting();
         try {
-          await this.#pointsModel.deleteTask(updateType, update);
+          await this.#pointsModel.deletePoint(updateType, update);
         } catch (err) {
           this.#pointPresenters.get(update.id).setAborting();
         }
@@ -250,7 +244,6 @@ export default class BoardPresenter {
       return;
     }
 
-
     if (this.points.length === 0 && !this.#isCreating) {
       this.#renderNoTripPoints();
       return;
@@ -272,18 +265,6 @@ export default class BoardPresenter {
     this.#filterModel.set(UpdateType.MAJOR, FilterType.EVERYTHING);
     this.#newPointButton.setDisable(true);
     this.#newPointPresenter.init();
-  };
-
-  #newPointDestroyHandler = (isCanceled) => {
-    this.#isCreating = false;
-    this.#newPointButton.setDisable(false);
-
-    if (isCanceled && this.points.length === 0) {
-      this.#renderNoTripPoints();
-    }
-    remove(this.#sortComponent);
-    this.#sortComponent = null;
-    this.#renderNoTripPoints();
   };
 
 }
