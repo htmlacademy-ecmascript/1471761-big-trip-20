@@ -77,9 +77,7 @@ function createEventDescriptionTemplate(destination) {
           </section>`;
 }
 
-// de verificat, e offers ? trebueie offers??
 function createEventDetailsTemplate(offers, destination) {
-  //debugger;
   if (!destination) {
     return '';
   }

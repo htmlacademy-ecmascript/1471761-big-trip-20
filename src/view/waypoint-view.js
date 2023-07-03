@@ -17,8 +17,26 @@ function createWaypointTemplate(routePoint, destination, offers) {
   const endTime = humaniseDate(dateTo, TIME_FORMAT);
   const durationTime = getPointDuration(dateFrom, dateTo);
 
+  /*const activeOffer = routePoint.offers
+    .find((i) => i.type === type)
+    .offers
+    .map((offer) => ({
+      ...offer,
+      checked: routePoint.offers.includes(offer.id)
+    }));
+
+const offerItems = data.pointOffers
+    .find((i) => i.type === type)
+    .offers
+    .map((offer) => ({
+      ...offer,
+      checked: eventPoint.offers.includes(offer.id)
+    }));
+
+  */
 
   function createOfferTemplate(offersList) {
+
     return offersList.offers.map((offer) =>
       `<li class="event__offer">
          <span class="event__offer-title">${offer.title}</span>
