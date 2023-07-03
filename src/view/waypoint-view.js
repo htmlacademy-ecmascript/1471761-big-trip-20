@@ -6,8 +6,18 @@ const DATE_FORMAT = 'YYYY-MM-DD';
 const EVENT_DATE = 'MMM DD';
 const TIME_FORMAT = 'HH:mm';
 
-function createWaypointTemplate(routePoint, destination, offers) {
+function createOfferTemplate(offersList) {
 
+  return offersList.map((offer) =>
+    `<li class="event__offer">
+         <span class="event__offer-title">${offer.title}</span>
+         &plus;&euro;&nbsp;
+         <span class="event__offer-price">${offer.price}</span>
+       </li>`).join('');
+}
+
+
+function createWaypointTemplate(routePoint, destination, { offers }) {
   const { dateFrom, dateTo, type, basePrice, isFavorite } = routePoint;
 
 
@@ -17,34 +27,8 @@ function createWaypointTemplate(routePoint, destination, offers) {
   const endTime = humaniseDate(dateTo, TIME_FORMAT);
   const durationTime = getPointDuration(dateFrom, dateTo);
 
-  /*const activeOffer = routePoint.offers
-    .find((i) => i.type === type)
-    .offers
-    .map((offer) => ({
-      ...offer,
-      checked: routePoint.offers.includes(offer.id)
-    }));
-
-const offerItems = data.pointOffers
-    .find((i) => i.type === type)
-    .offers
-    .map((offer) => ({
-      ...offer,
-      checked: eventPoint.offers.includes(offer.id)
-    }));
-
-  */
-
-  function createOfferTemplate(offersList) {
-
-    return offersList.offers.map((offer) =>
-      `<li class="event__offer">
-         <span class="event__offer-title">${offer.title}</span>
-         &plus;&euro;&nbsp;
-         <span class="event__offer-price">${offer.price}</span>
-       </li>`).join('');
-  }
-
+  const activeOffer = offers
+    .filter((offer) => routePoint.offers.includes(offer.id));
 
   const getFavoriteButton = () => isFavorite ? 'active' : '';
 
@@ -68,7 +52,7 @@ const offerItems = data.pointOffers
     </p>
     <h4 class="visually-hidden">Offers:</h4>
     <ul class="event__selected-offers">
-    ${createOfferTemplate(offers)}
+    ${createOfferTemplate(activeOffer)}
     </ul>
     <button class="event__favorite-btn event__favorite-btn--${getFavoriteButton()}" type="button">
       <span class="visually-hidden">Add to favorite</span>

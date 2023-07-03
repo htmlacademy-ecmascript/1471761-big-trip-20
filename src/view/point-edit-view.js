@@ -173,7 +173,6 @@ export default class PointEditView extends AbstractStatefulView {
   #handleFormSubmit = null;
   #handleDeleteClick = null;
 
-  //de verificat daca trebuie
   #handleRollupClick = null;
 
   #datepickerFrom = null;
@@ -222,9 +221,7 @@ export default class PointEditView extends AbstractStatefulView {
 
   removeElement = () => {
     super.removeElement();
-    // this.#datepickers.forEach((datepicker) => datepicker.destroy());
 
-    //verificat, don't repeat yourself
     if (this.#datepickerFrom) {
       this.#datepickerFrom.destroy();
       this.#datepickerFrom = null;
@@ -331,12 +328,9 @@ export default class PointEditView extends AbstractStatefulView {
   };
 
   #offerClickHandler = (evt) => {
-    //debugger;
     evt.preventDefault();
     const checkedBoxes = Array.from(this.element.querySelectorAll('.event__offer-checkbox:checked'));
 
-    /*this._setState({
-      offers: checkedBoxes.map((element) => element.dataset.offerId),  */
     this._setState({
       point: {
         ...this._state.point,
@@ -359,7 +353,7 @@ export default class PointEditView extends AbstractStatefulView {
     this.updateElement({
       point: {
         ...this._state.point,
-        dateFrom: userDate, // ToDo заполнить офферы
+        dateFrom: userDate,
       },
     });
   };
@@ -368,11 +362,10 @@ export default class PointEditView extends AbstractStatefulView {
     this.updateElement({
       point: {
         ...this._state.point,
-        dateTo: userDate, // ToDo заполнить офферы
+        dateTo: userDate,
       },
     });
   };
-
 
   #setDatepickers = () => {
     const datePickers = this.element.querySelectorAll('.event__input--time');

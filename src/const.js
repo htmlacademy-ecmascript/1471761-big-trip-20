@@ -1,8 +1,3 @@
-const POINT_COUNT = 7;
-const DESTINATION_COUNT = 7;
-const OFFER_COUNT = 7;
-
-
 const DEFAULT_DATETIME_FORMAT = 'DD/MM/YY HH:mm';
 
 const TYPES = [
@@ -15,8 +10,6 @@ const TYPES = [
   'sightseeing',
   'restaurant'
 ];
-
-const EVENT_TYPES_LIST = Object.values(TYPES);
 
 const OFFERS = [
   'Order Uber',
@@ -54,20 +47,10 @@ const SortType = {
 const DEFAULT_SORT_TYPE = 'DAY';
 
 
-const EnabledSortType = {
-  [SortType.DAY]: true,
-  [SortType.EVENT]: false,
-  [SortType.TIME]: true,
-  [SortType.PRICE]: true,
-  [SortType.OFFERS]: false
-};
-
 const EMPTY_POINT = {
   basePrice: 0,
   dateFrom: new Date,
-  //dayjs().format('YYYY-MM-DD HH:MM'),
   dateTo: new Date,
-  //dayjs().add(1, 'hour').format('YYYY-MM-DD HH:MM'),
   destination: null,
   isFavorite: true,
   offers: [],
@@ -105,13 +88,8 @@ export {
   UpdateType,
   EMPTY_POINT,
   OFFERS,
-  EVENT_TYPES_LIST,
-  EnabledSortType,
   SortType,
   Mode,
-  POINT_COUNT,
-  DESTINATION_COUNT,
-  OFFER_COUNT,
   TYPES,
   DEFAULT_TYPE,
   FilterType,

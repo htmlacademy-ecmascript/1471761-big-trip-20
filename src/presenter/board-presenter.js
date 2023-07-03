@@ -19,11 +19,9 @@ const TimeLimit = {
 
 export default class BoardPresenter {
   #container = null;
-  #newPointButtonContainer = null;
 
   #eventListComponent = new EventListView();
 
-  #datepicker = null;
   #emptyListComponent = null;
   #newPointButton = null;
   #sortComponent = null;
@@ -271,18 +269,6 @@ export default class BoardPresenter {
     this.#filterModel.set(UpdateType.MAJOR, FilterType.EVERYTHING);
     this.#newPointButton.setDisable(true);
     this.#newPointPresenter.init();
-  };
-
-  #newPointDestroyHandler = (isCanceled) => {
-    this.#isCreating = false;
-    this.#newPointButton.setDisable(false);
-
-    if (isCanceled && this.points.length === 0) {
-      this.#renderNoTripPoints();
-    }
-    remove(this.#sortComponent);
-    this.#sortComponent = null;
-    this.#renderNoTripPoints();
   };
 
 }
