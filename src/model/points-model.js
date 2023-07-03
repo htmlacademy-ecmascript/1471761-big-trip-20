@@ -86,7 +86,6 @@ export default class PointsModel extends Observable {
       isFavorite: point['is_favorite'],
     };
 
-
     delete adaptedPoint['base_price'];
     delete adaptedPoint['date_from'];
     delete adaptedPoint['date_to'];
@@ -97,9 +96,6 @@ export default class PointsModel extends Observable {
 
   static isFilled(point) {
     return point.basePrice && point.dateFrom && point.dateTo && point.destination;
-
   }
 
 }
-
-

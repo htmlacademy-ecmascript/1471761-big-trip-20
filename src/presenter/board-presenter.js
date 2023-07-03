@@ -16,7 +16,6 @@ const TimeLimit = {
   UPPER_LIMIT: 1000,
 };
 
-
 export default class BoardPresenter {
   #container = null;
 
@@ -25,7 +24,6 @@ export default class BoardPresenter {
   #emptyListComponent = null;
   #newPointButton = null;
   #sortComponent = null;
-
 
   #destinationsModel = null;
   #offersModel = null;
@@ -100,7 +98,6 @@ export default class BoardPresenter {
       this.#sortComponent = null;
     }
   };
-
 
   #renderPoint = (point) => {
     const pointPresenter = new PointPresenter({
@@ -246,7 +243,6 @@ export default class BoardPresenter {
       this.#renderLoading();
       return;
     }
-
 
     if (this.points.length === 0 && !this.#isCreating) {
       this.#renderNoTripPoints();

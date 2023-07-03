@@ -183,5 +183,4 @@ export default class PointPresenter {
     );
 
   };
-
 }
